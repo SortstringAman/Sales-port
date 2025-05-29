@@ -1,0 +1,217 @@
+.student-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.student-table th,
+.student-table td {
+    /* border: 1px solid #ddd; */
+    padding: 8px;
+    text-align: left;
+}
+
+.student-table thead th {
+    background-color: #f4f4f4;
+    background: #F9F9F9;
+    color: #6B778C;
+    font-size: 14px;
+    font-family: 'Monosans';
+    font-weight: 400;
+    /* border-radius: 6px; */
+}
+
+.student-table tbody tr {
+    /* background-color: #f4f4f4; */
+    background: #F9F9F9;
+    color: #6B778C;
+    font-size: 14px;
+    font-family: 'Monosans';
+    font-weight: 400;
+    border-radius: 8px;
+    height: 72px;
+}
+
+.student-table tbody tr td {
+    height: 72px;
+}
+
+.student-table tbody tr:nth-child(even) {
+    background-color: #F9F9F9;
+    /* White background for even rows */
+}
+
+.student-table tbody tr:nth-child(odd) {
+    /* Light gray background for odd rows */
+    background-color: #FFFFFF;
+}
+
+.student-table tbody tr.active-row  {
+    background: #F2EDFF;
+    border: 2px solid #7F56DA;
+    border-radius: 8px;
+}
+
+/* Styles for the table */
+.customise-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+/* Styles for the table header (th) */
+.customise-table th {
+    color: var(--text-color) !important;
+    margin: 0;
+    text-align: left;
+    font-size: 16px;
+    /* background-color: #fff; */
+    /* Bold text */
+}
+
+/* Styles for the table rows (tr) */
+.customise-table tr:nth-child(even) {
+    background-color: #ffffff;
+    /* Alternate row color */
+}
+
+.customise-table tr:nth-child(odd) {
+    
+    background-color: #f9f9f9;
+    /* White row color */
+}
+
+/* Styles for table data cells (td) */
+.customise-table td {
+    padding: 10px;
+    /* Padding for td */
+    text-align: center;
+    background:transparent;
+    /* Center-align text in td */
+    /* border: 1px solid #ddd; */
+    /* Border for table cells */
+}
+
+/* Hover effect for table rows */
+.customise-table tr:hover {
+    background-color: #ddd;
+    /* Light grey background on hover */
+}
+
+
+/* Pagination container */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 10px;
+  }
+  
+  /* Basic pagination styling */
+  .pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .page-item {
+    margin: 0 5px;
+    /* padding: 5px 10px; */
+    cursor: pointer;
+    /* border: 1px solid #ddd;  */
+    border-radius: 5px;
+    /* background-color: #f5f5f5; */
+  }
+  
+  .page-link {
+    text-decoration: none;
+    color: #333;
+    font-size: 13px;
+  }
+  
+  .page-item:hover {
+    background-color: #e0e0e0;
+    border-color: #bbb;
+  }
+  
+  /* Active page styling */
+  .page-item.active a {
+     background: #F9F9F9;
+     border-radius: 5px;
+     color: #7F56DA;
+     border:none;
+
+  }
+  
+
+  .page-link {
+    color: #5E707B;
+    background-color: #fff;
+    border: none;
+  }
+  .page-link.active {
+    color: #7F56DA;
+    background-color: #f9f9f9!important;
+  }
+  .page-link.active.page-link{
+    background-color: none!important;
+  }
+  /* Disabled page item */
+  .page-item.disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  
+  .page-item.disabled:hover {
+    background-color: #f5f5f5;
+  }
+  
+  /* Previous/Next Button styling */
+  .page-item .page-link {
+    font-weight: bold;
+  }
+  
+  .page-item .page-link:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .page-item .page-link:disabled {
+    background-color: #ddd;
+  }
+  
+
+.custom-switch .form-check-input {
+    width: 31px;
+    height: 18px;
+    background-color: #F0F0F0;
+    border-radius: 50px;
+    position: relative;
+    transition: background-color 0.3s ease;
+}
+
+.custom-switch .form-check-input:focus {
+    box-shadow: none;
+}
+
+.custom-switch .form-check-input:checked {
+    background-color: #7F56DA;
+
+}
+.form-check-input:checked{
+  border-color: #7F56DA;
+}
+.custom-switch .form-check-input:checked::before {
+    left: 25px;
+}
+
+/* .custom-switch .form-check-input::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 14px;
+    height: 14px;
+    background-color: #fff;
+    border-radius: 50%;
+    transition: left 0.3s ease;
+} */

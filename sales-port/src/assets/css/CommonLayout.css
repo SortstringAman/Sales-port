@@ -1,0 +1,337 @@
+/* Layout container */
+.layout-container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar styles */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 240px;
+  /* expanded width */
+  height: 100%;
+  background-color: #fff;
+  border-right: 1px solid #E9E9E9;
+  padding-top: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* transition: width 0.3s ease; */
+}
+
+.sidebar-header {
+  text-align: center;
+  padding-bottom: 15px;
+}
+
+.lg-logo-sidebar {
+  width: 60px;
+  margin-bottom: 10px;
+}
+
+/* If you have a title (e.g. IMROS) */
+.sidebar-title {
+  color: #222F3E;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Navigation */
+.sidebar-nav {
+  margin-top: 5px;
+  flex: 1;
+  /* ensures it stretches in the middle */
+  display: flex;
+}
+
+.sidebar-ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Each nav item */
+.sidebar-ul li {
+  width: 100%;
+}
+
+.sidebar-ul li a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  /* space between icon & text */
+  padding: 12px 20px;
+  color: #222F3E;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 15px;
+  /* text size next to icon */
+}
+
+/* Active/hover states */
+.sidebar-ul li a:hover svg path,
+.sidebar-ul li a:hover svg {
+  stroke: #7F56DA;
+
+}
+
+.sidebar-ul li :hover {
+  color: #7F56DA;
+}
+
+.sidebar-ul li :hover svg path,
+.sidebar-ul li :hover svg {
+  stroke: #7F56DA;
+
+}
+
+.sidebar-ul li.active svg,
+.sidebar-ul li.active svg path {
+  stroke: #7F56DA;
+}
+
+.sidebar-ul li a.active svg,
+.sidebar-ul li a.active svg path {
+  stroke: #7F56DA;
+}
+
+/* Bottom section styling if needed */
+.bottom-section {
+  margin-bottom: 20px;
+  /* The rest is inherited from .sidebar-ul */
+}
+
+/* Icons themselves */
+.sidebar-ul li svg {
+  flex-shrink: 0;
+  /* so icons don't get squashed */
+  cursor: pointer;
+}
+
+/* Profile image at bottom */
+.sidebar-ul li img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+/* Main Content Styles */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 240px;
+  /* same as sidebar width */
+  background-color: #fff;
+}
+
+.header {
+  background-color: #fff;
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.content-body {
+  flex: 1;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.add-btn {
+  display: flex;
+  align-items: center;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 12px 20px;
+  /* adjust as needed */
+  gap: 12px;
+}
+
+/* Submenu styling */
+.submenu {
+  padding-left: 40px;
+  /* indent sub-items */
+  margin-bottom: 0;
+  /* if needed */
+}
+
+.submenu li {
+  margin: 8px 0px;
+  /* spacing between sub-items */
+  list-style: none;
+}
+
+.submenu li a {
+  display: block;
+  padding: 4px 0;
+}
+
+/* Example highlight for active links */
+.sidebar-ul li a.active {
+  color: #7F56DA;
+  font-weight: 600;
+}
+
+/* Collapsed Sidebar */
+.sidebar.collapsed {
+  width: 65px;
+}
+
+.sidebar.collapsed .sidebar-ul span {
+  display: none;
+}
+
+.sidebar.collapsed .main-content {
+  margin-left: 65px;
+}
+
+.sidebar.collapsed+.main-content {
+  margin-left: 65px;
+}
+
+/* Adjust profile and toggle in collapsed */
+.sidebar.collapsed .bottom-section li img {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sidebar.collapsed .hamburger-btn {
+  justify-content: center;
+}
+/* .sidebar.collapsed .sidebar-title,
+.sidebar.collapsed span,
+.sidebar.collapsed .submenu {
+  display: none;
+} */
+ /* Only hide nested submenu normally, allow floated submenu to show */
+.sidebar.collapsed .submenu:not(.submenu-float) {
+  display: none;
+}
+
+/* Make sure the parent is positioned relatively */
+.submenu-container {
+  position: relative;
+}
+
+/* Submenu when floating in collapsed mode */
+.submenu-float {
+  position: absolute;
+  top: 0;
+  left: 65px;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  padding: 10px 0;
+  min-width: 180px;
+  z-index: 999;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); /* ✨ Smooth shadow */
+}
+
+
+.submenu-float li {
+  padding: 10px 16px;
+  white-space: nowrap;
+}
+
+
+/* Submenu floating when sidebar is collapsed */
+.sidebar.collapsed .submenu {
+  position: absolute;
+  left: 70px;
+  top: 0;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  padding: 10px 0;
+  min-width: 160px;
+  z-index: 1000;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); /* ✨ Smooth shadow */
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.sidebar.collapsed .submenu li {
+  padding: 8px 16px;
+  white-space: nowrap;
+}
+
+/* Fade + slide animation */
+.sidebar.collapsed .submenu-enter {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+.sidebar.collapsed .submenu-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+.status-box {
+  background-color: rgba(248, 249, 250, 0.9); /* #f8f9fa with 90% opacity */
+  border-radius: 12px;
+  padding: 10px;
+  width: 150px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: 0.3s ease;
+}
+
+.status-box:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.status-name {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #222f3e;
+}
+
+.status-count {
+  font-size: 20px;
+  font-weight: bold;
+   
+}
+.recharts-sector:focus {
+  outline: none;
+}
+
+
+.enquiry-person .student-table tbody tr td
+{
+  height: unset !important;
+  padding: 5px !important;
+  font-size: 14px !important;
+  color: #6B778C !important;
+}
+
+
+.enquiry-person .student-table tbody tr{
+  height: 50px !important;
+}
+
+.enq-status-container {
+  
+    border: 1px solid rgb(224, 224, 224);
+    border-radius: 10px;
+    padding: 15px;
+    background-color: rgb(255, 255, 255);
+
+}
+
+ .enquiry-person  .student-table tbody tr:nth-child(even){
+    background-color: #F9F9F9;
+}
+ 

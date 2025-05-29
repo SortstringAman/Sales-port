@@ -1,0 +1,7 @@
+.pm-div > div:nth-child(even) {
+    background-color: #F9F9F9; /* White background for even rows */
+}
+
+.pm-div > div:nth-child(odd) {
+    background-color: #FFFFFF; /* Light gray background for odd rows */
+}

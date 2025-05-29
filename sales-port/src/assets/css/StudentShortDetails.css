@@ -1,0 +1,20 @@
+.stu-pro{
+    padding: 20px;
+    background-color: #f9f9f9;
+    margin-top: 20px;
+    border-radius: 8px;
+}
+.stu-pro-inner{
+    display: flex;
+    justify-content: space-between;
+}
+.sd-p{
+    color: #6B778C!important;
+     font-size: 14px!important;
+     text-align:left!important; 
+     margin-top: 10px ;
+     margin-bottom:5px;
+}
+.alg-l{
+    text-align: left;
+}

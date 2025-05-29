@@ -1,0 +1,152 @@
+.lg-left-main {
+    height: 100vh;
+    /* background: #7F56DA; */
+    width: 50%;
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+}
+.lg-left-main-sd {
+    height: 100vh;
+    background:#262DBB;    ;
+    width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.lg-left-main-sd-sp {
+    /* height: 100vh; */
+    background:#262DBB;    ;
+    width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lg-rg-main {
+    width: 50%;
+    /* background-color: #E9E9E9; */
+    padding: 50px 100px;
+    justify-items: center;
+    align-content: center;
+
+}
+.lg-rg-main-sd {
+    width: 40%;
+    background-color: #E9E9E9;
+    padding: 50px 80px;
+    justify-items: center;
+    align-content: center;
+
+}
+
+.logingif {
+    height: 500px;
+    width: 484px;
+}
+
+.lg-logo {
+    background-color: transparent;
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+.get-otp-btn {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #7f56da;
+    /* Purple color */
+    color: white;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.get-otp-btn.disabled {
+    background-color: #d3d3d3;
+    /* Gray color when disabled */
+    cursor: not-allowed;
+}
+
+/* Enabled button styling */
+.get-otp-btn.enabled {
+    background-color: #7f56da;
+    /* Purple color when enabled */
+    cursor: pointer;
+}
+
+.get-otp-btn:focus {
+    outline: none !important;
+    box-shadow: none;
+}
+
+.code-select:focus {
+    outline: none !important;
+    box-shadow: none;
+}
+
+/* CSS for OTP Input and Layout */
+.otp-input-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.otp-input {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    text-align: center;
+    font-size: 18px;
+    width: 40px;
+    margin: 0 5px;
+}
+
+
+p {
+    font-size: 14px;
+    text-align: center;
+    /* margin-top: 20px; */
+}
+
+
+
+/* media queries */
+
+@media (max-width: 944px) {
+    .lg-left-main-sd {
+      display: none; /* Hide the GIF on smaller screens */
+    }
+    .lg-left-main-sd-sp {
+        display: none; /* Hide the GIF on smaller screens */
+      }
+      .lg-left-main {
+        display: none; /* Hide the GIF on smaller screens */
+      }
+    .lg-rg-main-sd {
+        width: 100%;
+        height: 100vh;
+    }
+    .lg-rg-main {
+        width: 100%;
+        height: 100vh;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .lg-rg-main-sd {
+        padding: 50px 10px;
+    }
+    .lg-rg-main {
+        padding: 50px 10px;
+    }
+  }
+
+
+  .form-label{
+  font-size: 14px;
+  font-weight:600
+}

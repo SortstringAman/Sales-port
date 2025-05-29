@@ -1,0 +1,210 @@
+.main-form-container {
+
+    padding: 20PX 60px;
+
+}
+
+.mfc-ip {
+    /* flex-direction: column; */
+    /* align-items: center; */
+    display: flex;
+    /* justify-content: center; */
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pa-f {
+    background: #F4F4F4;
+    padding: 20px;
+    color: #222F3E;
+    font-weight: 600;
+    font-size: 20px;
+    text-transform: uppercase;
+    /* margin-top:10px */
+
+}
+
+.mb-s {
+    padding: 15px 15px;
+    background: #F2EDFF;
+    border-radius: 8px;
+    text-align: left !important;
+    margin-top: 20px;
+}
+
+.mb-s p {
+    color: #222F3E;
+    font-weight: 600;
+    font-size: 17px;
+    text-align: left !important;
+}
+
+.camera-modal {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background: white;
+    padding: 20px;
+    z-index: 999;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 342px;
+}
+
+.otp-boxes {
+    width: 50px;
+    text-Align: center;
+    margin: 0 5px;
+    border-radius: 6px;
+    border: 1px solid #222F3E33;
+    font-Size: 15px;
+    color: #222F3E;
+}
+
+.vmm {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.vmm-l {
+    display: flex;
+    gap: 20px;
+    align-Items: end;
+    width: '55%'
+}
+
+.cus-cont {
+    min-width: auto;
+}
+.formlinkmodal{
+    width: 20%;
+}
+.cus-date{
+    width: 100%;
+}
+.react-datepicker-wrapper{
+    width: 100%;
+}
+.mc-cus{
+    width: 40%;
+}
+.otpsec{
+    display: flex;
+     gap: 20px;
+    align-Items: end;
+}
+.get-otp-btn{
+    width: 100%;
+}
+/* .imgfileName{
+    overflow-x: scroll;
+} */
+
+/* media queries */
+
+@media (max-width: 865px) {
+    .main-form-container {
+
+        padding: 10px 30px;
+
+    }
+
+    .mfc-ip {
+        flex-direction: column;
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        /* justify-content: space-between; */
+        align-items: center;
+        gap: 5px
+    }
+
+    .pa-f {
+        background: #F4F4F4;
+        padding: 10px;
+        color: #222F3E;
+        font-weight: 600;
+        font-size: 15px;
+        text-transform: uppercase;
+        /* margin-top:10px */
+
+    }
+    .formlinkmodal{
+        width: 30%;
+    }
+}
+
+@media (max-width: 730px) {
+    .main-form-container {
+
+        padding: 10px 30px;
+
+    }
+    .formlinkmodal{
+        width: 40%;
+    }
+
+    .vmm {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: space-between;
+    }
+
+    .vmm-l {
+        display: flex;
+        gap: 20px;
+        align-Items: end;
+        width: 100%
+    }
+
+}
+
+@media (max-width: 767px) {
+    .main-form-container {
+
+        padding: 10px 30px;
+
+    }
+
+    .input-group2 {
+        margin-top: 10px;
+    }
+
+    .cus-cont .ms-3 {
+        width: 100%;
+        overflow-x: scroll;
+    }
+    .mc-cus{
+        width: 60%;
+    }
+
+}
+
+
+@media (max-width: 500px) {
+    .main-form-container {
+
+        padding: 10px 10px;
+
+    }
+    .formlinkmodal{
+        width: 60%;
+    }
+    .mc-cus{
+        width: 90%;
+    }
+
+}
+@media (max-width: 440px) {
+    .otpsec{
+        flex-direction: column;
+        align-items: start;
+    }
+    .get-otp-btn{
+        width: auto;
+    }
+
+}
