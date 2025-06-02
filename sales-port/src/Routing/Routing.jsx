@@ -21,6 +21,7 @@ import { PaymentFailedPage } from '../Pages/PaymentPage/PaymentFailedPage';
 import { ManageFeeDashboard } from '../Pages/ManageFeeDashboard/FeeDashboard';
 import { EnquiryDashboardDetails } from '../Pages/EnquiryDashboard/EnquiryDashboard';
 import ManageItems from '../Pages/ManageItems/ManageItem';
+import ManageVendors from '../Pages/ManageVendors/ManageVendors';
 
 const Routing = () => {
     const userId = localStorage.getItem('token');
@@ -81,6 +82,7 @@ const Routing = () => {
 
 
                  <Route path="/manageItems" element={<ProtectedRoutes element={<CommonLayout><ManageItems    /></CommonLayout>} />} />
+                  <Route path="/manageVendors" element={<ProtectedRoutes element={<CommonLayout><ManageVendors   /></CommonLayout>} />} />
 
 
                 {/* Payment Pages */}
