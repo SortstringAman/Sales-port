@@ -3,6 +3,7 @@ import Select from 'react-select';
 import close from '../../assets/icons/close.svg';
 import next from '../../assets/icons/icon.svg';
 import '../../assets/css/ManageItem.css'
+import { reactSelectStyles } from '../../Utils/selectboxStyle';
 
 
 const AddItem = ({ isOpen, onClose }) => {
@@ -35,7 +36,7 @@ const AddItem = ({ isOpen, onClose }) => {
                     <div className="row mt-3">
                         <div className="col-md-4">
                             <label>Item Name<span className="astrisk">*</span></label>
-                            <input type="text" className="form-control" placeholder="Enter item name" style={{ height: "50px" }} />
+                            <input type="text" className="form-control input-height" placeholder="Enter item name" style={{ height: "50px" }} />
                         </div>
                         <div className="col-md-4">
                             <label>Item Category<span className="astrisk">*</span></label>
@@ -43,6 +44,7 @@ const AddItem = ({ isOpen, onClose }) => {
                                 options={[{ label: "Stationery", value: "stationery" }, { label: "Furniture", value: "furniture" }]}
                                 defaultValue={{ label: "Stationery", value: "stationery" }}
                                 isDisabled
+                                  styles={reactSelectStyles}
                             />
                         </div>
                         <div className="col-md-4">
@@ -51,6 +53,7 @@ const AddItem = ({ isOpen, onClose }) => {
                                 options={[{ label: "Pieces", value: "pcs" }, { label: "Kilograms", value: "kg" }]}
                                 defaultValue={{ label: "Pieces", value: "pcs" }}
                                 isDisabled
+                                  styles={reactSelectStyles}
                             />
                         </div>
                     </div>
@@ -63,15 +66,16 @@ const AddItem = ({ isOpen, onClose }) => {
                                 options={[{ label: "Consumable", value: "consumable" }, { label: "Non-consumable", value: "non-consumable" }]}
                                 defaultValue={{ label: "Consumable", value: "consumable" }}
                                 isDisabled
+                                  styles={reactSelectStyles}
                             />
                         </div>
                         <div className="col-md-4">
                             <label>Min Stock Level</label>
-                            <input type="number" className="form-control" placeholder="Enter opening stock" style={{ height: "50px" }} />
+                            <input type="number" className="form-control input-height" placeholder="Enter opening stock" style={{ height: "50px" }} />
                         </div>
                         <div className="col-md-4">
-                            <label>Reorder Level</label>
-                            <input type="number" className="form-control" placeholder="Enter reorder level" style={{ height: "50px" }} />
+                            <label>Reorder Level</label> 
+                            <input type="number" className="form-control input-height" placeholder="Enter reorder level" style={{ height: "50px" }} />
                         </div>
                     </div>
 
@@ -79,7 +83,7 @@ const AddItem = ({ isOpen, onClose }) => {
                     <div className="row mt-3">
                         <div className="col-md-4">
                             <label>SKU Code</label>
-                            <input type="text" className="form-control" placeholder="Enter HSN / SKU code" style={{ height: "50px" }} />
+                            <input type="text" className="form-control input-height" placeholder="Enter HSN / SKU code" style={{ height: "50px" }} />
                         </div>
                         <div className="col-md-4">
                             <label>Default Vendor</label>
@@ -87,6 +91,7 @@ const AddItem = ({ isOpen, onClose }) => {
                                 options={[{ label: "Vendor A", value: "vendorA" }, { label: "Vendor B", value: "vendorB" }]}
                                 defaultValue={{ label: "Vendor A", value: "vendorA" }}
                                 isDisabled
+                                  styles={reactSelectStyles}
                             />
                         </div>
                         <div className="col-md-4">
@@ -95,6 +100,7 @@ const AddItem = ({ isOpen, onClose }) => {
                                 options={[{ label: "Room Temp", value: "room" }, { label: "Refrigerated", value: "cold" }]}
                                 defaultValue={{ label: "Room Temp", value: "room" }}
                                 isDisabled
+                                  styles={reactSelectStyles}
                             />
                         </div>
                     </div>
@@ -103,11 +109,11 @@ const AddItem = ({ isOpen, onClose }) => {
                     <div className="row mt-3">
                         <div className="col-md-4">
                             <label>Brand / Manufacturer</label>
-                            <input type="text" className="form-control" placeholder="Enter brand or manufacturer" style={{ height: "50px" }} />
+                            <input type="text" className="form-control input-height" placeholder="Enter brand or manufacturer"  />
                         </div>
                         <div className="col-md-4">
                             <label>Shelf Life (in days)</label>
-                            <input type="number" className="form-control" placeholder="Enter shelf life in days" style={{ height: "50px" }} />
+                            <input type="number" className="form-control input-height" placeholder="Enter shelf life in days"   />
                         </div>
 
                     </div>
@@ -115,11 +121,11 @@ const AddItem = ({ isOpen, onClose }) => {
                     {/* Row 5 */}
                     <div className="row mt-5">
                         <div className="col-md-4 d-flex align-items-center">
-                            <input type="checkbox" className="me-2" />
+                            <input type="checkbox" className="me-2 input-height" />
                             <label>Batch No Enabled</label>
                         </div>
                         <div className="col-md-4 d-flex align-items-center">
-                            <input type="checkbox" className="me-2" />
+                            <input type="checkbox" className="me-2 input-height" />
                             <label>Expiry Date Required</label>
                         </div>
 

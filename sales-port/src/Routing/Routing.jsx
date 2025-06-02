@@ -22,6 +22,8 @@ import { ManageFeeDashboard } from '../Pages/ManageFeeDashboard/FeeDashboard';
 import { EnquiryDashboardDetails } from '../Pages/EnquiryDashboard/EnquiryDashboard';
 import ManageItems from '../Pages/ManageItems/ManageItem';
 import ManageVendors from '../Pages/ManageVendors/ManageVendors';
+import ManageStocks from '../Pages/ManageStocks/ManageStocks';
+ 
 
 const Routing = () => {
     const userId = localStorage.getItem('token');
@@ -83,6 +85,7 @@ const Routing = () => {
 
                  <Route path="/manageItems" element={<ProtectedRoutes element={<CommonLayout><ManageItems    /></CommonLayout>} />} />
                   <Route path="/manageVendors" element={<ProtectedRoutes element={<CommonLayout><ManageVendors   /></CommonLayout>} />} />
+    <Route path="/manageStocks" element={<ProtectedRoutes element={<CommonLayout><ManageStocks  /></CommonLayout>} />} />
 
 
                 {/* Payment Pages */}

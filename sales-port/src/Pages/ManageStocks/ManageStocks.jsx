@@ -1,3 +1,5 @@
+
+
 import { useState, useMemo, useEffect, useRef } from 'react';
 import CommonLayout from '../../Component/CommonLayout';
 import profileicon from '../../assets/icons/solar_square-academic-cap-2-outline.svg'
@@ -28,23 +30,27 @@ import { PhotoEditor } from '../../Component/PhotoEditor';
 import { IDValidityModal } from '../../Component/Modals/IDValidityModal';
 import { IDPreviewModal } from '../../Component/Modals/IDPreviewModal';
 import confirmadicon from '../../assets/icons/confirm-admission.svg';
-import exporticon from '../../assets/icons/export-data-white.svg';
+import exporticon from '../../assets/icons/export-data.svg';
 import { Tooltip } from 'react-tooltip';
 import checkgif from '../../assets/gif/successfullgif.gif';
 import close from '../../assets/icons/close.svg';
 import { Filter } from '../../Component/Filter/Filter';
 import debounce from 'lodash.debounce';
-import { mockData } from './data';
-import AddItem from '../../Component/Modals/AddItem';
 
-const ManageItems = () => {
+import { transactionsData } from './data';
+import StockShortDetails from './StockShortDetail';
+import { ReceiveStock } from '../../Component/Modals/ReceiveStock';
+import { IssueStock } from '../../Component/Modals/IssueStock';
+
+
+const ManageStocks = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [submit, setsubmit] = useState(false);
     const [currentPage, setCurrentPage] = useState(0); // Starts from 0
     const [totalCount, setTotalCount] = useState(0);
     const [studentdata, setStudentsdata] = useState([]);
     const [studentid, setstudentid] = useState([]);
-    const [selectedOrgDetails, setSelectedOrgDetails] = useState([]);
+    const [selectedStockDetails, setSelectedStockDetails] = useState([]);
     const [getstudentsdataId, setgetstudentsdataId] = useState(null);
     const [isEditMode, setIsEditMode] = useState(false);
     const [selectedUserId, setSelectedUserId] = useState(null);
@@ -93,22 +99,33 @@ const ManageItems = () => {
         // onFilter(searchQuery); 
         setfiltermodal(true);
     };
+
+
+    const [isReceiveStockModalOpen, setReceiveStockModalOpen] = useState(false);
+const [isIssueStockModal ,setIsIssueStockModal] = useState(false)
+
+
+const openIssueStockModal = ()=>{
+    setIsIssueStockModal(true)
+}
+
+const closeIssueStockModal=()=>{
+    setIsIssueStockModal(false)
+     setIsEditMode(false);
+}
+    const openReceiveStockModal = () => {
+        setReceiveStockModalOpen(true)
+    }
+
+
+    const closeReceiveStockModal = () => {
+        setReceiveStockModalOpen(false)
+        setIsEditMode(false);
+    }
+
     const openModal = () => {
         setIsModalOpen(true);
     };
-
-
-    const [addItemModal,setAddItemModal] = useState(false)
-
-
-        const openaddItemModal = () => {
-        setAddItemModal(true);
-    };
-
-       const closeaddItemModal = () => {
-     setAddItemModal(false);
-    };
-
 
     const closeModal = () => {
         setIsModalOpen(false);
@@ -168,31 +185,10 @@ const ManageItems = () => {
             displayToast('❌ Excel export failed', 'danger');
         }
     };
+
     const handleRowClick = async (userId, row) => {
-        const token = window.localStorage.getItem("token");
-
         try {
-            // const response = await fetch(`https://bgi.sortstring.com/api/v1/students/get-students/${userId}/`, {
-            //   method: 'GET',
-            //   headers: {
-            //     Authorization: `Token ${token}`
-            //   }
-            // });
-            const response = await getData(`students/get-students/${userId}/`)
-
-            // if (!employeeData || employeeData.error) {
-            //   throw new Error("Failed to fetch employee details");
-            // }
-
-            // const employeeData = await response.json();
-            setSelectedOrgDetails(response);
-            // Save data in state or localStorage (depending on your use case)
-            localStorage.setItem("selectedEmployeeData", JSON.stringify(response));
-            console.log("✅ Employee Data:", response);
-
-            // Optionally, update state to use in a modal
-            // setSelectedEmployeeData(employeeData); // if you're using it in a modal later
-
+            setSelectedStockDetails(row.original);
         } catch (error) {
             console.error("❌ Error fetching employee data:", error);
         }
@@ -290,13 +286,14 @@ const ManageItems = () => {
     }, []);
 
     const handleEditClick = (userId, row) => {
-        setSelectedUserId(userId);
-        setregistrationnumforhead(row?.original.permanent_registration_number);
-        setmainnamehead(row.original.name);
-        setstudentid(userId);
-        setIsEditMode(true);
-        setregMode(false);
-        setIsModalOpen(true); // open the modal
+        setIsVendorModalOpen(true)
+        // setSelectedUserId(userId);
+        // setregistrationnumforhead(row?.original.permanent_registration_number);
+        // setmainnamehead(row.original.name);
+        // setstudentid(userId);
+        // setIsEditMode(true);
+        // setregMode(false);
+        // setIsModalOpen(true); // open the modal
     };
     const handleregisClick = (userId, row) => {
         setSelectedUserId(userId);
@@ -339,119 +336,82 @@ const ManageItems = () => {
         console.log("responseidcard--", res);
     }
 
-const columns = useMemo(() => [
-  {
-    Header: <input type="checkbox" />,
-    accessor: 'checkbox',
-    Cell: ({ row }) => (
-      <input
-        type="checkbox"
-        checked={row.isSelected}
-        onChange={() => row.toggleRowSelected()}
-      />
-    ),
-  },
-  {
-    Header: 'Item Name (SKU CODE)',
-    accessor: 'name', // changed from 'img' to 'name'
-    Cell: ({ row }) => (
-      <div style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <div>
-          <p style={{ margin: 0, color: '#222F3E', fontWeight: 500 }}>{row.original.name}</p>
-          <p style={{ margin: 0 }}>({row.original.sku_code})</p>
-        </div>
-      </div>
-    ),
-  },
-  {
-    Header: "Item Group",
-    accessor: 'item_group',
-    Cell: ({ value }) => (
-      <p style={{ color: '#222F3E', fontWeight: 500, margin: 0 }}>{value}</p>
-    ),
-  },
-  {
-    Header: 'Available Stock',
-    accessor: 'available_stock',
-    Cell: ({ value }) => (
-      <p style={{ color: '#222F3E', fontWeight: 500, margin: 0 }}>{value}</p>
-    ),
-  },
-  {
-    Header: 'Min Stock Level',
-    accessor: 'min_stock_level',
-    Cell: ({ value }) => (
-      <p style={{ color: '#222F3E', fontWeight: 500, margin: 0 }}>{value}</p>
-    ),
-  },
-  {
-    Header: 'Reorder Level',
-    accessor: 'reorder_level',
-    Cell: ({ value }) => (
-      <p style={{ color: '#222F3E', fontWeight: 500, margin: 0 }}>{value}</p>
-    ),
-  },
-  {
-    Header: 'Last Purchased',
-    accessor: 'last_purchased',
-    Cell: ({ value }) => (
-      <p style={{ color: '#222F3E', fontWeight: 500, margin: 0 }}>{value}</p>
-    ),
-  },
-  {
-    Header: 'Supplier',
-    accessor: 'supplier',
-    Cell: ({ value }) => (
-      <p style={{ color: '#222F3E', fontWeight: 500, margin: 0 }}>{value}</p>
-    ),
-  },
-  {
-    Header: 'Stock Status',
-    accessor: 'stock_status',
-    Cell: ({ value }) => (
-      <p style={{ color: value === 'REORDER ITEM' ? 'red' : 'green', fontWeight: 500, margin: 0 }}>
-        {value}
-      </p>
-    ),
-  },
-  {
-    Header: 'Action',
-    Cell: ({ row }) => (
-      <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-        <div className="form-check form-switch custom-switch">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            role="switch"
-            checked={row.original.status}
-            onChange={() => handleStatus(row.original)}
-            style={{ cursor: 'pointer' }}
-          />
-        </div>
-        <img
-          src={edit}
-          alt="Edit"
-          style={{ cursor: 'pointer' }}
-          onClick={() => handleEdit(row.original)}
-        />
-      </div>
-    ),
-  },
-], []);
+    const columns = useMemo(
+        () => [
+            {
+                Header: 'Date of Transaction',
+                accessor: 'date',
+                Cell: ({ value, row }) => (
+                    <div
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => handleRowClick(row.original.id, row)}
+                    >
+                        <p style={{ textAlign: 'left', margin: 0 }}>{value || '-'}</p>
+                    </div>
+                ),
+            },
+            {
+                Header: 'Transaction No.',
+                accessor: 'transaction_no',
+                Cell: ({ value }) => (
+                    <p style={{ textAlign: 'left', fontWeight: 500, margin: 0 }}>{value || '-'}</p>
+                ),
+            },
+            {
+                Header: 'Type',
+                accessor: 'type',
+                Cell: ({ value }) => (
+                    <span
+                        style={{
+                            color: value === 'Stock Received' ? 'green' : 'red',
+                            fontWeight: 600,
+                            textAlign: 'left',
+                        }}
+                    >
+                        {value || '-'}
+                    </span>
+                ),
+            },
+            {
+                Header: 'Received By',
+                accessor: 'received_by',
+                Cell: ({ value }) => (
+                    <p style={{ textAlign: 'left', margin: 0 }}>{value || '-'}</p>
+                ),
+            },
+            {
+                Header: 'Issued By',
+                accessor: 'issued_by',
+                Cell: ({ value }) => (
+                    <p style={{ textAlign: 'left', margin: 0 }}>{value || '-'}</p>
+                ),
+            },
+            {
+                Header: 'Document',
+                accessor: 'document',
+                Cell: ({ row }) => {
+                    const downloadable = row.original.hasDocument;
+                    const url = row.original.documentUrl;
+                    return downloadable && url ? (
+                        <a href={url} target="_blank" rel="noopener noreferrer">
+                            <img src={downloadIcon} alt="Download" />
+                        </a>
+                    ) : (
+                        <span>-</span>
+                    );
+                },
+            },
+        ],
+        []
+    );
+
+
+
 
     const handlePageChange = (data) => {
         setCurrentPage(data.selected); // updates useEffect trigger
     };
-    // useEffect(() => {
-    //   const fetchStudents = async (page = 0) => {
-    //     const url = `students/get-students/?page=${page + 1}`; 
-    //     const response = await getData(url);
-    //     setStudentsdata(response.results || []);
-    //     setTotalCount(response.count || 0);
-    //     setgetstudentsdataId(response.results[0]?.user_id)
-    //   };
-    //   fetchStudents(currentPage)
-    // }, [currentPage, generatedregno])
+
     useEffect(() => {
         const fetchStudents = async (page = 0) => {
             const url = filterQueryString
@@ -513,47 +473,7 @@ const columns = useMemo(() => [
         };
         handleRowClick()
     }, [getstudentsdataId]);
-    // useEffect(() => {
-    //   const fetchAllData = async () => {
-    //     if (isEditMode && selectedUserId) {
-    //       try {
-    //         const token = window.localStorage.getItem("token");
 
-    //         const [basicRes, academicRes, officialRes, uploadDocRes] = await Promise.all([
-    //           fetch(`https://bgi.sortstring.com/api/v1/students/student-onboarding-basic-details/${selectedUserId}/`, { headers: { Authorization: `Token ${token}` } }),
-    //           fetch(`https://bgi.sortstring.com/api/v1/students/get-student-onboarding-qualification-details/${selectedUserId}/`, { headers: { Authorization: `Token ${token}` } }),
-    //           fetch(`https://bgi.sortstring.com/api/v1/students/get-student-onboarding-official-details/${selectedUserId}/`, { headers: { Authorization: `Token ${token}` } }),
-    //           fetch(`https://bgi.sortstring.com/api/v1/students/student-onboarding-documents-details/get-student-documents/?student_id=${selectedUserId}`, { headers: { Authorization: `Token ${token}` } }),
-    //           // fetch(`staff/attendance-settings/${selectedUserId}/`, { headers: { Authorization: `Token ${token}` } }),
-    //         ]);
-
-    //         const basicData = await basicRes.json();
-    //         const academicData = await academicRes.json();
-    //         const officialData = await officialRes.json();
-    //         const uploadData = await uploadDocRes.json();
-
-    //         if (basicData) {
-    //           setbasicdata(basicData);
-    //         }
-    //         if (academicData) {
-    //           setacademicdata(academicData);
-    //         }
-    //         if (officialData) {
-    //           setofficialdata(officialData);
-    //         }
-    //         if (uploadData) {
-    //           setdocdata(uploadData);
-    //         }
-
-
-    //       } catch (err) {
-    //         console.error("❌ Failed to fetch employee data:", err);
-    //       }
-    //     }
-    //   };
-
-    //   fetchAllData();
-    // }, [isEditMode, selectedUserId, currentStep]);
 
 
     useEffect(() => {
@@ -612,93 +532,78 @@ const columns = useMemo(() => [
                 {/* Content for the Dashboard */}
                 <div style={{ display: "flex", justifyContent: 'space-between' }}>
                     <div >
-                        <h2 className='main-heading'>Manage Items</h2>
+                        <h2 className='main-heading'>Manage Stock</h2>
                     </div>
-                    <div >
-                    
-                            <button className='add-btn' onClick={openaddItemModal}>
-                                <span className='me-2'>
-                                    <svg width="12" height="12" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M20.4286 13.3537H12.5714V21.2108C12.5714 21.6276 12.4059 22.0273 12.1112 22.322C11.8165 22.6167 11.4168 22.7822 11 22.7822C10.5832 22.7822 10.1835 22.6167 9.88883 22.322C9.59413 22.0273 9.42857 21.6276 9.42857 21.2108V13.3537H1.57143C1.15466 13.3537 0.754961 13.1881 0.460261 12.8934C0.165561 12.5987 0 12.199 0 11.7822C0 11.3655 0.165561 10.9658 0.460261 10.6711C0.754961 10.3764 1.15466 10.2108 1.57143 10.2108H9.42857V2.35366C9.42857 1.93689 9.59413 1.53719 9.88883 1.24249C10.1835 0.947787 10.5832 0.782227 11 0.782227C11.4168 0.782227 11.8165 0.947787 12.1112 1.24249C12.4059 1.53719 12.5714 1.93689 12.5714 2.35366V10.2108H20.4286C20.8453 10.2108 21.245 10.3764 21.5397 10.6711C21.8344 10.9658 22 11.3655 22 11.7822C22 12.199 21.8344 12.5987 21.5397 12.8934C21.245 13.1881 20.8453 13.3537 20.4286 13.3537Z" fill="white" />
-                                    </svg>
-                                </span>Create Item
-                            </button>
-                       
+                    <div style={{display:"flex",gap:"25px"}} >
+
+                        <button className='add-btn'
+                    onClick={openIssueStockModal}
+                        >
+                            <span className='me-2'>
+                                <svg width="12" height="12" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1.57143 10.2108C1.15466 10.2108 0.754961 10.3764 0.460261 10.6711C0.165561 10.9658 0 11.3655 0 11.7822C0 12.199 0.165561 12.5987 0.460261 12.8934C0.754961 13.1881 1.15466 13.3537 1.57143 13.3537H20.4286C20.8453 13.3537 21.245 13.1881 21.5397 12.8934C21.8344 12.5987 22 12.199 22 11.7822C22 11.3655 21.8344 10.9658 21.5397 10.6711C21.245 10.3764 20.8453 10.2108 20.4286 10.2108H1.57143Z" fill="white" />
+                                </svg>
+
+                            </span>Issue Stock
+                        </button>
+                        <button className='add-btn' onClick={openReceiveStockModal}>
+                            <span className='me-2'>
+                                <svg width="12" height="12" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M20.4286 13.3537H12.5714V21.2108C12.5714 21.6276 12.4059 22.0273 12.1112 22.322C11.8165 22.6167 11.4168 22.7822 11 22.7822C10.5832 22.7822 10.1835 22.6167 9.88883 22.322C9.59413 22.0273 9.42857 21.6276 9.42857 21.2108V13.3537H1.57143C1.15466 13.3537 0.754961 13.1881 0.460261 12.8934C0.165561 12.5987 0 12.199 0 11.7822C0 11.3655 0.165561 10.9658 0.460261 10.6711C0.754961 10.3764 1.15466 10.2108 1.57143 10.2108H9.42857V2.35366C9.42857 1.93689 9.59413 1.53719 9.88883 1.24249C10.1835 0.947787 10.5832 0.782227 11 0.782227C11.4168 0.782227 11.8165 0.947787 12.1112 1.24249C12.4059 1.53719 12.5714 1.93689 12.5714 2.35366V10.2108H20.4286C20.8453 10.2108 21.245 10.3764 21.5397 10.6711C21.8344 10.9658 22 11.3655 22 11.7822C22 12.199 21.8344 12.5987 21.5397 12.8934C21.245 13.1881 20.8453 13.3537 20.4286 13.3537Z" fill="white" />
+                                </svg>
+                            </span>Receive Stock
+                        </button>
+
                     </div>
-                    {/* <div>
-            <a
-              href="/admissionform"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="add-btn"
-              style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px' }}
-            >
-              <span className='me-2'>
-                <svg width="12" height="12" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M20.4286 13.3537H12.5714V21.2108C12.5714 21.6276 12.4059 22.0273 12.1112 22.322C11.8165 22.6167 11.4168 22.7822 11 22.7822C10.5832 22.7822 10.1835 22.6167 9.88883 22.322C9.59413 22.0273 9.42857 21.6276 9.42857 21.2108V13.3537H1.57143C1.15466 13.3537 0.754961 13.1881 0.460261 12.8934C0.165561 12.5987 0 12.199 0 11.7822C0 11.3655 0.165561 10.9658 0.460261 10.6711C0.754961 10.3764 1.15466 10.2108 1.57143 10.2108H9.42857V2.35366C9.42857 1.93689 9.59413 1.53719 9.88883 1.24249C10.1835 0.947787 10.5832 0.782227 11 0.782227C11.4168 0.782227 11.8165 0.947787 12.1112 1.24249C12.4059 1.53719 12.5714 1.93689 12.5714 2.35366V10.2108H20.4286C20.8453 10.2108 21.245 10.3764 21.5397 10.6711C21.8344 10.9658 22 11.3655 22 11.7822C22 12.199 21.8344 12.5987 21.5397 12.8934C21.245 13.1881 20.8453 13.3537 20.4286 13.3537Z" fill="white" />
-                </svg>
-              </span>
-              New Provisional Form
-            </a>
-          </div> */}
+
 
                 </div>
-                <div className="dashboard-cards row mt-2" style={{ padding: "20px" }} >
+                {/* <div className="dashboard-cards row mt-2" style={{ padding: "20px" }} >
                     <ProfileStatus
-                        label="No Of Products"
+                        label="No of Vendors"
                         icon={profileicon}
-                        percentage={percentage.all_students}
+                        // percentage={percentage.all_students}
+                        percentage="150"
                         iconColor="#39886F"
                         bgColor="#39886F0D"
                         circleColor=" #39886F"
-                        numbers={percentage.all_students}
+                        // numbers={percentage.all_students}
+                        numbers="150"
                     />
                     <ProfileStatus
-                        label="Item Groups"
+                        label="Active"
                         icon={profileicon2}
-                        percentage={percentage.provisional_fees_percentage}
+                        // percentage={percentage.provisional_fees_percentage}
+                        percentage="220"
                         iconColor="#0E9DED"
                         bgColor="#0E9DED0D"
                         circleColor="#0E9DED"
-                        numbers={percentage.provisional_fees_count}
+                        // numbers={percentage.provisional_fees_count}
+                        numbers="220"
                     />
                     <ProfileStatus
-                        label="Record Level"
+                        label="DEACTIVE"
                         icon={profileicon3}
-                        percentage={percentage.registration_percentage}
+                        //    / /percentage={percentage.registration_percentage}
+                        percentage="30"
                         iconColor=" #FF9B04"
                         bgColor="#FF9B040D"
                         circleColor=" #FF9B04"
-                        numbers={percentage.registration_count}
+                        // numbers={percentage.registration_count}
+                        numbers="30"
                     />
-                    <ProfileStatus
-                        label="Min Stock Level"
-                        icon={profileicon4}
-                        percentage={percentage.fees_payment_percentage}
-                        iconColor=" #2A62C8"
-                        bgColor=" #2A62C80D"
-                        circleColor=" #2A62C8"
-                        numbers={percentage.fees_payment_count}
-                    />
-                    {/* <ProfileStatus
-            label="ID Card/Biometric"
-            icon={profileicon5}
-            percentage={percentage.id_card_bometric_percentage}
-            iconColor=" #F19289"
-            bgColor=" #F192890D"
-            circleColor="#F19289"
-            numbers={percentage.id_card_bometric_count}
-          /> */}
-                </div>
+
+
+                </div> */}
                 <div className='row mt-2'>
-                    <div className="col-md-12">
+                    <div className="col-md-9">
                         <div className="row" style={{ alignItems: 'center' }}>
                             <div className="col-md-6">
-                                <h4 className='text-primary'>All Items {/*totalCount*/}</h4>
+                                {/* <h4 className='text-primary'>All Stock  </h4> */}
                             </div>
                             <div className="col-md-6">
                                 <div style={{ display: "flex", justifyContent: 'end' }}>
-                                    <SearchBar data={studentdata} onSearch={debouncedSearch} ref={searchInputRef} placeholder={'Serach by Item Name, S K U code..'} />
+                                    <SearchBar data={studentdata} onSearch={debouncedSearch} ref={searchInputRef} placeholder={'Serach by Name, Reg. No, Phone No, Email..'} />
                                     <button
                                         className="filter-btn"
                                         onClick={handleFilterClick}
@@ -708,7 +613,7 @@ const columns = useMemo(() => [
                                     </button>
                                     <button
                                         className="filter-btn"
-                                        style={{ background: '#7F56DA', border: '1px solid black', height: '43px' ,color:"white",border:"none"}}
+                                        style={{ background: 'white', border: '1px solid black', height: '43px' }}
                                         // onClick={handleFilterClick}
                                         onClick={handleExportExcel}
                                     >
@@ -726,8 +631,8 @@ const columns = useMemo(() => [
                                         columns={columns}
                                         pageCounts={pageCounts}
                                         handlePageChange={handlePageChange}
-                                        selectedOrgDetails={selectedOrgDetails}
-                                        data={mockData}
+                                        selectedStockDetails={selectedStockDetails}
+                                        data={transactionsData}
                                     />
                                 ) : (
                                     <div className="no-data-message" style={{ textAlign: 'center', padding: '40px', color: '#888' }}>
@@ -738,17 +643,18 @@ const columns = useMemo(() => [
                             </div>
                         </div>
                     </div>
-                    {/* <div className="col-md-3">
-            <StudentShortDetails navigate={navigate} selectedOrgDetails={selectedOrgDetails}
-              getstudentsdataId={getstudentsdataId} />
-          </div> */}
+                    <div className="col-md-3">
+                        <StockShortDetails navigate={navigate} selectedStockDetails={selectedStockDetails}
+                        // getstudentsdataId={getstudentsdataId}
+                        />
+                    </div>
                 </div>
             </div >
-            <div>
- <AddItem isOpen={addItemModal} onClose={closeaddItemModal}/>
-            </div>
-             
-           
+
+
+
+            <ReceiveStock isOpen={isReceiveStockModalOpen} onClose={closeReceiveStockModal} />
+            <IssueStock  isOpen={isIssueStockModal} onClose={closeIssueStockModal}/>
 
             {showToast && (
                 <div
@@ -778,14 +684,12 @@ const columns = useMemo(() => [
                 </div>
 
             )}
-            {paymentmodal && <IDValidityModal setshowvaliditymodal={setshowvaliditymodal} setcardpreview={setcardpreview} setpaymentmodal={setpaymentmodal} setvaliditydata={setvaliditydata} validtydata
-                ={validtydata} setFingerprints={setFingerprints} setCapturedPhoto={setCapturedPhoto} selectedOrgDetails={selectedOrgDetails} setidcarddata={setidcarddata} idcarddata={idcarddata} />}
-
-            {cardpreview && <IDPreviewModal setcardpreview={setcardpreview} selectedOrgDetails={selectedOrgDetails} fingerprints={fingerprints} imgurl={imgurl} setFingerprints={setFingerprints} setCapturedPhoto={setCapturedPhoto} capturedPhoto={capturedPhoto} setidcarddata={setidcarddata} idcarddata={idcarddata} />}
-            {filtermodal && <Filter setfiltermodal={setfiltermodal} setStudentsdata={setStudentsdata}
-                filterQueryString={filterQueryString} setFilterQueryString={setFilterQueryString} setTotalCount={setTotalCount} setCurrentPage={setCurrentPage} />}
+           
         </>
     );
 };
 
-export default ManageItems;
+
+
+
+export default ManageStocks

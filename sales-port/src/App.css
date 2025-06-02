@@ -184,3 +184,17 @@ button {
 .Select__menu-portal {
   z-index: 9999 !important;
 }
+
+
+.input-height{
+  height: 46px;
+      color: #222F3E;
+      font-size: 14px;
+}
+
+.stock .form-labell{
+  color: #222F3E;
+  font-size: 14px;
+  font-weight: 400;
+
+}
