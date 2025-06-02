@@ -1,0 +1,24 @@
+
+.item-name{
+     margin: 0;
+     color: #222F3E;
+      font-weight: 500;
+      font-size:'14px';
+      font-family:'Poppins' 
+}
+
+
+.item-values{
+    color: #222F3E;
+    font-weight: 400;
+    font-size: 14px;
+    text-align: start;
+
+}
+ 
+
+.add-item label{
+    margin-bottom: 8px;
+    font-size: 14px;
+font-weight: 400;
+}
