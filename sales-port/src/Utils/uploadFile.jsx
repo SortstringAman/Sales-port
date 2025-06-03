@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { BsUpload } from 'react-icons/bs';
 
-export const UploadBox = ({ label, name, onFileSelect }) => {
+export const UploadBox = ({ label, name, onFileSelect, col = 'col-md-2' }) => {
   const fileInputRef = useRef(null);
   const [fileName, setFileName] = useState('');
 
@@ -14,13 +14,13 @@ export const UploadBox = ({ label, name, onFileSelect }) => {
     if (file) {
       setFileName(file.name);
       if (onFileSelect) {
-        onFileSelect(name, file); // pass file back to parent/form
+        onFileSelect(name, file);
       }
     }
   };
 
   return (
-    <div className="col-md-2">
+    <div className={col}>
       <label className="form-label fw-medium">{label}</label>
       <div
         className="border rounded d-flex justify-content-between align-items-center p-3"

@@ -202,11 +202,24 @@ button {
 
  
 
-.vendor p,.stock p {
+.vendor p,.stock p,.pos p {
   font-weight: bolder;
 }
 
 .error{
   font-size: 14px !important;
 margin-top: 10px;
+}
+
+.porupees .input-height{
+  font-weight: bold;
+  font-size: 17px;
+}
+ 
+
+/* Target the calendar icon inside inputs with class 'form-control' */
+.pos .form-control[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(37%) sepia(78%) saturate(471%) hue-rotate(239deg) brightness(92%) contrast(90%);
+  cursor: pointer;
+  font-size: 20px;
 }
