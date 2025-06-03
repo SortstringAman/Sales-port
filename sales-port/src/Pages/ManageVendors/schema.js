@@ -1,6 +1,11 @@
 import * as Yup from 'yup';
 
 export const VendorSchema = Yup.object().shape({
+  poNumber: Yup.string().required('PO Number is required'),
+  dateOfReceiving: Yup.string().required('Receiving Date is required'),
+  billNo: Yup.string().required('Bill Number is required'),
+  storeIn: Yup.string().required('Store In is required'),
+
   vendorName: Yup.string().required('Vendor Name is required'),
   vendorType: Yup.string().required('Vendor Type is required'),
   contactPerson: Yup.string().required('Contact Person is required'),
@@ -30,4 +35,9 @@ export const VendorSchema = Yup.object().shape({
   pan: Yup.string()
     .matches(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Enter a valid PAN number')
     .required('PAN is required'),
+
+file: Yup.mixed()
+  .required('File is required')
+  .test('fileExists', 'A file must be uploaded', value => value instanceof File),
+
 });

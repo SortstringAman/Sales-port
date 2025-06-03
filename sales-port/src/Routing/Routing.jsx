@@ -23,14 +23,14 @@ import { EnquiryDashboardDetails } from '../Pages/EnquiryDashboard/EnquiryDashbo
 import ManageItems from '../Pages/ManageItems/ManageItem';
 import ManageVendors from '../Pages/ManageVendors/ManageVendors';
 import ManageStocks from '../Pages/ManageStocks/ManageStocks';
- 
+
 
 const Routing = () => {
     const userId = localStorage.getItem('token');
     return (
         <>
             <Routes>
-                <Route path="/" element={<ProtectedRoutes element={<ProtectedRoutes element= {<CommonLayout><EnquiryDashboardDetails /></CommonLayout>} />}/> }/>
+                <Route path="/" element={<ProtectedRoutes element={<ProtectedRoutes element={<CommonLayout><EnquiryDashboardDetails /></CommonLayout>} />} />} />
                 <Route path="/Login" element={<Login />} />
                 {/* Student Dashboard routes 
                 <Route path="/studentDashboard/" element={<CommonLayout><StudentDashboardPage /></CommonLayout>} />
@@ -55,7 +55,7 @@ const Routing = () => {
 
                 {/* Organisation Routes */}
                 {/* <Route path="/OrganisationDashboard" element={<ProtectedRoutes element={<CommonLayout><OrganisationDashboardPage /></CommonLayout>} />} /> */}
-                <Route path="/OrganisationDashboard" element={<ProtectedRoutes element= {<CommonLayout><OrganisationDashboardPage /></CommonLayout>}/>} />
+                <Route path="/OrganisationDashboard" element={<ProtectedRoutes element={<CommonLayout><OrganisationDashboardPage /></CommonLayout>} />} />
 
                 {/* Roles and Permissions */}
 
@@ -72,8 +72,8 @@ const Routing = () => {
                 <Route path="/supportdesklogin" element={<SupportDekLogin />} />
 
                 {/*Enquiry Dashboard  */}
-                <Route path="/enquiry" element={<ProtectedRoutes element= {<CommonLayout><EnquiryDashboard /></CommonLayout>}/>} />
-                <Route path="/enquiry-dashbord" element={<ProtectedRoutes element= {<CommonLayout><EnquiryDashboardDetails /></CommonLayout>}/>} />
+                <Route path="/enquiry" element={<ProtectedRoutes element={<CommonLayout><EnquiryDashboard /></CommonLayout>} />} />
+                <Route path="/enquiry-dashbord" element={<ProtectedRoutes element={<CommonLayout><EnquiryDashboardDetails /></CommonLayout>} />} />
 
                 {/* Employeedashboard */}
                 <Route path="/employeedashboard" element={<ProtectedRoutes element={<CommonLayout><UserDashboard /></CommonLayout>} />} />
@@ -83,14 +83,14 @@ const Routing = () => {
                 <Route path="/classDashboard" element={<ProtectedRoutes element={<CommonLayout><ClassDashboard /></CommonLayout>} />} />
 
 
-                 <Route path="/manageItems" element={<ProtectedRoutes element={<CommonLayout><ManageItems    /></CommonLayout>} />} />
-                  <Route path="/manageVendors" element={<ProtectedRoutes element={<CommonLayout><ManageVendors   /></CommonLayout>} />} />
-    <Route path="/manageStocks" element={<ProtectedRoutes element={<CommonLayout><ManageStocks  /></CommonLayout>} />} />
+                <Route path="/manageItems" element={<ProtectedRoutes element={<CommonLayout><ManageItems /></CommonLayout>} />} />
+                <Route path="/manageVendors" element={<ProtectedRoutes element={<CommonLayout><ManageVendors /></CommonLayout>} />} />
+                <Route path="/manageStocks" element={<ProtectedRoutes element={<CommonLayout><ManageStocks /></CommonLayout>} />} />
 
 
                 {/* Payment Pages */}
-                <Route path="/paymentsucess" element={<PaymentSuccessPage />}/>
-                <Route path="/paymentrejected" element= {<PaymentFailedPage />} />
+                <Route path="/paymentsucess" element={<PaymentSuccessPage />} />
+                <Route path="/paymentrejected" element={<PaymentFailedPage />} />
             </Routes>
         </>
     )

@@ -80,7 +80,7 @@ const AddItem = ({ isOpen, onClose }) => {
                                 <div className="col-md-4">
                                     <label>Item Name<span className="astrisk">*</span></label>
                                     <Field type="text" name="itemName" className="form-control input-height" placeholder="Enter item name" autoFocus/>
-                                    <ErrorMessage name="itemName" component="div" className="text-danger small" />
+                                    <ErrorMessage name="itemName" component="div" className="text-danger small error" />
                                 </div>
 
                                 <div className="col-md-4">
@@ -92,7 +92,7 @@ const AddItem = ({ isOpen, onClose }) => {
                                         onChange={val => setFieldValue('itemCategory', val)}
                                         styles={reactSelectStyles}
                                     />
-                                    <ErrorMessage name="itemCategory" component="div" className="text-danger small" />
+                                    <ErrorMessage name="itemCategory" component="div" className="text-danger small error" />
                                 </div>
 
                                 <div className="col-md-4">
@@ -104,7 +104,7 @@ const AddItem = ({ isOpen, onClose }) => {
                                         onChange={val => setFieldValue('uom', val)}
                                         styles={reactSelectStyles}
                                     />
-                                    <ErrorMessage name="uom" component="div" className="text-danger small" />
+                                    <ErrorMessage name="uom" component="div" className="text-danger small error" />
                                 </div>
                             </div>
 
@@ -119,17 +119,17 @@ const AddItem = ({ isOpen, onClose }) => {
                                         onChange={val => setFieldValue('itemType', val)}
                                         styles={reactSelectStyles}
                                     />
-                                    <ErrorMessage name="itemType" component="div" className="text-danger small" />
+                                    <ErrorMessage name="itemType" component="div" className="text-danger small error" />
                                 </div>
                                 <div className="col-md-4">
                                     <label>Min Stock Level</label>
                                     <Field type="number" name="minStock" className="form-control input-height" placeholder="Enter opening stock" />
-                                    <ErrorMessage name="minStock" component="div" className="text-danger small" />
+                                    <ErrorMessage name="minStock" component="div" className="text-danger smallerror" />
                                 </div>
                                 <div className="col-md-4">
                                     <label>Reorder Level</label>
                                     <Field type="number" name="reorderLevel" className="form-control input-height" placeholder="Enter reorder level" />
-                                    <ErrorMessage name="reorderLevel" component="div" className="text-danger small" />
+                                    <ErrorMessage name="reorderLevel" component="div" className="text-danger small error" />
                                 </div>
                             </div>
 
@@ -170,7 +170,7 @@ const AddItem = ({ isOpen, onClose }) => {
                                 <div className="col-md-4">
                                     <label>Shelf Life (in days)</label>
                                     <Field type="number" name="shelfLife" className="form-control input-height" placeholder="Enter shelf life in days" />
-                                    <ErrorMessage name="shelfLife" component="div" className="text-danger small" />
+                                    <ErrorMessage name="shelfLife" component="div" className="text-danger small error" />
                                 </div>
                             </div>
 

@@ -190,6 +190,7 @@ button {
   height: 50px;
       color: #222F3E;
       font-size: 14px;
+      
 }
 
 .stock .form-labell{
@@ -201,6 +202,11 @@ button {
 
  
 
-.vendor p {
+.vendor p,.stock p {
   font-weight: bolder;
+}
+
+.error{
+  font-size: 14px !important;
+margin-top: 10px;
 }

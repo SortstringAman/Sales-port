@@ -346,7 +346,7 @@ const closeIssueStockModal=()=>{
                         style={{ cursor: 'pointer' }}
                         onClick={() => handleRowClick(row.original.id, row)}
                     >
-                        <p style={{ textAlign: 'left', margin: 0 }}>{value || '-'}</p>
+                        <p style={{ margin: 0, color: '#222F3E', fontWeight: 'bold', textAlign: 'start'  }}>{value || '-'}</p>
                     </div>
                 ),
             },
@@ -354,22 +354,23 @@ const closeIssueStockModal=()=>{
                 Header: 'Transaction No.',
                 accessor: 'transaction_no',
                 Cell: ({ value }) => (
-                    <p style={{ textAlign: 'left', fontWeight: 500, margin: 0 }}>{value || '-'}</p>
+                    <p style={{ textAlign: 'left',fontSize:'14px', fontWeight: 500, margin: 0 }}>{value || '-'}</p>
                 ),
             },
             {
                 Header: 'Type',
                 accessor: 'type',
                 Cell: ({ value }) => (
-                    <span
+                    <h6
                         style={{
                             color: value === 'Stock Received' ? 'green' : 'red',
                             fontWeight: 600,
                             textAlign: 'left',
+                            fontWeight: 'bolder'
                         }}
                     >
                         {value || '-'}
-                    </span>
+                    </h6>
                 ),
             },
             {

@@ -84,7 +84,7 @@ export const AddNewVendor = ({
                                 <div className="col-md-3">
                                     <label>Vendor Name<span className='astrisk'>*</span></label>
                                     <Field name="vendorName" className="form-control input-height" placeholder="Enter Vendor Name" autoFocus />
-                                    <ErrorMessage name="vendorName" component="div" className="text-danger" />
+                                    <ErrorMessage name="vendorName" component="div" className="text-danger error" />
                                 </div>
                                 <div className="col-md-3">
                                     <label>Vendor Type<span className='astrisk'>*</span></label>
@@ -94,34 +94,37 @@ export const AddNewVendor = ({
                                         onChange={(opt) => setFieldValue('vendorType', opt?.value)}
                                         value={vendorTypeOptions.find(opt => opt.value === values.vendorType)}
                                     />
-                                    <ErrorMessage name="vendorType" component="div" className="text-danger" />
+                                    <ErrorMessage name="vendorType" component="div" className="text-danger error" />
                                 </div>
                             </div>
 
+                            
                             <p className="fm-pr-hd mt-3 text-start">Contact Information</p>
-                            <div className="row">
-                                <div className="col-md-2">
+                            <div className="row g-3">
+                                <div className="col-md-2 d-flex flex-column">
                                     <label>Contact Person Name<span className='astrisk'>*</span></label>
                                     <Field name="contactPerson" className="form-control input-height" placeholder="Enter Contact Person" />
-                                    <ErrorMessage name="contactPerson" component="div" className="text-danger" />
+                                    <ErrorMessage name="contactPerson" component="div" className="text-danger error" style={{ minHeight: '20px' }} />
                                 </div>
-                                <div className="col-md-2">
+                                <div className="col-md-2 d-flex flex-column">
                                     <label>Contact Number<span className='astrisk'>*</span></label>
                                     <Field name="contactNumber" className="form-control input-height" placeholder="e.g. +91-9876543210" />
-                                    <ErrorMessage name="contactNumber" component="div" className="text-danger" />
+                                    <ErrorMessage name="contactNumber" component="div" className="text-danger error" style={{ minHeight: '20px' }} />
                                 </div>
-                                <div className="col-md-2">
+                                <div className="col-md-2 d-flex flex-column">
                                     <label>Alternate Number</label>
                                     <Field name="alternateNumber" className="form-control input-height" placeholder="Optional" />
+                                    <div style={{ minHeight: '20px' }}></div>
                                 </div>
-                                <div className="col-md-2">
+                                <div className="col-md-2 d-flex flex-column">
                                     <label>Email ID<span className='astrisk'>*</span></label>
                                     <Field name="email" type="email" className="form-control input-height" placeholder="Enter Email" />
-                                    <ErrorMessage name="email" component="div" className="text-danger" />
+                                    <ErrorMessage name="email" component="div" className="text-danger error" style={{ minHeight: '20px' }} />
                                 </div>
-                                <div className="col-md-2">
+                                <div className="col-md-2 d-flex flex-column">
                                     <label>Website</label>
                                     <Field name="website" className="form-control input-height" placeholder="Optional" />
+                                    <div style={{ minHeight: '20px' }}></div>
                                 </div>
                             </div>
 
@@ -130,12 +133,12 @@ export const AddNewVendor = ({
                                 <div className="col-md-2">
                                     <label>Billing Address<span className='astrisk'>*</span></label>
                                     <Field name="billingAddress" className="form-control input-height" placeholder="Enter Billing Address" />
-                                    <ErrorMessage name="billingAddress" component="div" className="text-danger" />
+                                    <ErrorMessage name="billingAddress" component="div" className="text-danger error" />
                                 </div>
                                 <div className="col-md-2">
                                     <label>Shipping Address<span className='astrisk'>*</span></label>
                                     <Field name="shippingAddress" className="form-control input-height" placeholder="Enter Shipping Address" />
-                                    <ErrorMessage name="shippingAddress" component="div" className="text-danger" />
+                                    <ErrorMessage name="shippingAddress" component="div" className="text-danger error" />
                                 </div>
                                 <div className="col-md-2">
                                     <label>Country<span className='astrisk'>*</span></label>
@@ -145,7 +148,7 @@ export const AddNewVendor = ({
                                         onChange={(opt) => setFieldValue('country', opt?.value)}
                                         value={countryOptions.find(opt => opt.value === values.country)}
                                     />
-                                    <ErrorMessage name="country" component="div" className="text-danger" />
+                                    <ErrorMessage name="country" component="div" className="text-danger error" />
                                 </div>
                                 <div className="col-md-2">
                                     <label>State<span className='astrisk'>*</span></label>
@@ -155,17 +158,17 @@ export const AddNewVendor = ({
                                         onChange={(opt) => setFieldValue('state', opt?.value)}
                                         value={stateOptions.find(opt => opt.value === values.state)}
                                     />
-                                    <ErrorMessage name="state" component="div" className="text-danger" />
+                                    <ErrorMessage name="state" component="div" className="text-danger error" />
                                 </div>
                                 <div className="col-md-2">
                                     <label>City<span className='astrisk'>*</span></label>
                                     <Field name="city" className="form-control input-height" placeholder="Enter City" />
-                                    <ErrorMessage name="city" component="div" className="text-danger" />
+                                    <ErrorMessage name="city" component="div" className="text-danger error" />
                                 </div>
                                 <div className="col-md-2">
                                     <label>Pincode<span className='astrisk'>*</span></label>
                                     <Field name="pincode" className="form-control input-height" placeholder="ZIP" />
-                                    <ErrorMessage name="pincode" component="div" className="text-danger" />
+                                    <ErrorMessage name="pincode" component="div" className="text-danger error" />
                                 </div>
                             </div>
 
@@ -174,26 +177,26 @@ export const AddNewVendor = ({
                                 <div className="col-md-3">
                                     <label>Bank Name<span className='astrisk'>*</span></label>
                                     <Field name="bankName" className="form-control input-height" placeholder="Enter Bank name" />
-                                    <ErrorMessage name="bankName" component="div" className="text-danger" />
+                                    <ErrorMessage name="bankName" component="div" className="text-danger error" />
                                 </div>
                                 <div className="col-md-2">
                                     <label>Account Number<span className='astrisk'>*</span></label>
                                     <Field name="accountNumber" className="form-control input-height" placeholder="Enter Account number" />
-                                    <ErrorMessage name="accountNumber" component="div" className="text-danger" />
+                                    <ErrorMessage name="accountNumber" component="div" className="text-danger error" />
                                 </div>
                                 <div className="col-md-2">
                                     <label>IFSC Code<span className='astrisk'>*</span></label>
                                     <Field name="ifscCode" className="form-control input-height" placeholder="Enter IFSC code" />
-                                    <ErrorMessage name="ifscCode" component="div" className="text-danger" />
+                                    <ErrorMessage name="ifscCode" component="div" className="text-danger error" />
                                 </div>
                                 <div className="col-md-2">
                                     <label>UPI ID (if any)</label>
-                                    <Field name="upiId" className="form-control input-height" placeholder="Optional" />
+                                    <Field name="upiId" className="form-control input-height" placeholder="Optional error" />
                                 </div>
                                 <div className="col-md-3">
                                     <label>Payment Terms<span className='astrisk'>*</span></label>
                                     <Field name="paymentTerms" className="form-control input-height" placeholder="Enter Payment Terms" />
-                                    <ErrorMessage name="paymentTerms" component="div" className="text-danger" />
+                                    <ErrorMessage name="paymentTerms" component="div" className="text-danger error" />
                                 </div>
                             </div>
 
@@ -202,16 +205,16 @@ export const AddNewVendor = ({
                                 <div className="col-md-2">
                                     <label>GST number<span className='astrisk'>*</span></label>
                                     <Field name="gst" className="form-control input-height" placeholder="Enter GST number" />
-                                    <ErrorMessage name="gst" component="div" className="text-danger" />
+                                    <ErrorMessage name="gst" component="div" className="text-danger error error" />
                                 </div>
                                 <div className="col-md-2">
                                     <label>PAN Number<span className='astrisk'>*</span></label>
                                     <Field name="pan" className="form-control input-height" placeholder="Enter PAN Number" />
-                                    <ErrorMessage name="pan" component="div" className="text-danger" />
+                                    <ErrorMessage name="pan" component="div" className="text-danger error" />
                                 </div>
                                 <div className="col-md-2 mt-4">
                                     <label className="form-check-label me-2">TDS Applicable</label>
-                                    <Field type="checkbox" name="tdsApplicable" className="form-check-input" />
+                                    <Field type="checkbox" name="tdsApplicable" className="form-check-input " />
                                 </div>
                                 <div className="col-md-2">
                                     <label>MSME Registration No</label>
