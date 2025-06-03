@@ -187,7 +187,7 @@ button {
 
 
 .input-height{
-  height: 46px;
+  height: 50px;
       color: #222F3E;
       font-size: 14px;
 }
@@ -197,4 +197,10 @@ button {
   font-size: 14px;
   font-weight: 400;
 
+}
+
+ 
+
+.vendor p {
+  font-weight: bolder;
 }

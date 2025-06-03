@@ -98,15 +98,15 @@ const ManageItems = () => {
     };
 
 
-    const [addItemModal,setAddItemModal] = useState(false)
+    const [addItemModal, setAddItemModal] = useState(false)
 
 
-        const openaddItemModal = () => {
+    const openaddItemModal = () => {
         setAddItemModal(true);
     };
 
-       const closeaddItemModal = () => {
-     setAddItemModal(false);
+    const closeaddItemModal = () => {
+        setAddItemModal(false);
     };
 
 
@@ -230,7 +230,25 @@ const ManageItems = () => {
         });
     }, [studentdata]);
 
+const handleEdit = (row) => {
+    const orgData = row.original;
+    console.log("orgDataedit----", orgData);
+    // setorgform({
+    //   id: orgData.id,
+    //   name: orgData.name,
+    //   level: orgData.level,
+    //   mode: orgData.mode,
+    //   mode_count: orgData.mode_count,
+    //   duration: orgData.duration,
+    //   organization_id: orgData.organization_id,
+    //   alias: orgData.alias,
+    //   // status:false
+    // });
+    // setparentorgidsub(orgData.id);
+    openaddItemModal();
+    setUpdatebtn(true);
 
+  }
 
     // const handleSearch = (query) => {
     //   setSearchQuery(query);
@@ -330,114 +348,111 @@ const ManageItems = () => {
         // Log or handle response as needed
         console.log("Updated Status:", response);
     };
-    const handlegenerateIdcard = async (id) => {
-        let url = `students/get-student-attendance/${id}/`;
-        let res = await getData(url);
-        if (res) {
-            setidcarddata(res);
-        }
-        console.log("responseidcard--", res);
-    }
+ 
 
-const columns = useMemo(() => [
-  {
-    Header: <input type="checkbox" />,
-    accessor: 'checkbox',
-    Cell: ({ row }) => (
-      <input
-        type="checkbox"
-        checked={row.isSelected}
-        onChange={() => row.toggleRowSelected()}
-      />
-    ),
-  },
-  {
-    Header: 'Item Name (SKU CODE)',
-    accessor: 'name', // changed from 'img' to 'name'
-    Cell: ({ row }) => (
-      <div style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <div>
-          <p style={{ margin: 0, color: '#222F3E', fontWeight: 500 }}>{row.original.name}</p>
-          <p style={{ margin: 0 }}>({row.original.sku_code})</p>
-        </div>
-      </div>
-    ),
-  },
-  {
-    Header: "Item Group",
-    accessor: 'item_group',
-    Cell: ({ value }) => (
-      <p style={{ color: '#222F3E', fontWeight: 500, margin: 0 }}>{value}</p>
-    ),
-  },
-  {
-    Header: 'Available Stock',
-    accessor: 'available_stock',
-    Cell: ({ value }) => (
-      <p style={{ color: '#222F3E', fontWeight: 500, margin: 0 }}>{value}</p>
-    ),
-  },
-  {
-    Header: 'Min Stock Level',
-    accessor: 'min_stock_level',
-    Cell: ({ value }) => (
-      <p style={{ color: '#222F3E', fontWeight: 500, margin: 0 }}>{value}</p>
-    ),
-  },
-  {
-    Header: 'Reorder Level',
-    accessor: 'reorder_level',
-    Cell: ({ value }) => (
-      <p style={{ color: '#222F3E', fontWeight: 500, margin: 0 }}>{value}</p>
-    ),
-  },
-  {
-    Header: 'Last Purchased',
-    accessor: 'last_purchased',
-    Cell: ({ value }) => (
-      <p style={{ color: '#222F3E', fontWeight: 500, margin: 0 }}>{value}</p>
-    ),
-  },
-  {
-    Header: 'Supplier',
-    accessor: 'supplier',
-    Cell: ({ value }) => (
-      <p style={{ color: '#222F3E', fontWeight: 500, margin: 0 }}>{value}</p>
-    ),
-  },
-  {
-    Header: 'Stock Status',
-    accessor: 'stock_status',
-    Cell: ({ value }) => (
-      <p style={{ color: value === 'REORDER ITEM' ? 'red' : 'green', fontWeight: 500, margin: 0 }}>
-        {value}
-      </p>
-    ),
-  },
-  {
-    Header: 'Action',
-    Cell: ({ row }) => (
-      <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-        <div className="form-check form-switch custom-switch">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            role="switch"
-            checked={row.original.status}
-            onChange={() => handleStatus(row.original)}
-            style={{ cursor: 'pointer' }}
-          />
-        </div>
-        <img
-          src={edit}
-          alt="Edit"
-          style={{ cursor: 'pointer' }}
-          onClick={() => handleEdit(row.original)}
-        />
-      </div>
-    ),
-  },
-], []);
+    const columns = useMemo(() => [
+        {
+            Header: <input type="checkbox" />,
+            accessor: 'checkbox',
+            Cell: ({ row }) => (
+                <input
+                    type="checkbox"
+                    checked={row.isSelected}
+                    onChange={() => row.toggleRowSelected()}
+                />
+            ),
+        },
+        {
+            Header: 'Item Name (SKU CODE)',
+            accessor: 'name', // changed from 'img' to 'name'
+            Cell: ({ row }) => (
+                <div style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <div>
+                        <p style={{ margin: 0, color: '#222F3E', fontWeight: 'bold', textAlign: 'start' }}>{row.original.name}</p>
+                        <p style={{ margin: 0, textAlign: 'start', color: '#222F3E', fontWeight: 'bold', fontSize: '11px' }}>({row.original.sku_code})</p>
+                    </div>
+                </div>
+            ),
+        },
+        {
+            Header: "Item Group",
+            accessor: 'item_group',
+            Cell: ({ value }) => (
+                <p style={{ color: '#222F3E', fontWeight: 500, margin: 0, textAlign: 'start' }}>{value}</p>
+            ),
+        },
+        {
+            Header: 'Available Stock',
+            accessor: 'available_stock',
+            Cell: ({ value }) => (
+                <p style={{ color: '#222F3E', fontWeight: 500, margin: 0, textAlign: 'start' }}>{value}</p>
+            ),
+        },
+        {
+            Header: 'Min Stock Level',
+            accessor: 'min_stock_level',
+            Cell: ({ value }) => (
+                <p style={{ color: '#222F3E', fontWeight: 500, margin: 0, textAlign: 'start' }}>{value}</p>
+            ),
+        },
+        {
+            Header: 'Reorder Level',
+            accessor: 'reorder_level',
+            Cell: ({ value }) => (
+                <p style={{ color: '#222F3E', fontWeight: 500, margin: 0, textAlign: 'start' }}>{value}</p>
+            ),
+        },
+        {
+            Header: 'Last Purchased',
+            accessor: 'last_purchased',
+            Cell: ({ value }) => (
+                <p style={{ color: '#222F3E', fontWeight: 500, margin: 0, textAlign: 'start' }}>{value}</p>
+            ),
+        },
+        {
+            Header: 'Supplier',
+            accessor: 'supplier',
+            Cell: ({ value }) => (
+                <p style={{ color: '#222F3E', fontWeight: 500, margin: 0, textAlign: 'start' }}>{value}</p>
+            ),
+        },
+        {
+            Header: 'Stock Status',
+            accessor: 'stock_status',
+            Cell: ({ value }) => (
+                <h6 style={{ color: value === 'REORDER ITEM' ? 'red' : 'green', fontWeight: 'bolder', margin: 0, textAlign: 'start' }}>
+                    {value}
+                </h6>
+            ),
+        },
+        {
+            Header: 'Action',
+            Cell: ({ row }) => (
+                <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                    <div className="form-check form-switch custom-switch">
+                        <input
+                            className="form-check-input"
+                            type="checkbox"
+                            role="switch"
+                            checked={row.original.status}
+                            onChange={() => handleStatus(row.original)}
+                            style={{ cursor: 'pointer' }}
+                        />
+                    </div>
+                    <img
+                        src={edit}
+                        alt="Edit"
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => {
+                            handleEdit(row.original);
+                           
+                        }}
+                    />
+
+                </div>
+            ),
+        },
+    ], []);
 
     const handlePageChange = (data) => {
         setCurrentPage(data.selected); // updates useEffect trigger
@@ -615,15 +630,15 @@ const columns = useMemo(() => [
                         <h2 className='main-heading'>Manage Items</h2>
                     </div>
                     <div >
-                    
-                            <button className='add-btn' onClick={openaddItemModal}>
-                                <span className='me-2'>
-                                    <svg width="12" height="12" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M20.4286 13.3537H12.5714V21.2108C12.5714 21.6276 12.4059 22.0273 12.1112 22.322C11.8165 22.6167 11.4168 22.7822 11 22.7822C10.5832 22.7822 10.1835 22.6167 9.88883 22.322C9.59413 22.0273 9.42857 21.6276 9.42857 21.2108V13.3537H1.57143C1.15466 13.3537 0.754961 13.1881 0.460261 12.8934C0.165561 12.5987 0 12.199 0 11.7822C0 11.3655 0.165561 10.9658 0.460261 10.6711C0.754961 10.3764 1.15466 10.2108 1.57143 10.2108H9.42857V2.35366C9.42857 1.93689 9.59413 1.53719 9.88883 1.24249C10.1835 0.947787 10.5832 0.782227 11 0.782227C11.4168 0.782227 11.8165 0.947787 12.1112 1.24249C12.4059 1.53719 12.5714 1.93689 12.5714 2.35366V10.2108H20.4286C20.8453 10.2108 21.245 10.3764 21.5397 10.6711C21.8344 10.9658 22 11.3655 22 11.7822C22 12.199 21.8344 12.5987 21.5397 12.8934C21.245 13.1881 20.8453 13.3537 20.4286 13.3537Z" fill="white" />
-                                    </svg>
-                                </span>Create Item
-                            </button>
-                       
+
+                        <button className='add-btn' onClick={openaddItemModal}>
+                            <span className='me-2'>
+                                <svg width="12" height="12" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M20.4286 13.3537H12.5714V21.2108C12.5714 21.6276 12.4059 22.0273 12.1112 22.322C11.8165 22.6167 11.4168 22.7822 11 22.7822C10.5832 22.7822 10.1835 22.6167 9.88883 22.322C9.59413 22.0273 9.42857 21.6276 9.42857 21.2108V13.3537H1.57143C1.15466 13.3537 0.754961 13.1881 0.460261 12.8934C0.165561 12.5987 0 12.199 0 11.7822C0 11.3655 0.165561 10.9658 0.460261 10.6711C0.754961 10.3764 1.15466 10.2108 1.57143 10.2108H9.42857V2.35366C9.42857 1.93689 9.59413 1.53719 9.88883 1.24249C10.1835 0.947787 10.5832 0.782227 11 0.782227C11.4168 0.782227 11.8165 0.947787 12.1112 1.24249C12.4059 1.53719 12.5714 1.93689 12.5714 2.35366V10.2108H20.4286C20.8453 10.2108 21.245 10.3764 21.5397 10.6711C21.8344 10.9658 22 11.3655 22 11.7822C22 12.199 21.8344 12.5987 21.5397 12.8934C21.245 13.1881 20.8453 13.3537 20.4286 13.3537Z" fill="white" />
+                                </svg>
+                            </span>Create Item
+                        </button>
+
                     </div>
                     {/* <div>
             <a
@@ -708,7 +723,7 @@ const columns = useMemo(() => [
                                     </button>
                                     <button
                                         className="filter-btn"
-                                        style={{ background: '#7F56DA', border: '1px solid black', height: '43px' ,color:"white",border:"none"}}
+                                        style={{ background: '#7F56DA', border: '1px solid black', height: '43px', color: "white", border: "none" }}
                                         // onClick={handleFilterClick}
                                         onClick={handleExportExcel}
                                     >
@@ -745,11 +760,8 @@ const columns = useMemo(() => [
                 </div>
             </div >
             <div>
- <AddItem isOpen={addItemModal} onClose={closeaddItemModal}/>
+                <AddItem isOpen={addItemModal} onClose={closeaddItemModal} />
             </div>
-             
-           
-
             {showToast && (
                 <div
                     className={`custom-toast toast align-items-center text-white bg-${toastVariant} border-0 position-fixed top-0 end-0 m-3`}

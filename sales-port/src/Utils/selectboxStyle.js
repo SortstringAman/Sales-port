@@ -1,8 +1,8 @@
 export const reactSelectStyles = {
   control: (base, state) => ({
     ...base,
-    minHeight: '45px',
-    height: '40px',
+    minHeight: '50px',
+    height: '44px',
     width: '100%',
     fontSize: '14px',
     borderColor: state.isFocused ? '#7F56DA' : base.borderColor,

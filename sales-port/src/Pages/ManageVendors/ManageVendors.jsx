@@ -334,7 +334,7 @@ const ManageVendors = () => {
                         style={{ cursor: 'pointer' }}
                         onClick={() => handleRowClick(row.original.id, row)}
                     >
-                        <p style={{ textAlign: 'left', color: '#222F3E', fontWeight: 500, margin: 0 }}>
+                        <p style={{  color: '#222F3E',  fontWeight: 'bold', textAlign: 'start', margin: 0 }}>
                             {row.original.name}
                         </p>
                         <p style={{ textAlign: 'left', margin: 0 }}>
@@ -368,7 +368,7 @@ const ManageVendors = () => {
 
                     return (
                         <div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '5px',color: '#222F3E' }}>
                                 <img src={phone} alt="Phone" />
                                 <p>{number}</p>
                             </div>
@@ -376,7 +376,7 @@ const ManageVendors = () => {
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
                                     <img
                                         src={whatsapp}
-                                        style={{ width: '12px', height: '12px' }}
+                                        style={{ width: '12px', height: '12px',color: '#222F3E', }}
                                         alt="WhatsApp"
                                     />
                                     <p>{number}</p>

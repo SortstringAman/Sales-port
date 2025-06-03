@@ -1,24 +1,26 @@
 import React, { useRef, useState } from 'react';
 import { BsUpload } from 'react-icons/bs';
 
-export const  UploadBox=({ label }) =>{
+export const UploadBox = ({ label, name, onFileSelect }) => {
   const fileInputRef = useRef(null);
   const [fileName, setFileName] = useState('');
 
-  function handleClick() {
+  const handleClick = () => {
     fileInputRef.current?.click();
-  }
+  };
 
-  function handleFileChange(e) {
+  const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setFileName(file.name);
-      // You can also handle upload here if needed
+      if (onFileSelect) {
+        onFileSelect(name, file); // pass file back to parent/form
+      }
     }
-  }
+  };
 
   return (
-    <div className="col-md-3">
+    <div className="col-md-2">
       <label className="form-label fw-medium">{label}</label>
       <div
         className="border rounded d-flex justify-content-between align-items-center p-3"
@@ -40,5 +42,4 @@ export const  UploadBox=({ label }) =>{
       />
     </div>
   );
-}
-
+};

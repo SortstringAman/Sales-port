@@ -1,6 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
-import { useFormik } from 'formik';
+import { Formik, Form, Field, ErrorMessage, useFormik } from 'formik';
 import { BsUpload } from 'react-icons/bs';
 import close from '../../assets/icons/close.svg';
 import next from '../../assets/icons/icon.svg';
@@ -8,6 +8,7 @@ import useAutoFocus from '../../Utils/autoFocus';
 import { VendorSchema } from '../../Pages/ManageVendors/schema';
 import { reactSelectStyles } from '../../Utils/selectboxStyle';
 import { UploadBox } from '../../Utils/uploadFile';
+import { itemValidationSchema } from '../../Pages/ManageItems/schema';
 
 export const AddNewVendor = ({
     isOpen,
@@ -18,52 +19,54 @@ export const AddNewVendor = ({
 }) => {
     const nameInputRef = useAutoFocus(isOpen);
 
-
-
-    // Formik setup
-    const formik = useFormik({
-        initialValues: {
-            vendorName: '',
-            vendorType: '',
-            contactPerson: '',
-            contactNumber: '',
-            alternateNumber: '',
-            email: '',
-            website: '',
-            billingAddress: '',
-            shippingAddress: '',
-            country: '',
-            state: '',
-            city: '',
-            pincode: '',
-            bankName: '',
-            accountNumber: '',
-            ifscCode: '',
-            upiId: '',
-            paymentTerms: '',
-            gst: '',
-            pan: '',
-            tdsApplicable: false,
-            msme: '',
-        },
-        VendorSchema,
-        onSubmit: (values) => {
-            console.log('Form Submitted:', values);
-        },
-    });
-
-    // Helper to handle react-select changes
-    const handleSelectChange = (selectedOption, fieldName) => {
-        formik.setFieldValue(fieldName, selectedOption ? selectedOption.value : '');
+    const initialValues = {
+        vendorName: '',
+        vendorType: '',
+        contactPerson: '',
+        contactNumber: '',
+        alternateNumber: '',
+        email: '',
+        website: '',
+        billingAddress: '',
+        shippingAddress: '',
+        country: '',
+        state: '',
+        city: '',
+        pincode: '',
+        bankName: '',
+        accountNumber: '',
+        ifscCode: '',
+        upiId: '',
+        paymentTerms: '',
+        gst: '',
+        pan: '',
+        tdsApplicable: false,
+        msme: '',
     };
 
+    const vendorTypeOptions = [
+        { value: 'manufacturer', label: 'Manufacturer' },
+        { value: 'distributor', label: 'Distributor' },
+    ];
+    const countryOptions = [
+        { value: 'india', label: 'India' },
+        { value: 'usa', label: 'USA' },
+    ];
+    const stateOptions = [
+        { value: 'up', label: 'Uttar Pradesh' },
+        { value: 'mh', label: 'Maharashtra' },
+    ];
+    const handleSubmit = (values) => {
+        // send to API here
+        console.log('Form values:', values);
 
+    }
 
     if (!isOpen) return null;
 
     return (
         <div className="modal-overlay">
-            <div className="modal-content" style={{ position: 'relative', height: '90vh', overflowY: 'auto', padding: '30px' }}>
+            <div className="modal-content vendor" style={{ position: 'relative', height: '90vh', overflowY: 'auto', padding: '30px' }}>
                 <div className="modal-header-content d-flex justify-content-between align-items-center mb-3">
                     <h2 className='text-primary'>Create Vendor</h2>
                     <button className="close-btn" onClick={onClose}><img src={close} alt="close" /></button>
@@ -73,377 +76,167 @@ export const AddNewVendor = ({
                     Vendor Code <span className='text-purple'>VEN/2025/671</span>
                 </div>
 
-                <form onSubmit={formik.handleSubmit}>
-
-                    {/* Basic Information */}
-                    <p className="fm-pr-hd mt-3 text-start fw-900">Basic Information</p>
-                    <div className="row">
-                        <div className="col-md-3">
-                            <label className="form-labell">Vendor Name<span className='astrisk'>*</span></label>
-                            <input
-                                ref={nameInputRef}
-                                type="text"
-                                className={`form-control ${formik.touched.vendorName && formik.errors.vendorName ? 'is-invalid' : ''}input-height`}
-                                name="vendorName"
-                                placeholder="Enter Vendor Name"
-                            // onChange={formik.handleChange}
-                            // onBlur={formik.handleBlur}
-                            // value={formik.values.vendorName}
-                            />
-                            {/* {formik.touched.vendorName && formik.errors.vendorName && (
-                                <div className="invalid-feedback">{formik.errors.vendorName}</div>
-                            )} */}
-                        </div>
-                        <div className="col-md-3">
-                            <label className="form-labell">Vendor Type<span className='astrisk'>*</span></label>
-                            <Select
-                                classNamePrefix="react-select"
-                                styles={reactSelectStyles}
-                                // options={vendorTypeOptions}
-                                name="vendorType"
-                            // onChange={(opt) => handleSelectChange(opt, 'vendorType')}
-                            // onBlur={() => formik.setFieldTouched('vendorType', true)}
-                            // value={vendorTypeOptions.find(opt => opt.value === formik.values.vendorType) || null}
-                            />
-                            {/* {formik.touched.vendorType && formik.errors.vendorType && (
-                                <div className="text-danger mt-1" style={{ fontSize: '0.875em' }}>{formik.errors.vendorType}</div>
-                            )} */}
-                        </div>
-                    </div>
-
-                    {/* Contact Information */}
-                    <p className="fm-pr-hd mt-3 text-start fw-900">Contact Information</p>
-                    <div className="row">
-                        <div className="col-md-2">
-                            <label className="form-labell">Contact Person Name<span className='astrisk'>*</span></label>
-                            <input
-                                type="text"
-                                className={`form-control ${formik.touched.contactPerson && formik.errors.contactPerson ? 'is-invalid' : ''}input-height`}
-                                name="contactPerson"
-                                placeholder="Enter Contact Person"
-                            // onChange={formik.handleChange}
-                            // onBlur={formik.handleBlur}
-                            // value={formik.values.contactPerson}
-                            />
-                            {/* {formik.touched.contactPerson && formik.errors.contactPerson && (
-                                <div className="invalid-feedback">{formik.errors.contactPerson}</div>
-                            )} */}
-                        </div>
-                        <div className="col-md-2">
-                            <label className="form-labell">Contact Number<span className='astrisk'>*</span></label>
-                            <input
-                                type="text"
-                                className={`form-control ${formik.touched.contactNumber && formik.errors.contactNumber ? 'is-invalid' : ''} input-height`}
-                                name="contactNumber"
-                                placeholder="e.g. +91-9876543210"
-                            // onChange={formik.handleChange}
-                            // onBlur={formik.handleBlur}
-                            // value={formik.values.contactNumber}
-                            />
-                            {/* {formik.touched.contactNumber && formik.errors.contactNumber && (
-                                <div className="invalid-feedback">{formik.errors.contactNumber}</div>
-                            )} */}
-                        </div>
-                        <div className="col-md-2">
-                            <label className="form-labell">Alternate Number</label>
-                            <input
-                                type="text"
-                                className="form-control input-height"
-                                name="alternateNumber"
-                                placeholder="Optional"
-                            // onChange={formik.handleChange}
-                            // onBlur={formik.handleBlur}
-                            // value={formik.values.alternateNumber}
-                            />
-                        </div>
-
-                        <div className="col-md-2">
-                            <label className="form-labell">Email ID<span className='astrisk'>*</span></label>
-                            <input
-                                type="email"
-                                className={`form-control ${formik.touched.email && formik.errors.email ? 'is-invalid' : ''} input-height`}
-                                name="email"
-                                placeholder="Enter Email"
-                            // onChange={formik.handleChange}
-                            // onBlur={formik.handleBlur}
-                            // value={formik.values.email}
-                            />
-                            {formik.touched.email && formik.errors.email && (
-                                <div className="invalid-feedback">{formik.errors.email}</div>
-                            )}
-                        </div>
-
-                        <div className="col-md-2">
-                            <label className="form-labell">Website</label>
-                            <input
-                                type="text"
-                                className="form-control input-height"
-                                name="website"
-                                placeholder="Optional"
-                            // onChange={formik.handleChange}
-                            // onBlur={formik.handleBlur}
-                            // value={formik.values.website}
-                            />
-                        </div>
-                    </div>
-
-                    {/* Address Details */}
-                    <p className="fm-pr-hd mt-3 text-start fw-900">Address Details</p>
-                    <div className="row">
-                        <div className="col-md-2">
-                            <label className="form-labell">Billing Address<span className='astrisk'>*</span></label>
-                            <input
-                                type="text"
-                                className={`form-control ${formik.touched.billingAddress && formik.errors.billingAddress ? 'is-invalid' : ''}input-height`}
-                                name="billingAddress"
-                                placeholder="Enter Billing Address"
-                            // onChange={formik.handleChange}
-                            // onBlur={formik.handleBlur}
-                            // value={formik.values.billingAddress}
-                            />
-                            {formik.touched.billingAddress && formik.errors.billingAddress && (
-                                <div className="invalid-feedback">{formik.errors.billingAddress}</div>
-                            )}
-                        </div>
-                        <div className="col-md-2">
-                            <label className="form-labell">Shipping Address<span className='astrisk'>*</span></label>
-                            <input
-                                type="text"
-                                className={`form-control ${formik.touched.shippingAddress && formik.errors.shippingAddress ? 'is-invalid' : ''}input-height`}
-                                name="shippingAddress"
-                                placeholder="Enter Shipping Address"
-                            // onChange={formik.handleChange}
-                            // onBlur={formik.handleBlur}
-                            // value={formik.values.shippingAddress}
-                            />
-                            {formik.touched.shippingAddress && formik.errors.shippingAddress && (
-                                <div className="invalid-feedback">{formik.errors.shippingAddress}</div>
-                            )}
-                        </div>
-
-                        <div className="col-md-2">
-                            <label className="form-labell">Country<span className='astrisk'>*</span></label>
-                            <Select
-                                classNamePrefix="react-select"
-                                // options={countryOptions}
-                                name="country"
-                                styles={reactSelectStyles}
-                            // onChange={(opt) => handleSelectChange(opt, 'country')}
-                            // onBlur={() => formik.setFieldTouched('country', true)}
-                            // value={countryOptions.find(opt => opt.value === formik.values.country) || null}
-                            />
-                            {formik.touched.country && formik.errors.country && (
-                                <div className="text-danger mt-1" style={{ fontSize: '0.875em' }}>{formik.errors.country}</div>
-                            )}
-                        </div>
-                        <div className="col-md-2">
-                            <label className="form-labell">State<span className='astrisk'>*</span></label>
-                            <Select
-                                classNamePrefix="react-select"
-                                // options={stateOptions}
-                                name="state"
-                                // onChange={(opt) => handleSelectChange(opt, 'state')}
-                                // onBlur={() => formik.setFieldTouched('state', true)}
-                                // value={stateOptions.find(opt => opt.value === formik.values.state) || null}
-                                styles={reactSelectStyles}
-                            />
-                            {formik.touched.state && formik.errors.state && (
-                                <div className="text-danger mt-1" style={{ fontSize: '0.875em' }}>{formik.errors.state}</div>
-                            )}
-                        </div>
-                        <div className="col-md-2">
-                            <label className="form-labell">City<span className='astrisk'>*</span></label>
-                            <input
-                                type="text"
-                                className={`form-control ${formik.touched.city && formik.errors.city ? 'is-invalid' : ''}input-height`}
-                                name="city"
-                                placeholder="Enter City"
-                            // onChange={formik.handleChange}
-                            // onBlur={formik.handleBlur}
-                            // value={formik.values.city}
-                            />
-                            {formik.touched.city && formik.errors.city && (
-                                <div className="invalid-feedback">{formik.errors.city}</div>
-                            )}
-                        </div>
-                        <div className="col-md-2">
-                            <label className="form-labell">Pincode<span className='astrisk'>*</span></label>
-                            <input
-                                type="text"
-                                className={`form-control ${formik.touched.pincode && formik.errors.pincode ? 'is-invalid' : ''}input-height`}
-                                name="pincode"
-                                placeholder="ZIP"
-                            // onChange={formik.handleChange}
-                            // onBlur={formik.handleBlur}
-                            // value={formik.values.pincode}
-                            />
-                            {formik.touched.pincode && formik.errors.pincode && (
-                                <div className="invalid-feedback">{formik.errors.pincode}</div>
-                            )}
-                        </div>
-                    </div>
-
-                    {/* Bank & Payment Information */}
-                    <p className="fm-pr-hd mt-3 text-start fw-900">Bank & Payment Information</p>
-                    <div className="row">
-                        <div className="col-md-3">
-                            <label className="form-labell">Bank Name<span className='astrisk'>*</span></label>
-                            <input
-                                type="text"
-                                className={`form-control ${formik.touched.bankName && formik.errors.bankName ? 'is-invalid' : ''}input-height`}
-                                name="bankName"
-                                placeholder="Enter Bank name"
-                            // onChange={formik.handleChange}
-                            // onBlur={formik.handleBlur}
-                            // value={formik.values.bankName}
-                            />
-                            {formik.touched.bankName && formik.errors.bankName && (
-                                <div className="invalid-feedback">{formik.errors.bankName}</div>
-                            )}
-                        </div>
-                        <div className="col-md-2">
-                            <label className="form-labell">Account Number<span className='astrisk'>*</span></label>
-                            <input
-                                type="text"
-                                className={`form-control ${formik.touched.accountNumber && formik.errors.accountNumber ? 'is-invalid' : ''}input-height`}
-                                name="accountNumber"
-                                placeholder="Enter Account number"
-                            // onChange={formik.handleChange}
-                            // onBlur={formik.handleBlur}
-                            // value={formik.values.accountNumber}
-                            />
-                            {formik.touched.accountNumber && formik.errors.accountNumber && (
-                                <div className="invalid-feedback">{formik.errors.accountNumber}</div>
-                            )}
-                        </div>
-
-                        <div className="col-md-2">
-                            <label className="form-labell">IFSC Code<span className='astrisk'>*</span></label>
-                            <input
-                                type="text"
-                                className={`form-control ${formik.touched.ifscCode && formik.errors.ifscCode ? 'is-invalid' : ''}input-height`}
-                                name="ifscCode"
-                                placeholder="Enter IFSC code"
-                            // onChange={formik.handleChange}
-                            // onBlur={formik.handleBlur}
-                            // value={formik.values.ifscCode}
-                            />
-                            {formik.touched.ifscCode && formik.errors.ifscCode && (
-                                <div className="invalid-feedback">{formik.errors.ifscCode}</div>
-                            )}
-                        </div>
-                        <div className="col-md-2">
-                            <label className="form-labell">UPI ID (if any)</label>
-                            <input
-                                type="text"
-                                className="form-control input-height"
-                                name="upiId"
-                                placeholder="Enter UPI id (Optional)"
-                            // onChange={formik.handleChange}
-                            // onBlur={formik.handleBlur}
-                            // value={formik.values.upiId}
-                            />
-                        </div>
-                        <div className="col-md-3">
-                            <label className="form-labell">Payment Terms<span className='astrisk'>*</span></label>
-                            <input
-                                type="text"
-                                className={`form-control ${formik.touched.paymentTerms && formik.errors.paymentTerms ? 'is-invalid' : ''}input-height`}
-                                name="paymentTerms"
-                                placeholder="Enter Payment Terms"
-                            // onChange={formik.handleChange}
-                            // onBlur={formik.handleBlur}
-                            // value={formik.values.paymentTerms}
-                            />
-                            {formik.touched.paymentTerms && formik.errors.paymentTerms && (
-                                <div className="invalid-feedback">{formik.errors.paymentTerms}</div>
-                            )}
-                        </div>
-                    </div>
-
-                    {/* Tax & Compliance */}
-                    <p className="fm-pr-hd mt-3 text-start fw-900">Tax & Compliance</p>
-                    <div className="row">
-                        <div className="col-md-3">
-                            <label className="form-labell">GST number<span className='astrisk'>*</span></label>
-                            <input
-                                type="text"
-                                className={`form-control ${formik.touched.gst && formik.errors.gst ? 'is-invalid' : ''}input-height`}
-                                name="gst"
-                                placeholder="Enter GST number"
-                            // onChange={formik.handleChange}
-                            // onBlur={formik.handleBlur}
-                            // value={formik.values.gst}
-                            />
-                            {formik.touched.gst && formik.errors.gst && (
-                                <div className="invalid-feedback">{formik.errors.gst}</div>
-                            )}
-                        </div>
-                        <div className="col-md-2">
-                            <label className="form-labell">PAN Number<span className='astrisk'>*</span></label>
-                            <input
-                                type="text"
-                                className={`form-control ${formik.touched.pan && formik.errors.pan ? 'is-invalid' : ''}input-height`}
-                                name="pan"
-                                placeholder="Enter PAN Number"
-                            // onChange={formik.handleChange}
-                            // onBlur={formik.handleBlur}
-                            // value={formik.values.pan}
-                            />
-                            {formik.touched.pan && formik.errors.pan && (
-                                <div className="invalid-feedback">{formik.errors.pan}</div>
-                            )}
-                        </div>
-                        <div className="col-md-2">
-                            <label className="form-label fw-medium mt-3">TDS Applicable</label>
-                            <div className="form-check mt-3">
-                                <input
-                                    type="checkbox"
-                                    id="tdsApplicable"
-                                    name="tdsApplicable"
-                                    className="form-check-input"
-                                // onChange={formik.handleChange}
-                                // checked={formik.values.tdsApplicable}
-                                />
-                                <label className="form-check-label ms-1" htmlFor="tdsApplicable">
-                                  Yes
-                                </label>
+                <Formik initialValues={initialValues} validationSchema={VendorSchema} onSubmit={handleSubmit}>
+                    {({ setFieldValue, values }) => (
+                        <Form>
+                            <p className="fm-pr-hd mt-2 text-start">Basic Information</p>
+                            <div className="row">
+                                <div className="col-md-3">
+                                    <label>Vendor Name<span className='astrisk'>*</span></label>
+                                    <Field name="vendorName" className="form-control input-height" placeholder="Enter Vendor Name" autoFocus />
+                                    <ErrorMessage name="vendorName" component="div" className="text-danger" />
+                                </div>
+                                <div className="col-md-3">
+                                    <label>Vendor Type<span className='astrisk'>*</span></label>
+                                    <Select
+                                        name="vendorType"
+                                        options={vendorTypeOptions}
+                                        onChange={(opt) => setFieldValue('vendorType', opt?.value)}
+                                        value={vendorTypeOptions.find(opt => opt.value === values.vendorType)}
+                                    />
+                                    <ErrorMessage name="vendorType" component="div" className="text-danger" />
+                                </div>
                             </div>
-                              </div>
-                            <div className="col-md-4">
-                            <label className="form-labell ">MSME Registration No</label>
-                            <input
-                                type="text"
-                                className="form-control input-height"
-                                name="msme"
-                                placeholder="Optional"
-                            // onChange={formik.handleChange}
-                            // onBlur={formik.handleBlur}
-                            // value={formik.values.msme}
-                            />
-                        </div>
 
-                       
+                            <p className="fm-pr-hd mt-3 text-start">Contact Information</p>
+                            <div className="row">
+                                <div className="col-md-2">
+                                    <label>Contact Person Name<span className='astrisk'>*</span></label>
+                                    <Field name="contactPerson" className="form-control input-height" placeholder="Enter Contact Person" />
+                                    <ErrorMessage name="contactPerson" component="div" className="text-danger" />
+                                </div>
+                                <div className="col-md-2">
+                                    <label>Contact Number<span className='astrisk'>*</span></label>
+                                    <Field name="contactNumber" className="form-control input-height" placeholder="e.g. +91-9876543210" />
+                                    <ErrorMessage name="contactNumber" component="div" className="text-danger" />
+                                </div>
+                                <div className="col-md-2">
+                                    <label>Alternate Number</label>
+                                    <Field name="alternateNumber" className="form-control input-height" placeholder="Optional" />
+                                </div>
+                                <div className="col-md-2">
+                                    <label>Email ID<span className='astrisk'>*</span></label>
+                                    <Field name="email" type="email" className="form-control input-height" placeholder="Enter Email" />
+                                    <ErrorMessage name="email" component="div" className="text-danger" />
+                                </div>
+                                <div className="col-md-2">
+                                    <label>Website</label>
+                                    <Field name="website" className="form-control input-height" placeholder="Optional" />
+                                </div>
+                            </div>
 
-                    </div>
+                            <p className="fm-pr-hd mt-3 text-start">Address Details</p>
+                            <div className="row">
+                                <div className="col-md-2">
+                                    <label>Billing Address<span className='astrisk'>*</span></label>
+                                    <Field name="billingAddress" className="form-control input-height" placeholder="Enter Billing Address" />
+                                    <ErrorMessage name="billingAddress" component="div" className="text-danger" />
+                                </div>
+                                <div className="col-md-2">
+                                    <label>Shipping Address<span className='astrisk'>*</span></label>
+                                    <Field name="shippingAddress" className="form-control input-height" placeholder="Enter Shipping Address" />
+                                    <ErrorMessage name="shippingAddress" component="div" className="text-danger" />
+                                </div>
+                                <div className="col-md-2">
+                                    <label>Country<span className='astrisk'>*</span></label>
+                                    <Select
+                                        name="country"
+                                        options={countryOptions}
+                                        onChange={(opt) => setFieldValue('country', opt?.value)}
+                                        value={countryOptions.find(opt => opt.value === values.country)}
+                                    />
+                                    <ErrorMessage name="country" component="div" className="text-danger" />
+                                </div>
+                                <div className="col-md-2">
+                                    <label>State<span className='astrisk'>*</span></label>
+                                    <Select
+                                        name="state"
+                                        options={stateOptions}
+                                        onChange={(opt) => setFieldValue('state', opt?.value)}
+                                        value={stateOptions.find(opt => opt.value === values.state)}
+                                    />
+                                    <ErrorMessage name="state" component="div" className="text-danger" />
+                                </div>
+                                <div className="col-md-2">
+                                    <label>City<span className='astrisk'>*</span></label>
+                                    <Field name="city" className="form-control input-height" placeholder="Enter City" />
+                                    <ErrorMessage name="city" component="div" className="text-danger" />
+                                </div>
+                                <div className="col-md-2">
+                                    <label>Pincode<span className='astrisk'>*</span></label>
+                                    <Field name="pincode" className="form-control input-height" placeholder="ZIP" />
+                                    <ErrorMessage name="pincode" component="div" className="text-danger" />
+                                </div>
+                            </div>
 
-                    <p className="fm-pr-hd mt-3 text-start fw-900">Attachments & Documents</p>
-                    <div className="row g-4">
-                        <UploadBox label="Upload GST Certificate" />
-                        <UploadBox label="PAN Card Copy" />
-                        <UploadBox label="Bank Cancelled Cheque" />
-                        <UploadBox label="Other Licenses" />
-                    </div>
+                            <p className="fm-pr-hd mt-3 text-start">Bank & Payment Information</p>
+                            <div className="row">
+                                <div className="col-md-3">
+                                    <label>Bank Name<span className='astrisk'>*</span></label>
+                                    <Field name="bankName" className="form-control input-height" placeholder="Enter Bank name" />
+                                    <ErrorMessage name="bankName" component="div" className="text-danger" />
+                                </div>
+                                <div className="col-md-2">
+                                    <label>Account Number<span className='astrisk'>*</span></label>
+                                    <Field name="accountNumber" className="form-control input-height" placeholder="Enter Account number" />
+                                    <ErrorMessage name="accountNumber" component="div" className="text-danger" />
+                                </div>
+                                <div className="col-md-2">
+                                    <label>IFSC Code<span className='astrisk'>*</span></label>
+                                    <Field name="ifscCode" className="form-control input-height" placeholder="Enter IFSC code" />
+                                    <ErrorMessage name="ifscCode" component="div" className="text-danger" />
+                                </div>
+                                <div className="col-md-2">
+                                    <label>UPI ID (if any)</label>
+                                    <Field name="upiId" className="form-control input-height" placeholder="Optional" />
+                                </div>
+                                <div className="col-md-3">
+                                    <label>Payment Terms<span className='astrisk'>*</span></label>
+                                    <Field name="paymentTerms" className="form-control input-height" placeholder="Enter Payment Terms" />
+                                    <ErrorMessage name="paymentTerms" component="div" className="text-danger" />
+                                </div>
+                            </div>
 
+                            <p className="fm-pr-hd mt-3 text-start">Tax & Compliance</p>
+                            <div className="row">
+                                <div className="col-md-2">
+                                    <label>GST number<span className='astrisk'>*</span></label>
+                                    <Field name="gst" className="form-control input-height" placeholder="Enter GST number" />
+                                    <ErrorMessage name="gst" component="div" className="text-danger" />
+                                </div>
+                                <div className="col-md-2">
+                                    <label>PAN Number<span className='astrisk'>*</span></label>
+                                    <Field name="pan" className="form-control input-height" placeholder="Enter PAN Number" />
+                                    <ErrorMessage name="pan" component="div" className="text-danger" />
+                                </div>
+                                <div className="col-md-2 mt-4">
+                                    <label className="form-check-label me-2">TDS Applicable</label>
+                                    <Field type="checkbox" name="tdsApplicable" className="form-check-input" />
+                                </div>
+                                <div className="col-md-2">
+                                    <label>MSME Registration No</label>
+                                    <Field name="msme" className="form-control input-height" placeholder="Optional" />
+                                </div>
+                            </div>
 
-                    {/* Submit Button */}
-                    <div className="d-flex justify-content-end mt-4">
-                        <button type="submit" className="add-btn">
-                            Create Vendor
-                            <img className="ms-2" src={next} alt="next" />
-                        </button>
-                    </div>
-                </form>
+                            <p className="fm-pr-hd mt-3 text-start">Attachments & Documents</p>
+                            <div className="row g-4">
+                                <UploadBox label="Upload GST Certificate" name="gstCert" onFileSelect={(name, file) => setFieldValue(name, file)} />
+                                <UploadBox label="PAN Card Copy" name="panCard" onFileSelect={(name, file) => setFieldValue(name, file)} />
+                                <UploadBox label="Bank Cancelled Cheque" name="cheque" onFileSelect={(name, file) => setFieldValue(name, file)} />
+                                <UploadBox label="Other Licenses" name="otherLicenses" onFileSelect={(name, file) => setFieldValue(name, file)} />
+
+                            </div>
+
+                            <div className="d-flex justify-content-end mt-4">
+                                <button type="submit" className="add-btn">
+                                    Create Vendor
+                                    <img className="ms-2" src={next} alt="next" />
+                                </button>
+                            </div>
+                        </Form>
+                    )}
+                </Formik>
             </div>
         </div>
     );
