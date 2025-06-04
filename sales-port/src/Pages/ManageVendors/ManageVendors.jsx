@@ -620,7 +620,7 @@ const ManageVendors = () => {
                     <div className="col-md-9">
                         <div className="row" style={{ alignItems: 'center' }}>
                             <div className="col-md-6">
-                                <h4 className='text-primary'>All Students ({totalCount})</h4>
+                                <h4 className='text-primary'>All Vendors ({totalCount})</h4>
                             </div>
                             <div className="col-md-6">
                                 <div style={{ display: "flex", justifyContent: 'end' }}>
