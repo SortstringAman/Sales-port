@@ -5,6 +5,11 @@ import Logo from '../assets/Images/logosidebar.png';
 import profileimg from '../assets/Images/image.png';
 import logouticon from '../assets/icons/logout.png'
 import ConfirmationModal from './Modals/ConfirmationModal';
+import indentImg from '../assets/icons/file-check-alt-svgrepo-com.svg'
+import stockImg from '../assets/icons/box-minimalistic-svgrepo-com.svg'
+import itemImg from '../assets/icons/menu-2-svgrepo-com.svg'
+import poImg from '../assets/icons/card-emulator-pro-svgrepo-com.svg'
+import vendorImg from '../assets/icons/users-svgrepo-com.svg'
 export const Sidebar = () => {
   const location = useLocation();
   const [openMenu, setOpenMenu] = useState(null);
@@ -79,7 +84,7 @@ export const Sidebar = () => {
 
   const navigate = useNavigate()
 
-   // Called when logout icon clicked — opens modal
+  // Called when logout icon clicked — opens modal
   const handleLogoutClick = () => {
     setLogoutConfirmationModalOpen(true);
   };
@@ -109,36 +114,20 @@ export const Sidebar = () => {
 
       <nav className="sidebar-nav">
         <ul className="sidebar-ul">
-  
-
-
-
-
-          
-
-            <li>
+          <li>
             <Link
               to="/manageStocks"
               className={location.pathname === "/manageStocks" ? "active" : ""}>
-              <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10 0.831055C6.75889 0.831055 4.11472 3.47523 4.11472 6.71633C4.11472 8.71648 5.13204 10.4863 6.66305 11.5507C3.21175 12.8976 0.751709 16.2606 0.751709 20.1684H2.43322C2.43322 16.4708 5.11606 13.3801 8.63378 12.7328L9.15925 14.2831H10.8408L11.3662 12.7328C14.8839 13.3801 17.5668 16.4708 17.5668 20.1684H19.2483C19.2483 16.2606 16.7882 12.8976 13.337 11.5507C14.8671 10.4863 15.8853 8.71648 15.8853 6.71633C15.8853 3.47523 13.2411 0.831055 10 0.831055ZM10 2.51256C12.3314 2.51256 14.2038 4.38492 14.2038 6.71633C14.2038 9.04774 12.3314 10.9201 10 10.9201C7.66859 10.9201 5.79623 9.04774 5.79623 6.71633C5.79623 4.38492 7.66859 2.51256 10 2.51256ZM9.15925 15.1239L8.31849 20.1684H11.6815L10.8408 15.1239H9.15925Z" fill="black" />
-              </svg>
-
+               <img src={stockImg} alt="Manage Stocks Icon"  style={{width:'20px',height:'20px'}}  />
               <span>Manage Stocks</span>
             </Link>
           </li>
 
-
-
-
-           <li>
+          <li>
             <Link
               to="/manageItems"
               className={location.pathname === "/manageItems" ? "active" : ""}>
-              <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10 0.831055C6.75889 0.831055 4.11472 3.47523 4.11472 6.71633C4.11472 8.71648 5.13204 10.4863 6.66305 11.5507C3.21175 12.8976 0.751709 16.2606 0.751709 20.1684H2.43322C2.43322 16.4708 5.11606 13.3801 8.63378 12.7328L9.15925 14.2831H10.8408L11.3662 12.7328C14.8839 13.3801 17.5668 16.4708 17.5668 20.1684H19.2483C19.2483 16.2606 16.7882 12.8976 13.337 11.5507C14.8671 10.4863 15.8853 8.71648 15.8853 6.71633C15.8853 3.47523 13.2411 0.831055 10 0.831055ZM10 2.51256C12.3314 2.51256 14.2038 4.38492 14.2038 6.71633C14.2038 9.04774 12.3314 10.9201 10 10.9201C7.66859 10.9201 5.79623 9.04774 5.79623 6.71633C5.79623 4.38492 7.66859 2.51256 10 2.51256ZM9.15925 15.1239L8.31849 20.1684H11.6815L10.8408 15.1239H9.15925Z" fill="black" />
-              </svg>
-
+             <img src={itemImg} alt="Manage Items Icon"  style={{width:'20px',height:'20px'}}  />
               <span>Manage Items</span>
             </Link>
           </li>
@@ -147,40 +136,34 @@ export const Sidebar = () => {
             <Link
               to="/manageVendors"
               className={location.pathname === "/manageVendors" ? "active" : ""}>
-              <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10 0.831055C6.75889 0.831055 4.11472 3.47523 4.11472 6.71633C4.11472 8.71648 5.13204 10.4863 6.66305 11.5507C3.21175 12.8976 0.751709 16.2606 0.751709 20.1684H2.43322C2.43322 16.4708 5.11606 13.3801 8.63378 12.7328L9.15925 14.2831H10.8408L11.3662 12.7328C14.8839 13.3801 17.5668 16.4708 17.5668 20.1684H19.2483C19.2483 16.2606 16.7882 12.8976 13.337 11.5507C14.8671 10.4863 15.8853 8.71648 15.8853 6.71633C15.8853 3.47523 13.2411 0.831055 10 0.831055ZM10 2.51256C12.3314 2.51256 14.2038 4.38492 14.2038 6.71633C14.2038 9.04774 12.3314 10.9201 10 10.9201C7.66859 10.9201 5.79623 9.04774 5.79623 6.71633C5.79623 4.38492 7.66859 2.51256 10 2.51256ZM9.15925 15.1239L8.31849 20.1684H11.6815L10.8408 15.1239H9.15925Z" fill="black" />
-              </svg>
-
+              <img src={vendorImg} alt="Manage Vendors Icon"  style={{width:'20px',height:'20px'}}  />
               <span>Manage Vendors</span>
             </Link>
           </li>
 
-            <li>
+          <li>
             <Link
               to="/managePOs"
               className={location.pathname === "/managePOs" ? "active" : ""}>
-              <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10 0.831055C6.75889 0.831055 4.11472 3.47523 4.11472 6.71633C4.11472 8.71648 5.13204 10.4863 6.66305 11.5507C3.21175 12.8976 0.751709 16.2606 0.751709 20.1684H2.43322C2.43322 16.4708 5.11606 13.3801 8.63378 12.7328L9.15925 14.2831H10.8408L11.3662 12.7328C14.8839 13.3801 17.5668 16.4708 17.5668 20.1684H19.2483C19.2483 16.2606 16.7882 12.8976 13.337 11.5507C14.8671 10.4863 15.8853 8.71648 15.8853 6.71633C15.8853 3.47523 13.2411 0.831055 10 0.831055ZM10 2.51256C12.3314 2.51256 14.2038 4.38492 14.2038 6.71633C14.2038 9.04774 12.3314 10.9201 10 10.9201C7.66859 10.9201 5.79623 9.04774 5.79623 6.71633C5.79623 4.38492 7.66859 2.51256 10 2.51256ZM9.15925 15.1239L8.31849 20.1684H11.6815L10.8408 15.1239H9.15925Z" fill="black" />
-              </svg>
-
+             <img src={poImg} alt="Manage POs Icon" style={{width:'20px',height:'20px'}} />
               <span>Manage POS</span>
             </Link>
           </li>
-
- 
+          <li>
+            <Link
+              to="/manageIndents"
+              className={location.pathname === "/manageIndents" ? "active" : ""} >
+              <img src={indentImg} alt="Manage Indents Icon" style={{width:'20px',height:'20px'}} />
+              <span>Manage Indents</span>
+            </Link>
+          </li>
         </ul>
-
-        
       </nav>
 
       {/* Bottom icons/profile */}
       <div style={{ padding: '12px 20px' }}>
         <ul className="sidebar-ul bottom-section" style={{ gap: '10px', display: 'inline-flex' }}>
-          {/* <li style={{ display: 'flex' }}>
-            <svg width="20" height="21" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10.4999 15C9.83328 16 8.99995 16.5 7.99995 16.5C6.49995 16.5 6.16695 16 5.49995 15M13.0849 13.5H2.91495C2.62278 13.5001 2.33582 13.4227 2.0834 13.2756C1.83097 13.1285 1.62212 12.917 1.47821 12.6627C1.3343 12.4085 1.26048 12.1206 1.2643 11.8284C1.26812 11.5363 1.34944 11.2504 1.49995 11C2.48259 9.36478 3.00116 7.49275 2.99995 5.585V4.5C2.99995 3.43913 3.42137 2.42172 4.17152 1.67157C4.92166 0.921427 5.93908 0.5 6.99995 0.5H8.99995C10.0608 0.5 11.0782 0.921427 11.8284 1.67157C12.5785 2.42172 12.9999 3.43913 12.9999 4.5V5.585C12.9999 7.492 13.5179 9.365 14.4999 11C14.6505 11.2504 14.7318 11.5363 14.7356 11.8284C14.7394 12.1206 14.6656 12.4085 14.5217 12.6627C14.3778 12.917 14.1689 13.1285 13.9165 13.2756C13.6641 13.4227 13.3771 13.5001 13.0849 13.5Z" stroke="#222F3E" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </li> */}
+      
           <li>
             <img src={profileimg} alt="Profile" style={{ position: "relative", left: "-3px" }} />
           </li>
@@ -198,7 +181,7 @@ export const Sidebar = () => {
               </defs>
             </svg>
           </li>
-          <li style={{ display: 'flex' }} onClick={handleLogoutClick}  
+          <li style={{ display: 'flex' }} onClick={handleLogoutClick}
             data-bs-toggle="tooltip"
             data-bs-placement="top"
             title="Click For Logout">
@@ -207,14 +190,14 @@ export const Sidebar = () => {
           </li>
 
 
-           <ConfirmationModal
-        isOpen={isLogoutConfirmationModalOpen}
-        title="Confirm Logout"
-        message="Do you really want to log out?"
-        onConfirm={handleLogoutConfirm}
-        onCancel={handleLogoutCancel}
-        setWidth={"25%"}
-      />
+          <ConfirmationModal
+            isOpen={isLogoutConfirmationModalOpen}
+            title="Confirm Logout"
+            message="Do you really want to log out?"
+            onConfirm={handleLogoutConfirm}
+            onCancel={handleLogoutCancel}
+            setWidth={"25%"}
+          />
         </ul>
       </div>
     </div>

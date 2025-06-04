@@ -54,6 +54,7 @@
   margin: 0;
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 
 /* Each nav item */
@@ -307,6 +308,30 @@
 .recharts-sector:focus {
   outline: none;
 }
+
+
+.sidebar-nav span{
+  font-size: 16px;
+  
+
+}
+
+.sidebar-nav .sidebar-ul li a.active {
+  color: #7F56DA;
+}
+
+.sidebar-nav .sidebar-ul li a.active img,
+.sidebar-nav .sidebar-ul li a:hover img {
+  filter: invert(37%) sepia(69%) saturate(5647%) hue-rotate(255deg) brightness(95%) contrast(89%);
+  transition: filter 0.3s ease;
+}
+
+.sidebar-nav .sidebar-ul li a.active,
+.sidebar-nav .sidebar-ul li a:hover {
+  color: #7F56DA;
+  transition: color 0.3s ease;
+}
+
 
 
 .enquiry-person .student-table tbody tr td

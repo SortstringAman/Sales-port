@@ -9,6 +9,7 @@ import ManageItems from '../Pages/ManageItems/ManageItem';
 import ManageVendors from '../Pages/ManageVendors/ManageVendors';
 import ManageStocks from '../Pages/ManageStocks/ManageStocks';
 import ManagePOs from '../Pages/ManagePOs/ManagePo';
+import ManageIndents from '../Pages/ManageIndents/ManageIndent';
 
 
 const Routing = () => {
@@ -23,6 +24,7 @@ const Routing = () => {
                 <Route path="/manageVendors" element={<ProtectedRoutes element={<CommonLayout><ManageVendors /></CommonLayout>} />} />
                 <Route path="/manageStocks" element={<ProtectedRoutes element={<CommonLayout><ManageStocks /></CommonLayout>} />} />
                   <Route path="/managePOs" element={<ProtectedRoutes element={<CommonLayout><ManagePOs /></CommonLayout>} />} />
+                    <Route path="/manageIndents" element={<ProtectedRoutes element={<CommonLayout><ManageIndents /></CommonLayout>} />} />
 
 
               

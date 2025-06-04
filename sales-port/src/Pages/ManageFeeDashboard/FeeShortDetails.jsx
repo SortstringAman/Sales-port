@@ -27,14 +27,11 @@ export const FeeShortDetails = ({ navigate, openModaldept, closeModaldept, isMod
             <div className='stu-pro-inner mt-5'>
               <div style={{ display: 'flex', gap: "15px", flexDirection: "column", alignItems: 'start', justifyContent: 'space-between' }}>
                 <div>
-                  {/* <p className='sd-p'>Course</p> */}
-                  {/* <p style={{ fontSize: '14px', textAlign: 'left' }}>{selectedOrgDetails?.course}</p> */}
+                 
 
                   <h4 className='fm-pr-hd' style={{ margin: 0, textTransform: 'uppercase' }}>{selectedOrgDetails?.name}</h4>
                 </div>
-                {/* <div>
-                  <img src={selectedOrgDetails ? selectedOrgDetails.img : std} style={{ width: '80px', height: '100px', borderRadius: '8px' }} alt="Student" />
-                </div> */}
+               
               </div>
             </div>
             <div>
@@ -56,10 +53,7 @@ export const FeeShortDetails = ({ navigate, openModaldept, closeModaldept, isMod
               <p className='alg-l'>{selectedOrgDetails?.contact_number}</p>
             </div>
 
-            {/* <div>
-              <p className='sd-p'>Fees</p>
-              <p className='alg-l'>{selectedOrgDetails?.fees}</p>
-            </div> */}
+           
           </div>
         </div>
       </div>

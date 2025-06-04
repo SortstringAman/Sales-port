@@ -273,6 +273,11 @@ const ManagePOs = () => {
 
 
     const searchInputRef = useRef(null);
+       useEffect(() => {
+        if (searchInputRef.current) {
+            searchInputRef.current.focus();
+        }
+    }, []);
 
     return (
         <>

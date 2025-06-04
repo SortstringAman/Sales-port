@@ -20,7 +20,6 @@ import adstatus from '../../assets/icons/statuspur.svg'
 import adstatusred from '../../assets/icons/status-red.svg';
 import tablelast from '../../assets/icons/tablelast.svg';
 import edit from '../../assets/icons/editnew.svg';
-
 import { useNavigate } from 'react-router-dom';
 import { getBlob, getData, patchData } from '../../API/GlobalApi';
 import { GenerateIDModal } from '../../Component/Modals/GenerateIDModal';
@@ -34,10 +33,11 @@ import checkgif from '../../assets/gif/successfullgif.gif';
 import close from '../../assets/icons/close.svg';
 import { Filter } from '../../Component/Filter/Filter';
 import debounce from 'lodash.debounce';
-
-import  AddItem  from '../../Component/Modals/AddItem';
+import AddItem from '../../Component/Modals/AddItem';
 import { indentData } from './data';
-
+import { IndentShortDetails } from './IndentShortDetails';
+import { AddIndent } from '../../Component/Modals/AddIndent';
+ 
 const ManageIndents = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [submit, setsubmit] = useState(false);
@@ -45,46 +45,30 @@ const ManageIndents = () => {
     const [totalCount, setTotalCount] = useState(0);
     const [studentdata, setStudentsdata] = useState([]);
     const [studentid, setstudentid] = useState([]);
-    const [selectedOrgDetails, setSelectedOrgDetails] = useState([]);
+
     const [getstudentsdataId, setgetstudentsdataId] = useState(null);
     const [isEditMode, setIsEditMode] = useState(false);
     const [selectedUserId, setSelectedUserId] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
-    const [basicdata, setbasicdata] = useState([]);
-    const [academicdata, setacademicdata] = useState([]);
-    const [docdata, setdocdata] = useState([]);
-    const [officialdata, setofficialdata] = useState([]);
-    const [idcardmodal, setidcardmodal] = useState(false);
+    const [selectedIndentDetails, setSelectedIndentDetails] = useState([]);
     const navigate = useNavigate();
     const pageSize = 10;
     const [showToast, setShowToast] = useState(false);
     const [toastVariant, setToastVariant] = useState('success');
     const [toastMessage, setToastMessage] = useState('');
-    const [status, setstatus] = useState();
-    const [showEditor, setShowEditor] = useState(false);
-    const [showvaliditymodal, setshowvaliditymodal] = useState(false);
-    const [cardpreview, setcardpreview] = useState(false);
-    const [capturedPhoto, setCapturedPhoto] = useState(null);
-    const [paymentmodal, setpaymentmodal] = useState(null);
-    const [percentage, setpercentage] = useState([]);
-    const [currentStep, setCurrentStep] = useState(0);
-    const [idcarddata, setidcarddata] = useState([]);
+
     const today = new Date().toISOString().split('T')[0];
     const [validtydata, setvaliditydata] = useState({
         fromdate: today,
         Todate: ''
     })
     const [imgurl, setimgurl] = useState('')
-    const [fingerprints, setFingerprints] = useState([null, null, null]);
-    const [mainnamehead, setmainnamehead] = useState('');
-    const [registrationnumforhead, setregistrationnumforhead] = useState('');
-    const [regMode, setregMode] = useState(false);
-    const [generatedregno, setgeneratedregno] = useState('');
+
     const [filtermodal, setfiltermodal] = useState(false);
     const [filterQueryString, setFilterQueryString] = useState('');
 
-
-    const [isaddItemModalOpen, setIsAddItemModalOpen] = useState(false);
+    const pageCounts = Math.ceil(totalCount / pageSize);
+    const [isaddIndentModalOpen, setIsAddIndentModalOpen] = useState(false);
 
 
     const displayToast = (message, variant = 'success') => {
@@ -99,98 +83,51 @@ const ManageIndents = () => {
         setfiltermodal(true);
     };
     const openModal = () => {
-        setIsModalOpen(true);
+        setIsAddIndentModalOpen(true);
     };
 
 
-    const openItemModal = () => {
-        setIsAddItemModalOpen(true);
-    };
 
-    const closeItemModal = () => {
-        setIsAddItemModalOpen(false);
-        setUpdatebtn(false);
-        handleClear();
-    };
+
+    // const closeModal = () => {
+    //     setIsAddItemModalOpen(false);
+    //     setUpdatebtn(false);
+    //     handleClear();
+    // };
     const closeModal = () => {
-        setIsModalOpen(false);
-        setIsEditMode(false);
-        setidcardmodal(false);
-        setFingerprints([null, null, null]);
-        setCapturedPhoto();
+        setIsAddIndentModalOpen(false)
+        // setIsEditMode(false);
+        // setidcardmodal(false);
+        // setFingerprints([null, null, null]);
+        // setCapturedPhoto();
     };
     const submitclose = () => {
         setsubmit(false);
     };
-    // const handleExportExcel = () => {
-    //   const token = window.localStorage.getItem('token');
-    //   const baseUrl = 'https://bgi.sortstring.com/api/v1/students/students/export/excel/';
-    //   const urlWithParams = filterQueryString ? `${baseUrl}?${filterQueryString}` : baseUrl;
 
-    //   fetch(urlWithParams, {
-    //     method: 'GET',
-    //     headers: {
-    //       'Authorization': `Token ${token}`
-    //     }
-    //   })
-    //     .then(response => {
-    //       if (!response.ok) throw new Error("Failed to download file");
-    //       return response.blob();
-    //     })
-    //     .then(blob => {
-    //       const url = window.URL.createObjectURL(blob);
-    //       const a = document.createElement('a');
-    //       a.href = url;
-    //       a.download = 'students_export.xlsx';
-    //       document.body.appendChild(a);
-    //       a.click();
-    //       a.remove();
-    //     })
-    //     .catch(error => {
-    //       displayToast('❌ Excel export failed', 'danger');
-    //       console.error("Download error:", error);
-    //     });
-    // };
-    const handleExportExcel = async () => {
-        try {
-            const urlWithParams = filterQueryString
-                ? `students/export-student-payments-to-xls/?${filterQueryString}`
-                : 'students/export-student-payments-to-xls/';
 
-            const blob = await getBlob(urlWithParams);
-
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'students_export.xlsx';
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-        } catch (error) {
-            displayToast('❌ Excel export failed', 'danger');
-        }
-    };
     const handleRowClick = async (userId, row) => {
-        const token = window.localStorage.getItem("token");
+
 
         try {
+            console.log("handelclick==>", row?.original)
             // const response = await fetch(`https://bgi.sortstring.com/api/v1/students/get-students/${userId}/`, {
-            //   method: 'GET',
-            //   headers: {
-            //     Authorization: `Token ${token}`
-            //   }
-            // });
-            const response = await getData(`students/get-students/${userId}/`)
+            // //   method: 'GET',
+            // //   headers: {
+            // //     Authorization: `Token ${token}`
+            // //   }
+            // // });
+            // const response = await getData(`students/get-students/${userId}/`)
 
-            // if (!employeeData || employeeData.error) {
-            //   throw new Error("Failed to fetch employee details");
-            // }
+            // // if (!employeeData || employeeData.error) {
+            // //   throw new Error("Failed to fetch employee details");
+            // // }
 
-            // const employeeData = await response.json();
-            setSelectedOrgDetails(response);
+            // // const employeeData = await response.json();
+            setSelectedIndentDetails(row?.original);
             // Save data in state or localStorage (depending on your use case)
-            localStorage.setItem("selectedEmployeeData", JSON.stringify(response));
-            console.log("✅ Employee Data:", response);
+            // localStorage.setItem("selectedEmployeeData", JSON.stringify(response));
+            // console.log("✅ Employee Data:", response);
 
             // Optionally, update state to use in a modal
             // setSelectedEmployeeData(employeeData); // if you're using it in a modal later
@@ -201,88 +138,36 @@ const ManageIndents = () => {
     };
 
 
-    const data = useMemo(() => {
-        return studentdata?.map((emp) => {
-            const course = emp?.provisional_academic_group?.specialization?.course?.alias || 'N/A';
-            const year = '2022–25'; // You can derive it from admission year + course duration if needed
-            const semester = emp.lag?.academic_group?.name || 'N/A';
-            const section = emp.lag?.name || '';
-            const semesterInfo = section ? `${semester} - ${section}` : semester;
-            setstatus(emp.status)
-            return {
-                id: emp.user_id,
-                // name: `${emp.first_name || ''} ${emp.middle_name=== null || "null" ||"Null"?'':emp.middle_name} ${emp.last_name || ''}`,
-                name: `${emp.first_name || ''} ${emp.middle_name && emp.middle_name.toLowerCase() !== 'null' ? emp.middle_name : ''} ${emp.last_name || ''}`,
-
-                email: emp.email || '',
-                contacts: emp.contact_numbers || [],
-                img: emp.profile_picture || null,
-                status: emp.status,
-                course,
-                year,
-                semester: semesterInfo,
-                lag: emp.lag,
-                status: emp.status,
-                permanent_registration_number: emp.permanent_registration_number,
-                fees_payment_status: emp.fees_payment_status,
-                registration_status: emp.registration_status,
-                provisional_fees_status: emp.provisional_fees_status,
-                handleRowClick: handleRowClick
-            };
-        });
-    }, [studentdata]);
 
 
-
-    // const handleSearch = (query) => {
-    //   setSearchQuery(query);
-    // };
-    // const filteredData = useMemo(() => {
-    //   if (!searchQuery) {
-    //     return data;
-    //   }
-    //   return data.filter((org) =>
-    //     org.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    //     org.email.toLowerCase().includes(searchQuery.toLowerCase())
-    //     // org.id.toString().includes(searchQuery)
-    //   );
-    // }, [searchQuery, data]);
-    const handleSearchold = async (query) => {
-        setSearchQuery(query);
-        const url = `students/get-students/?search=${query}&page=1`; // Always reset to page 1 when searching
-        const response = await getData(url);
-        setStudentsdata(response.results || []);
-        setTotalCount(response.count || 0);
-        setgetstudentsdataId(response?.results[0]?.user_id || null);
-    };
     const handleSearch = async (query) => {
-        setSearchQuery(query);
+        // setSearchQuery(query);
 
-        const queryParams = new URLSearchParams();
+        // const queryParams = new URLSearchParams();
 
-        // Add existing filter query params if any
-        if (filterQueryString) {
-            const existingParams = new URLSearchParams(filterQueryString);
-            existingParams.forEach((value, key) => {
-                queryParams.append(key, value);
-            });
-        }
+        // // Add existing filter query params if any
+        // if (filterQueryString) {
+        //     const existingParams = new URLSearchParams(filterQueryString);
+        //     existingParams.forEach((value, key) => {
+        //         queryParams.append(key, value);
+        //     });
+        // }
 
-        // Add search and reset to page 1
-        queryParams.set("search", query);
-        queryParams.set("page", "1");
+        // // Add search and reset to page 1
+        // queryParams.set("search", query);
+        // queryParams.set("page", "1");
 
-        const finalUrl = `students/get-students/?${queryParams.toString()}`;
+        // const finalUrl = `students/get-students/?${queryParams.toString()}`;
 
-        try {
-            const response = await getData(finalUrl);
-            setStudentsdata(response?.results || []);
-            setTotalCount(response?.count || 0);
-            setgetstudentsdataId(response?.results[0]?.user_id || null);
-            setFilterQueryString(queryParams.toString()); // Save updated string
-        } catch (err) {
-            console.error("Search failed:", err);
-        }
+        // try {
+        //     const response = await getData(finalUrl);
+        //     setStudentsdata(response?.results || []);
+        //     setTotalCount(response?.count || 0);
+        //     setgetstudentsdataId(response?.results[0]?.user_id || null);
+        //     setFilterQueryString(queryParams.toString()); // Save updated string
+        // } catch (err) {
+        //     console.error("Search failed:", err);
+        // }
     };
 
 
@@ -292,395 +177,185 @@ const ManageIndents = () => {
     }, []);
 
     const handleEditClick = (userId, row) => {
-        setSelectedUserId(userId);
-        setregistrationnumforhead(row?.original.permanent_registration_number);
-        setmainnamehead(row.original.name);
-        setstudentid(userId);
-        setIsEditMode(true);
-        setregMode(false);
-        setIsModalOpen(true); // open the modal
+        setIsAddIndentModalOpen(true)
+        // setSelectedUserId(userId);
+        // setregistrationnumforhead(row?.original.permanent_registration_number);
+        // setmainnamehead(row.original.name);
+        // setstudentid(userId);
+        // setIsEditMode(true);
+        // setregMode(false);
+        // setIsModalOpen(true); // open the modal
     };
-    const handleregisClick = (userId, row) => {
-        setSelectedUserId(userId);
-        setregistrationnumforhead(row.original.permanent_registration_number);
-        setmainnamehead(row.original.name);
-        setstudentid(userId);
-        setIsEditMode(true);
-        setregMode(true);
-        setIsModalOpen(true); // open the modal
-    };
-    const handleStatus = async (row) => {
-        const newStatus = !row.original.status;
-        setstatus(newStatus) // Toggle status for that specific row
-        // Update the status for that row in your table
-        row.original.status = newStatus;
-
-        // Optionally, make an API call here to update the status on the backend
-        // const url = `administration/organizations/${row.original.id}/`;
-        const url = `students/update-student-status/${row.original.id}/`;
-        const response = await patchData(url, { status: newStatus });
-
-        if (response && !response.error) {
-            displayToast('Status Updated successfully!', 'success');
-            // getorgdata()
-        } else if (response && response.error) {
-            const errorMsg = response.error?.[0] || 'Error Updating Status.';
-            displayToast(errorMsg, 'danger');
-        } else {
-            displayToast('Unexpected error occurred.', 'danger');
-        }
-        // Log or handle response as needed
-        console.log("Updated Status:", response);
-    };
-    const handlegenerateIdcard = async (id) => {
-        let url = `students/get-student-attendance/${id}/`;
-        let res = await getData(url);
-        if (res) {
-            setidcarddata(res);
-        }
-        console.log("responseidcard--", res);
-    }
 
 
-const columns = useMemo(() => [
-  {
-    Header: <input type="checkbox" />,
-    accessor: 'checkbox',
-    Cell: ({ row }) => (
-      <input
-        type="checkbox"
-        checked={row.isSelected}
-        onChange={() => row.toggleRowSelected()}
-      />
-    ),
-  },
-  {
-    Header: 'Date of Indent',
-    accessor: 'date',
-    Cell: ({ value }) => <p className="item-values">{value}</p>,
-  },
-  {
-    Header: 'Indent No',
-    accessor: 'indent_no',
-    Cell: ({ value }) => <p className="item-values">{value}</p>,
-  },
-  {
-    Header: 'Department',
-    accessor: 'department',
-    Cell: ({ value }) => <p className="item-values">{value}</p>,
-  },
-  {
-    Header: 'Indent Priority',
-    accessor: 'priority',
-    Cell: ({ value }) => <p className="item-values">{value}</p>,
-  },
-  {
-    Header: 'Store Location',
-    accessor: 'store_location',
-    Cell: ({ value }) => <p className="item-values">{value}</p>,
-  },
-  {
-    Header: 'Status',
-    accessor: 'status',
-    Cell: ({ value }) => {
-      let color = '#39886F'; // default green for APPROVED
-
-      if (value === 'OPEN') color = '#FF9B04';
-      else if (value === 'REJECTED') color = '#FF5C5C';
-
-      return (
-        <p style={{
-          color,
-          fontWeight: 700,
-          fontSize: '14px',
-          margin: 0,
-          textTransform: 'uppercase',
-        }}>
-          {value}
-        </p>
-      );
-    },
-  },
-  {
-    Header: 'Raised By',
-    accessor: 'raised_by',
-    Cell: ({ row }) => (
-      <div style={{ lineHeight: 1.2 }}>
-        <p className="item-values">{row.original.raised_by}</p>
-        <p className="item-values">({row.original.raised_on})</p>
-      </div>
-    ),
-  },
-  {
-    Header: 'Action',
-    disableSortBy: true,
-    Cell: ({ row }) => (
-      <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-        {/* <img src={viewIcon} alt="View" onClick={() => handleView(row.original)} style={{ cursor: 'pointer' }} />
-        <img src={editIcon} alt="Edit" onClick={() => handleEdit(row.original)} style={{ cursor: 'pointer' }} />
-        <img src={downloadIcon} alt="Download" onClick={() => handleDownload(row.original)} style={{ cursor: 'pointer' }} /> */}
-      </div>
-    ),
-  },
-], []);
-
-
-    const handlePageChange = (data) => {
-        setCurrentPage(data.selected); // updates useEffect trigger
-    };
-    // useEffect(() => {
-    //   const fetchStudents = async (page = 0) => {
-    //     const url = `students/get-students/?page=${page + 1}`; 
-    //     const response = await getData(url);
-    //     setStudentsdata(response.results || []);
-    //     setTotalCount(response.count || 0);
-    //     setgetstudentsdataId(response.results[0]?.user_id)
-    //   };
-    //   fetchStudents(currentPage)
-    // }, [currentPage, generatedregno])
-    useEffect(() => {
-        const fetchStudents = async (page = 0) => {
-            const url = filterQueryString
-                ? `students/get-students/?${filterQueryString}&page=${page + 1}`
-                : `students/get-students/?page=${page + 1}`;
-            const response = await getData(url);
-            setStudentsdata(response?.results || []);
-            setTotalCount(response?.count || 0);
-            setgetstudentsdataId(response?.results[0]?.user_id);
-        };
-        fetchStudents(currentPage);
-    }, [currentPage, generatedregno, filterQueryString]);
-
-    const pageCounts = Math.ceil(totalCount / pageSize);
-    console.log("pageCounts--newSt", pageCounts)
-
-
-    useEffect(() => {
-        const fetchStudents = async (page = 0) => {
-            const url = `students/get-students/?page=${page + 1}`; // API is 1-indexed
-            const response = await getData(url);
-            setStudentsdata(response?.results || []);
-            setTotalCount(response?.count || 0);
-            setgetstudentsdataId(response?.results[0]?.user_id)
-        };
-        fetchStudents(currentPage)
-    }, [status])
-
-
-    useEffect(() => {
-        const handleRowClick = async () => {
-            const token = window.localStorage.getItem("token");
-
-            try {
-                // const response = await fetch(`https://bgi.sortstring.com/api/v1/students/get-students/${getstudentsdataId}/`, {
-                //   method: 'GET',
-                //   headers: {
-                //     Authorization: `Token ${token}`
-                //   }
-                // });
-                const response = await getData(`students/get-students/${getstudentsdataId}/`)
-
-                // if (!response.ok) {
-                //   throw new Error("Failed to fetch employee details");
-                // }
-
-                // const employeeData = await response.json();
-                setSelectedOrgDetails(response);
-                // Save data in state or localStorage (depending on your use case)
-                localStorage.setItem("selectedEmployeeData", JSON.stringify(response));
-                console.log("✅ Employee Data:", response);
-
-                // Optionally, update state to use in a modal
-                // setSelectedEmployeeData(employeeData); // if you're using it in a modal later
-
-            } catch (error) {
-                console.error("❌ Error fetching employee data:", error);
-            }
-        };
-        handleRowClick()
-    }, [getstudentsdataId]);
-    // useEffect(() => {
-    //   const fetchAllData = async () => {
-    //     if (isEditMode && selectedUserId) {
-    //       try {
-    //         const token = window.localStorage.getItem("token");
-
-    //         const [basicRes, academicRes, officialRes, uploadDocRes] = await Promise.all([
-    //           fetch(`https://bgi.sortstring.com/api/v1/students/student-onboarding-basic-details/${selectedUserId}/`, { headers: { Authorization: `Token ${token}` } }),
-    //           fetch(`https://bgi.sortstring.com/api/v1/students/get-student-onboarding-qualification-details/${selectedUserId}/`, { headers: { Authorization: `Token ${token}` } }),
-    //           fetch(`https://bgi.sortstring.com/api/v1/students/get-student-onboarding-official-details/${selectedUserId}/`, { headers: { Authorization: `Token ${token}` } }),
-    //           fetch(`https://bgi.sortstring.com/api/v1/students/student-onboarding-documents-details/get-student-documents/?student_id=${selectedUserId}`, { headers: { Authorization: `Token ${token}` } }),
-    //           // fetch(`staff/attendance-settings/${selectedUserId}/`, { headers: { Authorization: `Token ${token}` } }),
-    //         ]);
-
-    //         const basicData = await basicRes.json();
-    //         const academicData = await academicRes.json();
-    //         const officialData = await officialRes.json();
-    //         const uploadData = await uploadDocRes.json();
-
-    //         if (basicData) {
-    //           setbasicdata(basicData);
-    //         }
-    //         if (academicData) {
-    //           setacademicdata(academicData);
-    //         }
-    //         if (officialData) {
-    //           setofficialdata(officialData);
-    //         }
-    //         if (uploadData) {
-    //           setdocdata(uploadData);
-    //         }
-
-
-    //       } catch (err) {
-    //         console.error("❌ Failed to fetch employee data:", err);
-    //       }
-    //     }
-    //   };
-
-    //   fetchAllData();
-    // }, [isEditMode, selectedUserId, currentStep]);
-
-
-    useEffect(() => {
-        const fetchAllData = async () => {
-            if (isEditMode && selectedUserId) {
-                try {
-                    const [
-                        basicData,
-                        academicData,
-                        officialData,
-                        uploadData
-                    ] = await Promise.all([
-                        getData(`students/student-onboarding-basic-details/${selectedUserId}/`),
-                        getData(`students/get-student-onboarding-qualification-details/${selectedUserId}/`),
-                        getData(`students/get-student-onboarding-official-details/${selectedUserId}/`),
-                        getData(`students/student-onboarding-documents-details/get-student-documents/?student_id=${selectedUserId}`),
-                    ]);
-
-                    if (basicData) setbasicdata(basicData);
-                    if (academicData) setacademicdata(academicData);
-                    if (officialData) setofficialdata(officialData);
-                    if (uploadData) setdocdata(uploadData);
-
-                } catch (err) {
-                    console.error("❌ Failed to fetch student onboarding data:", err);
-                }
-            }
-        };
-
-        fetchAllData();
-    }, [isEditMode, selectedUserId, currentStep]);
-
-    const getallpercentages = async () => {
-        let url = 'students/student-dashboard-percentages/';
-        let res = await getData(url);
-        if (res) {
-            setpercentage(res)
-        }
-    }
-    useEffect(() => {
-        getallpercentages();
-    }, [generatedregno])
-    useEffect(() => {
-        getallpercentages();
-    }, [])
     const searchInputRef = useRef(null);
-
     useEffect(() => {
         if (searchInputRef.current) {
             searchInputRef.current.focus();
         }
     }, []);
+    const columns = useMemo(() => [
+        {
+            Header: <input type="checkbox" />,
+            accessor: 'checkbox',
+            Cell: ({ row }) => (
+
+                <input
+                    type="checkbox"
+                    checked={row.isSelected}
+                    onChange={() => row.toggleRowSelected()}
+                />
+            ),
+        },
+        {
+            Header: 'Date of Indent',
+            accessor: 'date',
+            Cell: ({ value, row }) => (
+                <div
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => handleRowClick(row.original.id, row)}
+                >
+                    <p className="item-values" style={{ color: '#222F3E', fontWeight: 'bold', }}>{value}</p>
+                </div>),
+        },
+        {
+            Header: 'Indent No',
+            accessor: 'indent_no',
+            Cell: ({ value }) => <p className="item-values">{value}</p>,
+        },
+        {
+            Header: 'Department',
+            accessor: 'department',
+            Cell: ({ value }) => <p className="item-values">{value}</p>,
+        },
+        {
+            Header: 'Indent Priority',
+            accessor: 'priority',
+            Cell: ({ value }) => <p className="item-values">{value}</p>,
+        },
+        {
+            Header: 'Store Location',
+            accessor: 'store_location',
+            Cell: ({ value }) => <p className="item-values">{value}</p>,
+        },
+        {
+            Header: 'Status',
+            accessor: 'status',
+            Cell: ({ value }) => {
+                let color = '#39886F'; // default green for APPROVED
+
+                if (value === 'OPEN') color = '#FF9B04';
+                else if (value === 'REJECTED') color = '#FF5C5C';
+
+                return (
+                    <p style={{
+                        textAlign: 'start',
+                        color,
+                        fontWeight: 'bold',
+                        fontSize: '14px',
+                        margin: 0,
+                        textTransform: 'uppercase',
+                    }}>
+                        {value}
+                    </p>
+                );
+            },
+        },
+        {
+            Header: 'Raised By',
+            accessor: 'raised_by',
+            Cell: ({ row }) => (
+                <div style={{ lineHeight: 1.2 }}>
+                    <p className="item-values">{row.original.raised_by}</p>
+                    <p className="item-values raiseOn">({row.original.raised_on})</p>
+                </div>
+            ),
+        },
+        {
+            Header: 'Action',
+            disableSortBy: true,
+            Cell: ({ row }) => (
+                <div style={{ display: 'flex', gap: '12px', alignItems: 'center', }}>
+                    {/* {/* <img src={viewIcon} alt="View" onClick={() => handleView(row.original)} style={{ cursor: 'pointer' }} /> */}
+                    <img src={edit} alt="Edit" onClick={() => handleEditClick(row.original)} style={{ cursor: 'pointer' }} />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style={{ cursor: 'pointer', color: '#7A4FF5' }}>
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                    </svg>
+
+
+                    {/* <img src={downloadIcon} alt="Download" onClick={() => handleDownload(row.original)} style={{ cursor: 'pointer' }} /> */}
+                </div>
+            ),
+        },
+    ], []);
+
+
+    const handlePageChange = (data) => {
+        setCurrentPage(data.selected); // updates useEffect trigger
+    };
+
+
+
+
+
+
     return (
         <>
             <div className="dashboard">
                 {/* Content for the Dashboard */}
                 <div style={{ display: "flex", justifyContent: 'space-between' }}>
                     <div >
-                        <h2 className='main-heading'>Manage Items</h2>
+                        <h2 className='main-heading'>Manage Indents</h2>
                     </div>
                     <div >
 
-                        <button className='add-btn' onClick={openItemModal}>
+                        <button className='add-btn' onClick={openModal}>
                             <span className='me-2'>
                                 <svg width="12" height="12" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M20.4286 13.3537H12.5714V21.2108C12.5714 21.6276 12.4059 22.0273 12.1112 22.322C11.8165 22.6167 11.4168 22.7822 11 22.7822C10.5832 22.7822 10.1835 22.6167 9.88883 22.322C9.59413 22.0273 9.42857 21.6276 9.42857 21.2108V13.3537H1.57143C1.15466 13.3537 0.754961 13.1881 0.460261 12.8934C0.165561 12.5987 0 12.199 0 11.7822C0 11.3655 0.165561 10.9658 0.460261 10.6711C0.754961 10.3764 1.15466 10.2108 1.57143 10.2108H9.42857V2.35366C9.42857 1.93689 9.59413 1.53719 9.88883 1.24249C10.1835 0.947787 10.5832 0.782227 11 0.782227C11.4168 0.782227 11.8165 0.947787 12.1112 1.24249C12.4059 1.53719 12.5714 1.93689 12.5714 2.35366V10.2108H20.4286C20.8453 10.2108 21.245 10.3764 21.5397 10.6711C21.8344 10.9658 22 11.3655 22 11.7822C22 12.199 21.8344 12.5987 21.5397 12.8934C21.245 13.1881 20.8453 13.3537 20.4286 13.3537Z" fill="white" />
                                 </svg>
-                            </span>Create Item
+                            </span>Create Indent
                         </button>
 
                     </div>
-                    {/* <div>
-            <a
-              href="/admissionform"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="add-btn"
-              style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px' }}
-            >
-              <span className='me-2'>
-                <svg width="12" height="12" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M20.4286 13.3537H12.5714V21.2108C12.5714 21.6276 12.4059 22.0273 12.1112 22.322C11.8165 22.6167 11.4168 22.7822 11 22.7822C10.5832 22.7822 10.1835 22.6167 9.88883 22.322C9.59413 22.0273 9.42857 21.6276 9.42857 21.2108V13.3537H1.57143C1.15466 13.3537 0.754961 13.1881 0.460261 12.8934C0.165561 12.5987 0 12.199 0 11.7822C0 11.3655 0.165561 10.9658 0.460261 10.6711C0.754961 10.3764 1.15466 10.2108 1.57143 10.2108H9.42857V2.35366C9.42857 1.93689 9.59413 1.53719 9.88883 1.24249C10.1835 0.947787 10.5832 0.782227 11 0.782227C11.4168 0.782227 11.8165 0.947787 12.1112 1.24249C12.4059 1.53719 12.5714 1.93689 12.5714 2.35366V10.2108H20.4286C20.8453 10.2108 21.245 10.3764 21.5397 10.6711C21.8344 10.9658 22 11.3655 22 11.7822C22 12.199 21.8344 12.5987 21.5397 12.8934C21.245 13.1881 20.8453 13.3537 20.4286 13.3537Z" fill="white" />
-                </svg>
-              </span>
-              New Provisional Form
-            </a>
-          </div> */}
+
 
                 </div>
                 <div className="dashboard-cards row mt-2" style={{ padding: "20px" }} >
                     <ProfileStatus
-                        label="No Of Products"
+                        label="APPROVED"
                         icon={profileicon}
-                        percentage={percentage.all_students}
+                        // percentage={percentage.all_students}
                         iconColor="#39886F"
                         bgColor="#39886F0D"
                         circleColor=" #39886F"
-                        numbers={percentage.all_students}
+                        numbers="100"
                     />
                     <ProfileStatus
-                        label="Item Groups"
+                        label="OPEN"
                         icon={profileicon2}
-                        percentage={percentage.provisional_fees_percentage}
+                        // percentage={percentage.provisional_fees_percentage}
                         iconColor="#0E9DED"
                         bgColor="#0E9DED0D"
                         circleColor="#0E9DED"
-                        numbers={percentage.provisional_fees_count}
+                        numbers="10"
                     />
                     <ProfileStatus
-                        label="Record Level"
+                        label="REJECTED"
                         icon={profileicon3}
-                        percentage={percentage.registration_percentage}
+                        // percentage={percentage.registration_percentage}
                         iconColor=" #FF9B04"
                         bgColor="#FF9B040D"
                         circleColor=" #FF9B04"
-                        numbers={percentage.registration_count}
+                        numbers="2"
                     />
-                    <ProfileStatus
-                        label="Min Stock Level"
-                        icon={profileicon4}
-                        percentage={percentage.fees_payment_percentage}
-                        iconColor=" #2A62C8"
-                        bgColor=" #2A62C80D"
-                        circleColor=" #2A62C8"
-                        numbers={percentage.fees_payment_count}
-                    />
-                    {/* <ProfileStatus
-            label="ID Card/Biometric"
-            icon={profileicon5}
-            percentage={percentage.id_card_bometric_percentage}
-            iconColor=" #F19289"
-            bgColor=" #F192890D"
-            circleColor="#F19289"
-            numbers={percentage.id_card_bometric_count}
-          /> */}
+
                 </div>
                 <div className='row mt-2'>
-                    <div className="col-md-12">
+                    <div className="col-md-9">
                         <div className="row" style={{ alignItems: 'center' }}>
                             <div className="col-md-6">
-                                <h4 className='text-primary'>All Items {/*totalCount*/}</h4>
+                                {/* <h4 className='text-primary'>All Items totalCount</h4> */}
                             </div>
                             <div className="col-md-6">
                                 <div style={{ display: "flex", justifyContent: 'end' }}>
@@ -694,9 +369,9 @@ const columns = useMemo(() => [
                                     </button>
                                     <button
                                         className="filter-btn"
-                                        style={{ background: '#7F56DA', border: '1px solid black', height: '43px', color: "white",  }}
-                                        // onClick={handleFilterClick}
-                                        onClick={handleExportExcel}
+                                        style={{ background: '#7F56DA', border: ' ', height: '43px', color: "white", }}
+                                    // onClick={handleFilterClick}
+                                    // onClick={handleExportExcel}
                                     >
                                         <img src={exporticon} alt='Filter icon'></img>
                                     </button>
@@ -705,30 +380,34 @@ const columns = useMemo(() => [
                         </div>
                         <div className="row">
                             <div className="col-md-12">
-                                {/* <Table columns={columns}
-                  pageCounts={pageCounts} handlePageChange={handlePageChange} selectedOrgDetails={selectedOrgDetails} data={data} /> */}
-                                {data.length > 0 ? (
-                                    <Table
-                                        columns={columns}
-                                        pageCounts={pageCounts}
-                                        handlePageChange={handlePageChange}
-                                        selectedOrgDetails={selectedOrgDetails}
-                                        data={indentData}
-                                    />
-                                ) : (
+
+                                {/* {data.length > 0 ? ( */}
+                                <Table
+                                    columns={columns}
+                                    pageCounts={pageCounts}
+                                    handlePageChange={handlePageChange}
+                                    selectedOrgDetails={selectedIndentDetails}
+                                    data={indentData}
+                                />
+                                {/* ) : (
                                     <div className="no-data-message" style={{ textAlign: 'center', padding: '40px', color: '#888' }}>
                                         No data available
                                     </div>
-                                )}
+                                )} */}
 
                             </div>
+
                         </div>
+                    </div>
+
+                    <div className="col-md-3">
+                        <IndentShortDetails navigate={navigate} selectedIndentDetails={selectedIndentDetails} />
                     </div>
 
                 </div>
             </div >
             <div>
-                <AddItem isOpen={isaddItemModalOpen} onClose={closeItemModal}/>
+                <AddIndent isOpen={isaddIndentModalOpen} onClose={closeModal} />
             </div>
 
 
@@ -760,7 +439,7 @@ const columns = useMemo(() => [
                 </div>
 
             )}
-           
+
         </>
     );
 };
