@@ -8,8 +8,11 @@ import ConfirmationModal from './Modals/ConfirmationModal';
 import indentImg from '../assets/icons/file-check-alt-svgrepo-com.svg'
 import stockImg from '../assets/icons/box-minimalistic-svgrepo-com.svg'
 import itemImg from '../assets/icons/menu-2-svgrepo-com.svg'
-import poImg from '../assets/icons/card-emulator-pro-svgrepo-com.svg'
+import poImg from '../assets/icons/credit-card-02-svgrepo-com.svg'
 import vendorImg from '../assets/icons/users-svgrepo-com.svg'
+import barchart from '../assets/icons/bar-chart-line-svgrepo-com.svg'
+
+
 export const Sidebar = () => {
   const location = useLocation();
   const [openMenu, setOpenMenu] = useState(null);
@@ -155,19 +158,24 @@ export const Sidebar = () => {
               <span>Manage Vendors</span>
             </Link>
           </li>
-
-
-
+            <li>
+            <Link
+              to="/manageReports"
+              className={location.pathname === "/manageReports" ? "active" : ""}>
+              <img src={barchart} alt="Manage Report Icon" style={{ width: '20px', height: '20px',borderRadius:"0px" }} />
+              <span>MIS Reports</span>
+            </Link>
+          </li>
         </ul>
       </nav>
 
       {/* Bottom icons/profile */}
       <div style={{ padding: '12px 20px' }}>
         <ul className="sidebar-ul bottom-section" style={{ gap: '10px', display: 'inline-flex' }}>
-
+{/* 
           <li>
             <img src={profileimg} alt="Profile" style={{ position: "relative", left: "-3px" }} />
-          </li>
+          </li> */}
           <li style={{ display: 'flex' }}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={toggleSidebar}>
               <g clipPath="url(#clip0_62_1750)">

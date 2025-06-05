@@ -354,7 +354,7 @@ const closeIssueStockModal=()=>{
                                         columns={columns}
                                         pageCounts={pageCounts}
                                         handlePageChange={handlePageChange}
-                                        selectedStockDetails={selectedStockDetails}
+                                        selectedData={selectedStockDetails}
                                         data={transactionsData}
                                     />
                                 {/* ) : ( */}

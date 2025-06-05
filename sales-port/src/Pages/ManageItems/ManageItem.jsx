@@ -292,8 +292,8 @@ const ManageItems = () => {
 
                 return (
                     <div style={{ textAlign: 'start' }}>
-                        <p style={{ color: '#222F3E', fontWeight: 500, margin: 0,textAlign: 'start' }}>{lastPurchased}</p>
-                        <p style={{ color: '', fontWeight: 400, margin: 0 ,textAlign: 'start'}}>({supplier})</p>
+                        <p style={{ color: '#222F3E', fontWeight: 500, margin: 0, textAlign: 'start' }}>{lastPurchased}</p>
+                        <p style={{ color: '', fontWeight: 400, margin: 0, textAlign: 'start' }}>({supplier})</p>
                     </div>
                 );
             },
@@ -442,7 +442,7 @@ const ManageItems = () => {
                                     </button>
                                     <button
                                         className="filter-btn"
-                                        style={{ background: '#7F56DA', border: '1px solid black', height: '43px', color: "white", border: "none" }}
+                                        style={{ background: '#7F56DA', height: '43px', color: "white", border: "none" }}
                                     // onClick={handleFilterClick}
                                     // onClick={handleExportExcel}
                                     >
@@ -460,7 +460,7 @@ const ManageItems = () => {
                                     columns={columns}
                                     pageCounts={pageCounts}
                                     handlePageChange={handlePageChange}
-                                    selectedOrgDetails={selectedOrgDetails}
+                                   selectedData={selectedOrgDetails}
                                     data={mockData}
                                 />
                                 {/* ) : (

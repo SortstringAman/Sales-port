@@ -378,7 +378,7 @@ const ManageIndents = () => {
                                     columns={columns}
                                     pageCounts={pageCounts}
                                     handlePageChange={handlePageChange}
-                                    selectedOrgDetails={selectedIndentDetails}
+                                   selectedData={selectedIndentDetails}
                                     data={indentData}
                                 />
                                 {/* ) : (

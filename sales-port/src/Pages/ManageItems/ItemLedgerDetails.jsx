@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { dummyLedgerData } from "./data";
 import ProfileStatus from "../../Component/ProfileStatus";
 import profileicon from '../../assets/icons/solar_square-academic-cap-2-outline.svg'
@@ -39,7 +39,7 @@ const ItemLedgerDetails = () => {
         }
     }, []);
 
-
+const navigate = useNavigate()
 
     const handlePageChange = (data) => {
         setCurrentPage(data.selected); // updates useEffect trigger
@@ -92,73 +92,64 @@ const ItemLedgerDetails = () => {
 
 
     const debouncedSearch = useMemo(() => debounce(handleSearch, 100), []);
+const columns = useMemo(() => [
+  {
+    Header: 'Date of Transaction',
+    accessor: 'date',
+    disableSortBy: false,
+    Cell: ({ row }) => (
+      <div
+        style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}
+        onClick={() => handleRowClick(row.original.id, row)}
+      >
+        <div>
+          <p style={{ margin: 0, color: '#222F3E', fontWeight: 'bold', textAlign: 'start' }}>
+            {row.original.date}
+          </p>
+        </div>
+      </div>
+    ),
+  },
+  {
+    Header: 'Transaction No.',
+    accessor: 'transactionNo',
+    disableSortBy: false,
+    Cell: ({ value }) => (
+      <p style={{ margin: 0, fontWeight: 500, color: '#222F3E', textAlign: 'start' }}>{value}</p>
+    ),
+  },
+  {
+    Header: () => <div style={{ textAlign: 'right', width: '100%' }}>Credit</div>,
+    accessor: 'credit',
+    disableSortBy: true, // ✅ Disable sorting
+    Cell: ({ value }) => (
+      <p style={{ margin: 0, fontWeight: 500, color: '#222F3E', textAlign: 'right' }}>
+        {value.toFixed(2)}
+      </p>
+    ),
+  },
+  {
+    Header: () => <div style={{ textAlign: 'right', width: '100%' }}>Debit</div>,
+    accessor: 'debit',
+    disableSortBy: true, // ✅ Disable sorting
+    Cell: ({ value }) => (
+      <p style={{ margin: 0, fontWeight: 500, color: '#222F3E', textAlign: 'right' }}>
+        {value.toFixed(2)}
+      </p>
+    ),
+  },
+  {
+    Header: () => <div style={{ textAlign: 'right', width: '100%' }}>Balance</div>,
+    accessor: 'balance',
+    disableSortBy: true, // ✅ Disable sorting
+    Cell: ({ value }) => (
+      <p style={{ margin: 0, fontWeight: 500, color: '#222F3E', textAlign: 'right' }}>
+        {value.toFixed(2)}
+      </p>
+    ),
+  },
+], []);
 
-    const columns = useMemo(() => [
-
-
-        {
-            Header: 'Date of Transaction',
-            accessor: 'date', // changed from 'img' to 'name'
-            Cell: ({ row }) => (
-                <div style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }} onClick={() => handleRowClick(row.original.id, row)}>
-                    <div>
-                        <p style={{ margin: 0, color: '#222F3E', fontWeight: 'bold', textAlign: 'start' }}>{row.original.date}</p>
-                        {/* <p style={{ margin: 0, textAlign: 'start', color: '#222F3E', fontWeight: 'bold', fontSize: '11px' }}>({row.original.sku_code})</p> */}
-                    </div>
-                </div>
-            ),
-        },
-
-
-
-        {
-            Header: 'Transaction No.',
-            accessor: 'transactionNo',
-            Cell: ({ value }) => (
-                <p style={{ margin: 0, fontWeight: 500, color: '#222F3E', textAlign: 'start' }}>{value}</p>
-            ),
-        },
-        {
-            Header: () => (
-                <div style={{ textAlign: 'right', width: '100%' }}>
-                    Credit
-                </div>
-            ),
-            accessor: 'credit',
-            Cell: ({ value }) => (
-                <p style={{ margin: 0, fontWeight: 500, color: '#222F3E', textAlign: 'right' }}>
-                    {value.toFixed(2)}
-                </p>
-            ),
-        },
-        {
-            Header: () => (
-                <div style={{ textAlign: 'right', width: '100%' }}>
-                    Debit
-                </div>
-            ),
-            accessor: 'debit',
-            Cell: ({ value }) => (
-                <p style={{ margin: 0, fontWeight: 500, color: '#222F3E', textAlign: 'right' }}>
-                    {value.toFixed(2)}
-                </p>
-            ),
-        },
-        {
-            Header: () => (
-                <div style={{ textAlign: 'right', width: '100%' }}>
-                    Balance
-                </div>
-            ),
-            accessor: 'balance',
-            Cell: ({ value }) => (
-                <p style={{ margin: 0, fontWeight: 500, color: '#222F3E', textAlign: 'right' }}>
-                    {value.toFixed(2)}
-                </p>
-            ),
-        },
-
-    ], []);
 
     return (
         <>
@@ -166,9 +157,7 @@ const ItemLedgerDetails = () => {
                 {/* Content for the Dashboard */}
                 <div style={{ display: "flex", justifyContent: 'space-between' }}>
                     <div >
-                        <h2 className='main-heading'  > <span style={{ textDecoration: 'underline' }}>Manage Items</span>
-
-
+                        <h2 className='main-heading'  > <span style={{ textDecoration: 'underline',cursor:'pointer' }} onClick={()=>navigate('/manageItems')}>Manage Items</span>
                             <svg
                                 class="rightarrow"
                                 viewBox="0 0 24 24"

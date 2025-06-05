@@ -33,7 +33,7 @@ import debounce from 'lodash.debounce';
 import { dummydata } from './data';
 import { VendorShortDetails } from './VendorsShortDetails';
 import { AddNewVendor } from '../../Component/Modals/AddVendor.jsX';
- 
+
 
 const ManageVendors = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -118,7 +118,7 @@ const ManageVendors = () => {
     const submitclose = () => {
         setsubmit(false);
     };
-    
+
     // const handleExportExcel = async () => {
     //     try {
     //         const urlWithParams = filterQueryString
@@ -199,7 +199,7 @@ const ManageVendors = () => {
         // setregMode(false);
         // setIsModalOpen(true); // open the modal
     };
-    
+
     // const handleStatus = async (row) => {
     //     const newStatus = !row.original.status;
     //     setstatus(newStatus) // Toggle status for that specific row
@@ -223,7 +223,7 @@ const ManageVendors = () => {
     //     // Log or handle response as needed
     //     console.log("Updated Status:", response);
     // };
-  
+
     const columns = useMemo(
         () => [
             {
@@ -234,7 +234,7 @@ const ManageVendors = () => {
                         style={{ cursor: 'pointer' }}
                         onClick={() => handleRowClick(row.original.id, row)}
                     >
-                        <p style={{  color: '#222F3E',  fontWeight: 'bold', textAlign: 'start', margin: 0 }}>
+                        <p style={{ color: '#222F3E', fontWeight: 'bold', textAlign: 'start', margin: 0 }}>
                             {row.original.name}
                         </p>
                         <p style={{ textAlign: 'left', margin: 0 }}>
@@ -247,7 +247,7 @@ const ManageVendors = () => {
                 Header: 'Vendor Type',
                 accessor: 'vendor_type',
                 Cell: ({ value, row }) => {
-                    
+
                     return (
                         <p style={{ textAlign: 'left', color: '#222F3E', fontWeight: 500, margin: 0 }}>
                             {value || '-'}
@@ -259,7 +259,7 @@ const ManageVendors = () => {
             {
                 Header: 'Contacts',
                 accessor: 'contacts',
-                      disableSortBy: true,
+                disableSortBy: true,
                 Cell: ({ row }) => {
                     const contact =
                         row.original.contacts.find(c => c.contact_type === 'Mobile') ||
@@ -269,7 +269,7 @@ const ManageVendors = () => {
 
                     return (
                         <div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '5px',color: '#222F3E' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '5px', color: '#222F3E' }}>
                                 <img src={phone} alt="Phone" />
                                 <p>{number}</p>
                             </div>
@@ -277,7 +277,7 @@ const ManageVendors = () => {
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
                                     <img
                                         src={whatsapp}
-                                        style={{ width: '12px', height: '12px',color: '#222F3E', }}
+                                        style={{ width: '12px', height: '12px', color: '#222F3E', }}
                                         alt="WhatsApp"
                                     />
                                     <p>{number}</p>
@@ -290,7 +290,7 @@ const ManageVendors = () => {
             {
                 Header: 'Email',
                 accessor: 'email',
-                      disableSortBy: true,
+                disableSortBy: true,
                 Cell: ({ value }) => (
                     <p style={{ textAlign: 'left', color: '#222F3E', fontWeight: 500, margin: 0 }}>
                         {value || '-'}
@@ -300,7 +300,7 @@ const ManageVendors = () => {
             {
                 Header: 'Location',
                 accessor: 'location',
-                      disableSortBy: true,
+                disableSortBy: true,
                 Cell: ({ value }) => (
                     <p style={{ textAlign: 'left', color: '#222F3E', fontWeight: 500, margin: 0 }}>
                         {value || '-'}
@@ -309,7 +309,7 @@ const ManageVendors = () => {
             },
             {
                 Header: 'Action',
-                      disableSortBy: true,
+                disableSortBy: true,
                 Cell: ({ row }) => (
                     <div
                         style={{ display: 'flex', gap: '10px' }}
@@ -347,7 +347,7 @@ const ManageVendors = () => {
         setCurrentPage(data.selected); // updates useEffect trigger
     };
 
- 
+
     const pageCounts = Math.ceil(totalCount / pageSize);
     console.log("pageCounts--newSt", pageCounts)
 
@@ -356,46 +356,46 @@ const ManageVendors = () => {
 
 
     // useEffect(() => {
-        // const handleRowClick = async () => {
-          
-        //     const token = window.localStorage.getItem("token");
+    // const handleRowClick = async () => {
 
-        //     try {
-        //         // const response = await fetch(`https://bgi.sortstring.com/api/v1/students/get-students/${getstudentsdataId}/`, {
-        //         //   method: 'GET',
-        //         //   headers: {
-        //         //     Authorization: `Token ${token}`
-        //         //   }
-        //         // });
-        //         const response = await getData(`students/get-students/${getstudentsdataId}/`)
+    //     const token = window.localStorage.getItem("token");
 
-        //         // if (!response.ok) {
-        //         //   throw new Error("Failed to fetch employee details");
-        //         // }
+    //     try {
+    //         // const response = await fetch(`https://bgi.sortstring.com/api/v1/students/get-students/${getstudentsdataId}/`, {
+    //         //   method: 'GET',
+    //         //   headers: {
+    //         //     Authorization: `Token ${token}`
+    //         //   }
+    //         // });
+    //         const response = await getData(`students/get-students/${getstudentsdataId}/`)
 
-        //         // const employeeData = await response.json();
-        //         setselectedVendor(response);
-        //         // Save data in state or localStorage (depending on your use case)
-        //         localStorage.setItem("selectedEmployeeData", JSON.stringify(response));
-        //         console.log("✅ Employee Data:", response);
+    //         // if (!response.ok) {
+    //         //   throw new Error("Failed to fetch employee details");
+    //         // }
 
-        //         // Optionally, update state to use in a modal
-        //         // setSelectedEmployeeData(employeeData); // if you're using it in a modal later
+    //         // const employeeData = await response.json();
+    //         setselectedVendor(response);
+    //         // Save data in state or localStorage (depending on your use case)
+    //         localStorage.setItem("selectedEmployeeData", JSON.stringify(response));
+    //         console.log("✅ Employee Data:", response);
 
-        //     } catch (error) {
-        //         console.error("❌ Error fetching employee data:", error);
-        //     }
+    //         // Optionally, update state to use in a modal
+    //         // setSelectedEmployeeData(employeeData); // if you're using it in a modal later
+
+    //     } catch (error) {
+    //         console.error("❌ Error fetching employee data:", error);
+    //     }
 
 
 
-        //  };
-        // handleRowClick()
+    //  };
+    // handleRowClick()
     // }, [getstudentsdataId]);
     //  }, [ ]);
 
 
 
-    
+
 
     const searchInputRef = useRef(null);
 
@@ -448,7 +448,7 @@ const ManageVendors = () => {
                         circleColor="#0E9DED"
                         // numbers={percentage.provisional_fees_count}
                         numbers="220"
-                           width='600px'
+                        width='600px'
                     />
                     <ProfileStatus
                         label="DEACTIVE"
@@ -460,7 +460,7 @@ const ManageVendors = () => {
                         circleColor=" #FF9B04"
                         // numbers={percentage.registration_count}
                         numbers="30"
-                           width='600px'
+                        width='600px'
                     />
 
 
@@ -484,8 +484,8 @@ const ManageVendors = () => {
                                     <button
                                         className="filter-btn"
                                         style={{ background: 'white', border: '1px solid black', height: '43px' }}
-                                        // onClick={handleFilterClick}
-                                        // onClick={handleExportExcel}
+                                    // onClick={handleFilterClick}
+                                    // onClick={handleExportExcel}
                                     >
                                         <img src={exporticon} alt='Filter icon'></img>
                                     </button>
@@ -497,13 +497,13 @@ const ManageVendors = () => {
                                 {/* <Table columns={columns}
                   pageCounts={pageCounts} handlePageChange={handlePageChange} selectedVendor={selectedVendor} data={data} /> */}
                                 {/* {data.length > 0 ? ( */}
-                                    <Table
-                                        columns={columns}
-                                        pageCounts={pageCounts}
-                                        handlePageChange={handlePageChange}
-                                        selectedOrgDetails={selectedVendor}
-                                        data={dummydata}
-                                    />
+                                <Table
+                                    columns={columns}
+                                    pageCounts={pageCounts}
+                                    handlePageChange={handlePageChange}
+                                    selectedData={selectedVendor}
+                                    data={dummydata}
+                                />
                                 {/* ) : (
                                     <div className="no-data-message" style={{ textAlign: 'center', padding: '40px', color: '#888' }}>
                                         No data available
@@ -553,7 +553,7 @@ const ManageVendors = () => {
                 </div>
 
             )}
-     
+
         </>
     );
 };

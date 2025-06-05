@@ -398,7 +398,7 @@ const ManagePOs = () => {
                                     columns={columns}
                                     pageCounts={pageCounts}
                                     handlePageChange={handlePageChange}
-                                    selectedStockDetails={selectedStockDetails}
+                                    selectedData={selectedStockDetails}
                                     data={purchaseOrdersData}
                                 />
                                 {/* ) : (
