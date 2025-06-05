@@ -10,7 +10,6 @@ import ProfileStatus from '../../Component/ProfileStatus';
 import filtericon from '../../assets/icons/mage_filter-fill.svg'
 import '../../assets/css/StudentDashboard.css'
 import SearchBar from '../../Component/SearchBar';
-import AddNewStudentModal from '../../Component/Modals/AddNewStudentModal';
 import { SuccessfulPopup } from '../../Component/Modals/SuccessfulPopup';
 import Table from '../../Component/Table';
 import image from '../../assets/Images/image.png';
@@ -24,10 +23,6 @@ import edit from '../../assets/icons/editnew.svg';
 
 import { useNavigate } from 'react-router-dom';
 import { getBlob, getData, patchData } from '../../API/GlobalApi';
-import { GenerateIDModal } from '../../Component/Modals/GenerateIDModal';
-import { PhotoEditor } from '../../Component/PhotoEditor';
-import { IDValidityModal } from '../../Component/Modals/IDValidityModal';
-import { IDPreviewModal } from '../../Component/Modals/IDPreviewModal';
 import confirmadicon from '../../assets/icons/confirm-admission.svg';
 import exporticon from '../../assets/icons/export-data.svg';
 import { Tooltip } from 'react-tooltip';
@@ -47,7 +42,7 @@ const ManageVendors = () => {
     const [totalCount, setTotalCount] = useState(0);
     const [studentdata, setStudentsdata] = useState([]);
     const [studentid, setstudentid] = useState([]);
-    const [selectedOrgDetails, setSelectedOrgDetails] = useState([]);
+    const [selectedVendor, setselectedVendor] = useState([]);
     const [getstudentsdataId, setgetstudentsdataId] = useState(null);
     const [isEditMode, setIsEditMode] = useState(false);
     const [selectedUserId, setSelectedUserId] = useState(null);
@@ -123,148 +118,69 @@ const ManageVendors = () => {
     const submitclose = () => {
         setsubmit(false);
     };
-    // const handleExportExcel = () => {
-    //   const token = window.localStorage.getItem('token');
-    //   const baseUrl = 'https://bgi.sortstring.com/api/v1/students/students/export/excel/';
-    //   const urlWithParams = filterQueryString ? `${baseUrl}?${filterQueryString}` : baseUrl;
+    
+    // const handleExportExcel = async () => {
+    //     try {
+    //         const urlWithParams = filterQueryString
+    //             ? `students/export-student-payments-to-xls/?${filterQueryString}`
+    //             : 'students/export-student-payments-to-xls/';
 
-    //   fetch(urlWithParams, {
-    //     method: 'GET',
-    //     headers: {
-    //       'Authorization': `Token ${token}`
+    //         const blob = await getBlob(urlWithParams);
+
+    //         const url = window.URL.createObjectURL(blob);
+    //         const a = document.createElement('a');
+    //         a.href = url;
+    //         a.download = 'students_export.xlsx';
+    //         document.body.appendChild(a);
+    //         a.click();
+    //         a.remove();
+    //     } catch (error) {
+    //         displayToast('❌ Excel export failed', 'danger');
     //     }
-    //   })
-    //     .then(response => {
-    //       if (!response.ok) throw new Error("Failed to download file");
-    //       return response.blob();
-    //     })
-    //     .then(blob => {
-    //       const url = window.URL.createObjectURL(blob);
-    //       const a = document.createElement('a');
-    //       a.href = url;
-    //       a.download = 'students_export.xlsx';
-    //       document.body.appendChild(a);
-    //       a.click();
-    //       a.remove();
-    //     })
-    //     .catch(error => {
-    //       displayToast('❌ Excel export failed', 'danger');
-    //       console.error("Download error:", error);
-    //     });
     // };
-    const handleExportExcel = async () => {
-        try {
-            const urlWithParams = filterQueryString
-                ? `students/export-student-payments-to-xls/?${filterQueryString}`
-                : 'students/export-student-payments-to-xls/';
-
-            const blob = await getBlob(urlWithParams);
-
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'students_export.xlsx';
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-        } catch (error) {
-            displayToast('❌ Excel export failed', 'danger');
-        }
-    };
 
     const handleRowClick = async (userId, row) => {
         try {
 
 
-            setSelectedOrgDetails(row.original);
+            setselectedVendor(row.original);
         } catch (error) {
             console.error("❌ Error fetching employee data:", error);
         }
     };
 
 
-    const data = useMemo(() => {
-        return studentdata?.map((emp) => {
-            const course = emp?.provisional_academic_group?.specialization?.course?.alias || 'N/A';
-            const year = '2022–25'; // You can derive it from admission year + course duration if needed
-            const semester = emp.lag?.academic_group?.name || 'N/A';
-            const section = emp.lag?.name || '';
-            const semesterInfo = section ? `${semester} - ${section}` : semester;
-            setstatus(emp.status)
-            return {
-                id: emp.user_id,
-                // name: `${emp.first_name || ''} ${emp.middle_name=== null || "null" ||"Null"?'':emp.middle_name} ${emp.last_name || ''}`,
-                name: `${emp.first_name || ''} ${emp.middle_name && emp.middle_name.toLowerCase() !== 'null' ? emp.middle_name : ''} ${emp.last_name || ''}`,
-
-                email: emp.email || '',
-                contacts: emp.contact_numbers || [],
-                img: emp.profile_picture || null,
-                status: emp.status,
-                course,
-                year,
-                semester: semesterInfo,
-                lag: emp.lag,
-                status: emp.status,
-                permanent_registration_number: emp.permanent_registration_number,
-                fees_payment_status: emp.fees_payment_status,
-                registration_status: emp.registration_status,
-                provisional_fees_status: emp.provisional_fees_status,
-                handleRowClick: handleRowClick
-            };
-        });
-    }, [studentdata]);
 
 
 
-    // const handleSearch = (query) => {
-    //   setSearchQuery(query);
-    // };
-    // const filteredData = useMemo(() => {
-    //   if (!searchQuery) {
-    //     return data;
-    //   }
-    //   return data.filter((org) =>
-    //     org.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    //     org.email.toLowerCase().includes(searchQuery.toLowerCase())
-    //     // org.id.toString().includes(searchQuery)
-    //   );
-    // }, [searchQuery, data]);
-    const handleSearchold = async (query) => {
-        setSearchQuery(query);
-        const url = `students/get-students/?search=${query}&page=1`; // Always reset to page 1 when searching
-        const response = await getData(url);
-        setStudentsdata(response.results || []);
-        setTotalCount(response.count || 0);
-        setgetstudentsdataId(response?.results[0]?.user_id || null);
-    };
     const handleSearch = async (query) => {
-        setSearchQuery(query);
+        // setSearchQuery(query);
 
-        const queryParams = new URLSearchParams();
+        // const queryParams = new URLSearchParams();
 
-        // Add existing filter query params if any
-        if (filterQueryString) {
-            const existingParams = new URLSearchParams(filterQueryString);
-            existingParams.forEach((value, key) => {
-                queryParams.append(key, value);
-            });
-        }
+        // // Add existing filter query params if any
+        // if (filterQueryString) {
+        //     const existingParams = new URLSearchParams(filterQueryString);
+        //     existingParams.forEach((value, key) => {
+        //         queryParams.append(key, value);
+        //     });
+        // }
 
-        // Add search and reset to page 1
-        queryParams.set("search", query);
-        queryParams.set("page", "1");
+        // // Add search and reset to page 1
+        // queryParams.set("search", query);
+        // queryParams.set("page", "1");
 
-        const finalUrl = `students/get-students/?${queryParams.toString()}`;
+        // const finalUrl = `students/get-students/?${queryParams.toString()}`;
 
-        try {
-            const response = await getData(finalUrl);
-            setStudentsdata(response?.results || []);
-            setTotalCount(response?.count || 0);
-            setgetstudentsdataId(response?.results[0]?.user_id || null);
-            setFilterQueryString(queryParams.toString()); // Save updated string
-        } catch (err) {
-            console.error("Search failed:", err);
-        }
+        // try {
+        //     const response = await getData(finalUrl);
+        //     setStudentsdata(response?.results || []);
+        //     setTotalCount(response?.count || 0);
+        //     setgetstudentsdataId(response?.results[0]?.user_id || null);
+        //     setFilterQueryString(queryParams.toString()); // Save updated string
+        // } catch (err) {
+        //     console.error("Search failed:", err);
+        // }
     };
 
 
@@ -283,47 +199,31 @@ const ManageVendors = () => {
         // setregMode(false);
         // setIsModalOpen(true); // open the modal
     };
-    const handleregisClick = (userId, row) => {
-        setSelectedUserId(userId);
-        setregistrationnumforhead(row.original.permanent_registration_number);
-        setmainnamehead(row.original.name);
-        setstudentid(userId);
-        setIsEditMode(true);
-        setregMode(true);
-        setIsModalOpen(true); // open the modal
-    };
-    const handleStatus = async (row) => {
-        const newStatus = !row.original.status;
-        setstatus(newStatus) // Toggle status for that specific row
-        // Update the status for that row in your table
-        row.original.status = newStatus;
+    
+    // const handleStatus = async (row) => {
+    //     const newStatus = !row.original.status;
+    //     setstatus(newStatus) // Toggle status for that specific row
+    //     // Update the status for that row in your table
+    //     row.original.status = newStatus;
 
-        // Optionally, make an API call here to update the status on the backend
-        // const url = `administration/organizations/${row.original.id}/`;
-        const url = `students/update-student-status/${row.original.id}/`;
-        const response = await patchData(url, { status: newStatus });
+    //     // Optionally, make an API call here to update the status on the backend
+    //     // const url = `administration/organizations/${row.original.id}/`;
+    //     const url = `students/update-student-status/${row.original.id}/`;
+    //     const response = await patchData(url, { status: newStatus });
 
-        if (response && !response.error) {
-            displayToast('Status Updated successfully!', 'success');
-            // getorgdata()
-        } else if (response && response.error) {
-            const errorMsg = response.error?.[0] || 'Error Updating Status.';
-            displayToast(errorMsg, 'danger');
-        } else {
-            displayToast('Unexpected error occurred.', 'danger');
-        }
-        // Log or handle response as needed
-        console.log("Updated Status:", response);
-    };
-    const handlegenerateIdcard = async (id) => {
-        let url = `students/get-student-attendance/${id}/`;
-        let res = await getData(url);
-        if (res) {
-            setidcarddata(res);
-        }
-        console.log("responseidcard--", res);
-    }
-
+    //     if (response && !response.error) {
+    //         displayToast('Status Updated successfully!', 'success');
+    //         // getorgdata()
+    //     } else if (response && response.error) {
+    //         const errorMsg = response.error?.[0] || 'Error Updating Status.';
+    //         displayToast(errorMsg, 'danger');
+    //     } else {
+    //         displayToast('Unexpected error occurred.', 'danger');
+    //     }
+    //     // Log or handle response as needed
+    //     console.log("Updated Status:", response);
+    // };
+  
     const columns = useMemo(
         () => [
             {
@@ -347,7 +247,7 @@ const ManageVendors = () => {
                 Header: 'Vendor Type',
                 accessor: 'vendor_type',
                 Cell: ({ value, row }) => {
-                    console.log('Vendor Type value:', value, 'row:', row.original);
+                    
                     return (
                         <p style={{ textAlign: 'left', color: '#222F3E', fontWeight: 500, margin: 0 }}>
                             {value || '-'}
@@ -359,6 +259,7 @@ const ManageVendors = () => {
             {
                 Header: 'Contacts',
                 accessor: 'contacts',
+                      disableSortBy: true,
                 Cell: ({ row }) => {
                     const contact =
                         row.original.contacts.find(c => c.contact_type === 'Mobile') ||
@@ -389,6 +290,7 @@ const ManageVendors = () => {
             {
                 Header: 'Email',
                 accessor: 'email',
+                      disableSortBy: true,
                 Cell: ({ value }) => (
                     <p style={{ textAlign: 'left', color: '#222F3E', fontWeight: 500, margin: 0 }}>
                         {value || '-'}
@@ -398,6 +300,7 @@ const ManageVendors = () => {
             {
                 Header: 'Location',
                 accessor: 'location',
+                      disableSortBy: true,
                 Cell: ({ value }) => (
                     <p style={{ textAlign: 'left', color: '#222F3E', fontWeight: 500, margin: 0 }}>
                         {value || '-'}
@@ -406,6 +309,7 @@ const ManageVendors = () => {
             },
             {
                 Header: 'Action',
+                      disableSortBy: true,
                 Cell: ({ row }) => (
                     <div
                         style={{ display: 'flex', gap: '10px' }}
@@ -443,113 +347,56 @@ const ManageVendors = () => {
         setCurrentPage(data.selected); // updates useEffect trigger
     };
 
-    useEffect(() => {
-        const fetchStudents = async (page = 0) => {
-            const url = filterQueryString
-                ? `students/get-students/?${filterQueryString}&page=${page + 1}`
-                : `students/get-students/?page=${page + 1}`;
-            const response = await getData(url);
-            setStudentsdata(response?.results || []);
-            setTotalCount(response?.count || 0);
-            setgetstudentsdataId(response?.results[0]?.user_id);
-        };
-        fetchStudents(currentPage);
-    }, [currentPage, generatedregno, filterQueryString]);
-
+ 
     const pageCounts = Math.ceil(totalCount / pageSize);
     console.log("pageCounts--newSt", pageCounts)
 
 
-    useEffect(() => {
-        const fetchStudents = async (page = 0) => {
-            const url = `students/get-students/?page=${page + 1}`; // API is 1-indexed
-            const response = await getData(url);
-            setStudentsdata(response?.results || []);
-            setTotalCount(response?.count || 0);
-            setgetstudentsdataId(response?.results[0]?.user_id)
-        };
-        fetchStudents(currentPage)
-    }, [status])
-
-
-    useEffect(() => {
-        const handleRowClick = async () => {
-            const token = window.localStorage.getItem("token");
-
-            try {
-                // const response = await fetch(`https://bgi.sortstring.com/api/v1/students/get-students/${getstudentsdataId}/`, {
-                //   method: 'GET',
-                //   headers: {
-                //     Authorization: `Token ${token}`
-                //   }
-                // });
-                const response = await getData(`students/get-students/${getstudentsdataId}/`)
-
-                // if (!response.ok) {
-                //   throw new Error("Failed to fetch employee details");
-                // }
-
-                // const employeeData = await response.json();
-                setSelectedOrgDetails(response);
-                // Save data in state or localStorage (depending on your use case)
-                localStorage.setItem("selectedEmployeeData", JSON.stringify(response));
-                console.log("✅ Employee Data:", response);
-
-                // Optionally, update state to use in a modal
-                // setSelectedEmployeeData(employeeData); // if you're using it in a modal later
-
-            } catch (error) {
-                console.error("❌ Error fetching employee data:", error);
-            }
-        };
-        handleRowClick()
-    }, [getstudentsdataId]);
 
 
 
-    useEffect(() => {
-        const fetchAllData = async () => {
-            if (isEditMode && selectedUserId) {
-                try {
-                    const [
-                        basicData,
-                        academicData,
-                        officialData,
-                        uploadData
-                    ] = await Promise.all([
-                        getData(`students/student-onboarding-basic-details/${selectedUserId}/`),
-                        getData(`students/get-student-onboarding-qualification-details/${selectedUserId}/`),
-                        getData(`students/get-student-onboarding-official-details/${selectedUserId}/`),
-                        getData(`students/student-onboarding-documents-details/get-student-documents/?student_id=${selectedUserId}`),
-                    ]);
+    // useEffect(() => {
+        // const handleRowClick = async () => {
+          
+        //     const token = window.localStorage.getItem("token");
 
-                    if (basicData) setbasicdata(basicData);
-                    if (academicData) setacademicdata(academicData);
-                    if (officialData) setofficialdata(officialData);
-                    if (uploadData) setdocdata(uploadData);
+        //     try {
+        //         // const response = await fetch(`https://bgi.sortstring.com/api/v1/students/get-students/${getstudentsdataId}/`, {
+        //         //   method: 'GET',
+        //         //   headers: {
+        //         //     Authorization: `Token ${token}`
+        //         //   }
+        //         // });
+        //         const response = await getData(`students/get-students/${getstudentsdataId}/`)
 
-                } catch (err) {
-                    console.error("❌ Failed to fetch student onboarding data:", err);
-                }
-            }
-        };
+        //         // if (!response.ok) {
+        //         //   throw new Error("Failed to fetch employee details");
+        //         // }
 
-        fetchAllData();
-    }, [isEditMode, selectedUserId, currentStep]);
+        //         // const employeeData = await response.json();
+        //         setselectedVendor(response);
+        //         // Save data in state or localStorage (depending on your use case)
+        //         localStorage.setItem("selectedEmployeeData", JSON.stringify(response));
+        //         console.log("✅ Employee Data:", response);
 
-    const getallpercentages = async () => {
-        let url = 'students/student-dashboard-percentages/';
-        let res = await getData(url);
-        if (res) {
-            setpercentage(res)
-        }
-    }
-    useEffect(() => {
-        getallpercentages();
-    }, [generatedregno])
-    useEffect(() => {
-        getallpercentages();
-    }, [])
+        //         // Optionally, update state to use in a modal
+        //         // setSelectedEmployeeData(employeeData); // if you're using it in a modal later
+
+        //     } catch (error) {
+        //         console.error("❌ Error fetching employee data:", error);
+        //     }
+
+
+
+        //  };
+        // handleRowClick()
+    // }, [getstudentsdataId]);
+    //  }, [ ]);
+
+
+
+    
+
     const searchInputRef = useRef(null);
 
     useEffect(() => {
@@ -601,6 +448,7 @@ const ManageVendors = () => {
                         circleColor="#0E9DED"
                         // numbers={percentage.provisional_fees_count}
                         numbers="220"
+                           width='600px'
                     />
                     <ProfileStatus
                         label="DEACTIVE"
@@ -612,6 +460,7 @@ const ManageVendors = () => {
                         circleColor=" #FF9B04"
                         // numbers={percentage.registration_count}
                         numbers="30"
+                           width='600px'
                     />
 
 
@@ -636,7 +485,7 @@ const ManageVendors = () => {
                                         className="filter-btn"
                                         style={{ background: 'white', border: '1px solid black', height: '43px' }}
                                         // onClick={handleFilterClick}
-                                        onClick={handleExportExcel}
+                                        // onClick={handleExportExcel}
                                     >
                                         <img src={exporticon} alt='Filter icon'></img>
                                     </button>
@@ -646,26 +495,26 @@ const ManageVendors = () => {
                         <div className="row">
                             <div className="col-md-12">
                                 {/* <Table columns={columns}
-                  pageCounts={pageCounts} handlePageChange={handlePageChange} selectedOrgDetails={selectedOrgDetails} data={data} /> */}
-                                {data.length > 0 ? (
+                  pageCounts={pageCounts} handlePageChange={handlePageChange} selectedVendor={selectedVendor} data={data} /> */}
+                                {/* {data.length > 0 ? ( */}
                                     <Table
                                         columns={columns}
                                         pageCounts={pageCounts}
                                         handlePageChange={handlePageChange}
-                                        selectedOrgDetails={selectedOrgDetails}
+                                        selectedOrgDetails={selectedVendor}
                                         data={dummydata}
                                     />
-                                ) : (
+                                {/* ) : (
                                     <div className="no-data-message" style={{ textAlign: 'center', padding: '40px', color: '#888' }}>
                                         No data available
                                     </div>
-                                )}
+                                )} */}
 
                             </div>
                         </div>
                     </div>
                     <div className="col-md-3">
-                        <VendorShortDetails navigate={navigate} selectedOrgDetails={selectedOrgDetails}
+                        <VendorShortDetails navigate={navigate} selectedVendor={selectedVendor}
                         // getstudentsdataId={getstudentsdataId}
                         />
                     </div>
@@ -704,12 +553,7 @@ const ManageVendors = () => {
                 </div>
 
             )}
-            {paymentmodal && <IDValidityModal setshowvaliditymodal={setshowvaliditymodal} setcardpreview={setcardpreview} setpaymentmodal={setpaymentmodal} setvaliditydata={setvaliditydata} validtydata
-                ={validtydata} setFingerprints={setFingerprints} setCapturedPhoto={setCapturedPhoto} selectedOrgDetails={selectedOrgDetails} setidcarddata={setidcarddata} idcarddata={idcarddata} />}
-
-            {cardpreview && <IDPreviewModal setcardpreview={setcardpreview} selectedOrgDetails={selectedOrgDetails} fingerprints={fingerprints} imgurl={imgurl} setFingerprints={setFingerprints} setCapturedPhoto={setCapturedPhoto} capturedPhoto={capturedPhoto} setidcarddata={setidcarddata} idcarddata={idcarddata} />}
-            {filtermodal && <Filter setfiltermodal={setfiltermodal} setStudentsdata={setStudentsdata}
-                filterQueryString={filterQueryString} setFilterQueryString={setFilterQueryString} setTotalCount={setTotalCount} setCurrentPage={setCurrentPage} />}
+     
         </>
     );
 };

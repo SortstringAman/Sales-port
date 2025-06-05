@@ -9,7 +9,7 @@ import ProfileStatus from '../../Component/ProfileStatus';
 import filtericon from '../../assets/icons/mage_filter-fill.svg'
 import '../../assets/css/ManageItem.css'
 import SearchBar from '../../Component/SearchBar';
-import AddNewStudentModal from '../../Component/Modals/AddNewStudentModal';
+
 import { SuccessfulPopup } from '../../Component/Modals/SuccessfulPopup';
 import Table from '../../Component/Table';
 import image from '../../assets/Images/image.png';
@@ -21,11 +21,6 @@ import adstatusred from '../../assets/icons/status-red.svg';
 import tablelast from '../../assets/icons/tablelast.svg';
 import edit from '../../assets/icons/editnew.svg';
 import { useNavigate } from 'react-router-dom';
-import { getBlob, getData, patchData } from '../../API/GlobalApi';
-import { GenerateIDModal } from '../../Component/Modals/GenerateIDModal';
-import { PhotoEditor } from '../../Component/PhotoEditor';
-import { IDValidityModal } from '../../Component/Modals/IDValidityModal';
-import { IDPreviewModal } from '../../Component/Modals/IDPreviewModal';
 import confirmadicon from '../../assets/icons/confirm-admission.svg';
 import exporticon from '../../assets/icons/export-data-white.svg';
 import { Tooltip } from 'react-tooltip';
@@ -33,11 +28,10 @@ import checkgif from '../../assets/gif/successfullgif.gif';
 import close from '../../assets/icons/close.svg';
 import { Filter } from '../../Component/Filter/Filter';
 import debounce from 'lodash.debounce';
-import AddItem from '../../Component/Modals/AddItem';
 import { indentData } from './data';
 import { IndentShortDetails } from './IndentShortDetails';
 import { AddIndent } from '../../Component/Modals/AddIndent';
- 
+
 const ManageIndents = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [submit, setsubmit] = useState(false);
@@ -195,21 +189,11 @@ const ManageIndents = () => {
         }
     }, []);
     const columns = useMemo(() => [
-        {
-            Header: <input type="checkbox" />,
-            accessor: 'checkbox',
-            Cell: ({ row }) => (
 
-                <input
-                    type="checkbox"
-                    checked={row.isSelected}
-                    onChange={() => row.toggleRowSelected()}
-                />
-            ),
-        },
         {
             Header: 'Date of Indent',
             accessor: 'date',
+            disableSortBy: false,
             Cell: ({ value, row }) => (
                 <div
                     style={{ cursor: 'pointer' }}
@@ -221,26 +205,31 @@ const ManageIndents = () => {
         {
             Header: 'Indent No',
             accessor: 'indent_no',
+            disableSortBy: false,
             Cell: ({ value }) => <p className="item-values">{value}</p>,
         },
         {
             Header: 'Department',
             accessor: 'department',
+            disableSortBy: true,
             Cell: ({ value }) => <p className="item-values">{value}</p>,
         },
         {
             Header: 'Indent Priority',
             accessor: 'priority',
+            disableSortBy: true,
             Cell: ({ value }) => <p className="item-values">{value}</p>,
         },
         {
             Header: 'Store Location',
+            disableSortBy: true,
             accessor: 'store_location',
             Cell: ({ value }) => <p className="item-values">{value}</p>,
         },
         {
             Header: 'Status',
             accessor: 'status',
+            disableSortBy: true,
             Cell: ({ value }) => {
                 let color = '#39886F'; // default green for APPROVED
 
@@ -264,6 +253,7 @@ const ManageIndents = () => {
         {
             Header: 'Raised By',
             accessor: 'raised_by',
+            disableSortBy: true,
             Cell: ({ row }) => (
                 <div style={{ lineHeight: 1.2 }}>
                     <p className="item-values">{row.original.raised_by}</p>
@@ -339,6 +329,7 @@ const ManageIndents = () => {
                         bgColor="#0E9DED0D"
                         circleColor="#0E9DED"
                         numbers="10"
+                           width='600px'
                     />
                     <ProfileStatus
                         label="REJECTED"
@@ -348,6 +339,7 @@ const ManageIndents = () => {
                         bgColor="#FF9B040D"
                         circleColor=" #FF9B04"
                         numbers="2"
+                           width='600px'
                     />
 
                 </div>

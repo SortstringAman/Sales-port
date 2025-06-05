@@ -118,7 +118,7 @@ export const Sidebar = () => {
             <Link
               to="/manageStocks"
               className={location.pathname === "/manageStocks" ? "active" : ""}>
-               <img src={stockImg} alt="Manage Stocks Icon"  style={{width:'20px',height:'20px'}}  />
+              <img src={stockImg} alt="Manage Stocks Icon" style={{ width: '20px', height: '20px' }} />
               <span>Manage Stocks</span>
             </Link>
           </li>
@@ -127,43 +127,44 @@ export const Sidebar = () => {
             <Link
               to="/manageItems"
               className={location.pathname === "/manageItems" ? "active" : ""}>
-             <img src={itemImg} alt="Manage Items Icon"  style={{width:'20px',height:'20px'}}  />
+              <img src={itemImg} alt="Manage Items Icon" style={{ width: '20px', height: '20px' }} />
               <span>Manage Items</span>
-            </Link>
-          </li>
-
-          <li>
-            <Link
-              to="/manageVendors"
-              className={location.pathname === "/manageVendors" ? "active" : ""}>
-              <img src={vendorImg} alt="Manage Vendors Icon"  style={{width:'20px',height:'20px'}}  />
-              <span>Manage Vendors</span>
-            </Link>
-          </li>
-
-          <li>
-            <Link
-              to="/managePOs"
-              className={location.pathname === "/managePOs" ? "active" : ""}>
-             <img src={poImg} alt="Manage POs Icon" style={{width:'20px',height:'20px'}} />
-              <span>Manage POS</span>
             </Link>
           </li>
           <li>
             <Link
               to="/manageIndents"
               className={location.pathname === "/manageIndents" ? "active" : ""} >
-              <img src={indentImg} alt="Manage Indents Icon" style={{width:'20px',height:'20px'}} />
+              <img src={indentImg} alt="Manage Indents Icon" style={{ width: '20px', height: '20px' }} />
               <span>Manage Indents</span>
             </Link>
           </li>
+          <li>
+            <Link
+              to="/managePOs"
+              className={location.pathname === "/managePOs" ? "active" : ""}>
+              <img src={poImg} alt="Manage POs Icon" style={{ width: '20px', height: '20px' }} />
+              <span>Manage POS</span>
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/manageVendors"
+              className={location.pathname === "/manageVendors" ? "active" : ""}>
+              <img src={vendorImg} alt="Manage Vendors Icon" style={{ width: '20px', height: '20px' }} />
+              <span>Manage Vendors</span>
+            </Link>
+          </li>
+
+
+
         </ul>
       </nav>
 
       {/* Bottom icons/profile */}
       <div style={{ padding: '12px 20px' }}>
         <ul className="sidebar-ul bottom-section" style={{ gap: '10px', display: 'inline-flex' }}>
-      
+
           <li>
             <img src={profileimg} alt="Profile" style={{ position: "relative", left: "-3px" }} />
           </li>

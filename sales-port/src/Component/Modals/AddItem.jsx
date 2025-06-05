@@ -7,7 +7,7 @@ import '../../assets/css/ManageItem.css';
 import { reactSelectStyles } from '../../Utils/selectboxStyle';
 import { itemValidationSchema } from '../../Pages/ManageItems/schema';
 import useAutoFocus from '../../Utils/autoFocus';
-
+import '../../assets/css/Modal.css'; // Make sure to import the CSS
 
 const AddItem = ({ isOpen, onClose }) => {
     if (!isOpen) return null;

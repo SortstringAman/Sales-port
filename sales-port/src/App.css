@@ -239,3 +239,31 @@ font-weight: bolder !important;
     font-size: 14px;
     font-weight: 400;
 }
+
+.rightarrow{
+   color:#7F56DA !important;
+   margin: 0px 10px 0px 15px;
+}
+.itemName{
+  color: #222F3E !important;
+}
+
+.pos-content{
+color: #6B778C !important;
+    font-size: 14px !important;
+    text-align:end !important;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.pos-content-gst,.pos-content-copy{
+  color: #6B778C !important;
+  font-size: 11px;
+   margin-top: 3px;
+    margin-bottom: 3px;
+ text-align:end !important;
+}
+
+.pos-content-copy{
+text-align: start !important;
+}

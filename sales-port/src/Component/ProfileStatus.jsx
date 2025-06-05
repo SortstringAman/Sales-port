@@ -1,9 +1,9 @@
 import React from 'react';
 import '../assets/css/ProfileStatus.css'
 
-const ProfileStatus = ({ label, numbers, icon, percentage, iconColor, bgColor, circleColor }) => {
+const ProfileStatus = ({ label, numbers, icon, percentage, iconColor, bgColor, circleColor,width="344px" }) => {
     return (
-        <div className="progress-card col-sm-3" style={{ backgroundColor: bgColor }}>
+        <div className="progress-card col-sm-3" style={{ backgroundColor: bgColor ,width}}>
             <div className="" style={{ display: "flex", alignItems: 'center' }}>
                 <div style={{height:'44px',width:'44px',borderRadius:'22px',display:'flex',alignItems:'center',background: bgColor,justifyContent:'center',marginRight:"20px"}}>
                     <img src={icon} alt={label} style={{ color: iconColor }} className="progress-card-icon" />

@@ -8,6 +8,7 @@ import close from '../../assets/icons/close.svg';
 import { VendorSchema } from '../../Pages/ManageVendors/schema';
 import { reactSelectStyles } from '../../Utils/selectboxStyle';
 import { UploadBox } from '../../Utils/uploadFile';
+import '../../assets/css/Modal.css'; // Make sure to import the CSS
 
 export const AddPurchaseOrder = ({ isOpen, onClose }) => {
     // Internal options

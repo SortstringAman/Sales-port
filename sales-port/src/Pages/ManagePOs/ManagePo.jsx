@@ -1,7 +1,4 @@
 
-
-
-
 import { useState, useMemo, useEffect, useRef } from 'react';
 import CommonLayout from '../../Component/CommonLayout';
 import profileicon from '../../assets/icons/solar_square-academic-cap-2-outline.svg'
@@ -13,7 +10,6 @@ import ProfileStatus from '../../Component/ProfileStatus';
 import filtericon from '../../assets/icons/mage_filter-fill.svg'
 import '../../assets/css/StudentDashboard.css'
 import SearchBar from '../../Component/SearchBar';
-import AddNewStudentModal from '../../Component/Modals/AddNewStudentModal';
 import { SuccessfulPopup } from '../../Component/Modals/SuccessfulPopup';
 import Table from '../../Component/Table';
 import image from '../../assets/Images/image.png';
@@ -27,20 +23,12 @@ import edit from '../../assets/icons/editnew.svg';
 
 import { useNavigate } from 'react-router-dom';
 import { getBlob, getData, patchData } from '../../API/GlobalApi';
-import { GenerateIDModal } from '../../Component/Modals/GenerateIDModal';
-import { PhotoEditor } from '../../Component/PhotoEditor';
-import { IDValidityModal } from '../../Component/Modals/IDValidityModal';
-import { IDPreviewModal } from '../../Component/Modals/IDPreviewModal';
-import confirmadicon from '../../assets/icons/confirm-admission.svg';
 import exporticon from '../../assets/icons/export-data.svg';
 import { Tooltip } from 'react-tooltip';
 import checkgif from '../../assets/gif/successfullgif.gif';
 import close from '../../assets/icons/close.svg';
 import { Filter } from '../../Component/Filter/Filter';
 import debounce from 'lodash.debounce';
-
-import { ReceiveStock } from '../../Component/Modals/ReceiveStock';
-import { IssueStock } from '../../Component/Modals/IssueStock';
 import POsShortDetails from './POsShortdetails';
 import { purchaseOrdersData } from './data';
 import { AddPurchaseOrder } from '../../Component/Modals/AddPurchaseOrder';
@@ -174,6 +162,7 @@ const ManagePOs = () => {
         () => [
             {
                 Header: 'Date of PO',
+                disableSortBy: false,
                 accessor: 'date',
                 Cell: ({ value, row }) => (
                     <div
@@ -187,6 +176,7 @@ const ManagePOs = () => {
             {
                 Header: 'PO No',
                 accessor: 'po_no',
+                disableSortBy: false,
                 Cell: ({ value }) => (
                     <p style={{ textAlign: 'left', fontSize: '14px', fontWeight: 500, margin: 0 }}>{value || '-'}</p>
                 ),
@@ -194,6 +184,7 @@ const ManagePOs = () => {
             {
                 Header: 'Vendor Name',
                 accessor: 'vendor_name',
+                disableSortBy: true,
                 Cell: ({ value }) => (
                     <p style={{ textAlign: 'left', margin: 0 }}>{value || '-'}</p>
                 ),
@@ -201,20 +192,41 @@ const ManagePOs = () => {
             {
                 Header: 'Vendor Contact',
                 accessor: 'vendor_contact',
+                disableSortBy: true,
                 Cell: ({ value }) => (
                     <p style={{ textAlign: 'left', margin: 0 }}>{value || '-'}</p>
                 ),
             },
             {
-                Header: 'PO Value',
+                Header: () => (
+                    <p
+                        style={{
+                            textAlign: 'right',
+                        
+                        }}
+                    >
+                        PO Value
+                    </p>
+                ),
                 accessor: 'po_value',
+                disableSortBy: true,
                 Cell: ({ value }) => (
-                    <p style={{ textAlign: 'left', margin: 0 }}>{value || '-'}</p>
+                    <p
+                        style={{
+                            textAlign: 'right',
+                            color: '#222F3E',  
+                            fontWeight: 400,
+                            margin: 0,
+                        }}
+                    >
+                        {value || '-'}
+                    </p>
                 ),
             },
             {
                 Header: 'Status',
                 accessor: 'status',
+                disableSortBy: true,
                 Cell: ({ value }) => (
                     <span
                         style={{
@@ -234,19 +246,21 @@ const ManagePOs = () => {
             },
             {
                 Header: 'Created By',
+                disableSortBy: true,
                 accessor: 'created_by',
                 Cell: ({ row }) => (
-                    <div style={{ textAlign: 'left' }}>
-                        <p style={{ margin: 0, fontWeight: 'bold' }}>{row.original.created_by}</p>
-                        <p style={{ margin: 0, fontSize: '12px', color: '#888' }}>{row.original.created_on}</p>
+                    <div style={{ textAlign: 'start' }}>
+                        <p style={{ margin: 0, fontWeight: 'bold', textAlign: 'start' }}>{row.original.created_by}</p>
+                        <p style={{ margin: 0, fontSize: '12px', color: '#888', textAlign: 'start' }}>{row.original.created_on}</p>
                     </div>
                 ),
             },
             {
                 Header: 'Action',
+                disableSortBy: true,
                 accessor: 'action',
                 Cell: ({ row }) => (
-                    <div style={{ display: 'flex', gap: '8px' }}>
+                    <div style={{ display: 'flex', gap: '8px', justifyContent: 'space-evenly' }}>
                         <img
                             src={edit}
                             style={{ cursor: 'pointer' }}
@@ -255,6 +269,9 @@ const ManagePOs = () => {
                             data-tooltip-id="vendor-tip"
                             data-tooltip-content="Edit POs"
                         />
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style={{ cursor: 'pointer', color: '#7A4FF5' }}>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                        </svg>
                         {/* <button onClick={() => handleDownload(row.original.id)}>
                         <img src={downloadIcon} alt="Download" />
                     </button> */}
@@ -273,7 +290,7 @@ const ManagePOs = () => {
 
 
     const searchInputRef = useRef(null);
-       useEffect(() => {
+    useEffect(() => {
         if (searchInputRef.current) {
             searchInputRef.current.focus();
         }
@@ -285,7 +302,7 @@ const ManagePOs = () => {
                 {/* Content for the Dashboard */}
                 <div style={{ display: "flex", justifyContent: 'space-between' }}>
                     <div >
-                        <h2 className='main-heading'>Manage Purchase Order</h2>
+                        <h2 className='main-heading'>Manage Purchase Orders</h2>
                     </div>
                     <div style={{ display: "flex", gap: "25px" }} >
 
@@ -324,6 +341,7 @@ const ManagePOs = () => {
                         circleColor="#0E9DED"
                         // numbers={percentage.provisional_fees_count}
                         numbers="220"
+                        width='600px'
                     />
                     <ProfileStatus
                         label="CANCELLED"
@@ -335,6 +353,7 @@ const ManagePOs = () => {
                         circleColor=" #FF9B04"
                         // numbers={percentage.registration_count}
                         numbers="30"
+                        width='600px'
                     />
 
 

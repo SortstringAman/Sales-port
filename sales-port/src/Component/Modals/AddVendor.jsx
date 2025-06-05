@@ -9,7 +9,7 @@ import { VendorSchema } from '../../Pages/ManageVendors/schema';
 import { reactSelectStyles } from '../../Utils/selectboxStyle';
 import { UploadBox } from '../../Utils/uploadFile';
 import { itemValidationSchema } from '../../Pages/ManageItems/schema';
-
+import '../../assets/css/Modal.css'; // Make sure to import the CSS
 export const AddNewVendor = ({
     isOpen,
     onClose,

@@ -60,7 +60,7 @@ export const IndentShortDetails = ({ navigate, selectedIndentDetails }) => {
             </div>
             <div className="row">
                 <div className="col-md-12">
-                    <div className="stu-pro">
+                    <div className="stu-pro" style={{ marginTop: '6px' }}>
                         <div className='stu-pro-inner'>
                             <div style={{ display: 'flex', gap: "15px", flexDirection: "column", alignItems: 'start', justifyContent: 'space-between' }}>
                                 <div>

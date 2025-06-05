@@ -9,7 +9,6 @@ import ProfileStatus from '../../Component/ProfileStatus';
 import filtericon from '../../assets/icons/mage_filter-fill.svg'
 import '../../assets/css/StudentDashboard.css'
 import SearchBar from '../../Component/SearchBar';
-import AddNewStudentModal from '../../Component/Modals/AddNewStudentModal';
 import { SuccessfulPopup } from '../../Component/Modals/SuccessfulPopup';
 import Table from '../../Component/Table';
 import image from '../../assets/Images/image.png';
@@ -20,13 +19,8 @@ import adstatus from '../../assets/icons/statuspur.svg'
 import adstatusred from '../../assets/icons/status-red.svg';
 import tablelast from '../../assets/icons/tablelast.svg';
 import edit from '../../assets/icons/editnew.svg';
-
 import { useNavigate } from 'react-router-dom';
-import { getBlob, getData, patchData } from '../../API/GlobalApi';
-import { GenerateIDModal } from '../../Component/Modals/GenerateIDModal';
-import { PhotoEditor } from '../../Component/PhotoEditor';
-import { IDValidityModal } from '../../Component/Modals/IDValidityModal';
-import { IDPreviewModal } from '../../Component/Modals/IDPreviewModal';
+
 import confirmadicon from '../../assets/icons/confirm-admission.svg';
 import exporticon from '../../assets/icons/export-data-white.svg';
 import { Tooltip } from 'react-tooltip';
@@ -120,57 +114,17 @@ const ManageItems = () => {
     const submitclose = () => {
         setsubmit(false);
     };
-    // const handleExportExcel = () => {
-    //   const token = window.localStorage.getItem('token');
-    //   const baseUrl = 'https://bgi.sortstring.com/api/v1/students/students/export/excel/';
-    //   const urlWithParams = filterQueryString ? `${baseUrl}?${filterQueryString}` : baseUrl;
 
-    //   fetch(urlWithParams, {
-    //     method: 'GET',
-    //     headers: {
-    //       'Authorization': `Token ${token}`
-    //     }
-    //   })
-    //     .then(response => {
-    //       if (!response.ok) throw new Error("Failed to download file");
-    //       return response.blob();
-    //     })
-    //     .then(blob => {
-    //       const url = window.URL.createObjectURL(blob);
-    //       const a = document.createElement('a');
-    //       a.href = url;
-    //       a.download = 'students_export.xlsx';
-    //       document.body.appendChild(a);
-    //       a.click();
-    //       a.remove();
-    //     })
-    //     .catch(error => {
-    //       displayToast('❌ Excel export failed', 'danger');
-    //       console.error("Download error:", error);
-    //     });
-    // };
-    const handleExportExcel = async () => {
-        try {
-            const urlWithParams = filterQueryString
-                ? `students/export-student-payments-to-xls/?${filterQueryString}`
-                : 'students/export-student-payments-to-xls/';
+    const pageCounts = Math.ceil(totalCount / pageSize);
 
-            const blob = await getBlob(urlWithParams);
 
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'students_export.xlsx';
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-        } catch (error) {
-            displayToast('❌ Excel export failed', 'danger');
-        }
-    };
-    const handleRowClick = async (userId, row) => {
-        const token = window.localStorage.getItem("token");
 
+    const handleRowClick = async (itemId, row) => {
+        // const token = window.localStorage.getItem("token");
+        console.log('Row clicked:for redirection', itemId, row.original);
+        navigate(`/manageItems/${itemId}`, {
+            state: { rowData: row.original },
+        });
         try {
             // const response = await fetch(`https://bgi.sortstring.com/api/v1/students/get-students/${userId}/`, {
             //   method: 'GET',
@@ -178,17 +132,17 @@ const ManageItems = () => {
             //     Authorization: `Token ${token}`
             //   }
             // });
-            const response = await getData(`students/get-students/${userId}/`)
+            // const response = await getData(`students/get-students/${userId}/`)
 
             // if (!employeeData || employeeData.error) {
             //   throw new Error("Failed to fetch employee details");
             // }
 
             // const employeeData = await response.json();
-            setSelectedOrgDetails(response);
+            // setSelectedOrgDetails(response);
             // Save data in state or localStorage (depending on your use case)
-            localStorage.setItem("selectedEmployeeData", JSON.stringify(response));
-            console.log("✅ Employee Data:", response);
+            // localStorage.setItem("selectedEmployeeData", JSON.stringify(response));
+            // console.log("✅ Employee Data:", response);
 
             // Optionally, update state to use in a modal
             // setSelectedEmployeeData(employeeData); // if you're using it in a modal later
@@ -199,106 +153,59 @@ const ManageItems = () => {
     };
 
 
-    const data = useMemo(() => {
-        return studentdata?.map((emp) => {
-            const course = emp?.provisional_academic_group?.specialization?.course?.alias || 'N/A';
-            const year = '2022–25'; // You can derive it from admission year + course duration if needed
-            const semester = emp.lag?.academic_group?.name || 'N/A';
-            const section = emp.lag?.name || '';
-            const semesterInfo = section ? `${semester} - ${section}` : semester;
-            setstatus(emp.status)
-            return {
-                id: emp.user_id,
-                // name: `${emp.first_name || ''} ${emp.middle_name=== null || "null" ||"Null"?'':emp.middle_name} ${emp.last_name || ''}`,
-                name: `${emp.first_name || ''} ${emp.middle_name && emp.middle_name.toLowerCase() !== 'null' ? emp.middle_name : ''} ${emp.last_name || ''}`,
 
-                email: emp.email || '',
-                contacts: emp.contact_numbers || [],
-                img: emp.profile_picture || null,
-                status: emp.status,
-                course,
-                year,
-                semester: semesterInfo,
-                lag: emp.lag,
-                status: emp.status,
-                permanent_registration_number: emp.permanent_registration_number,
-                fees_payment_status: emp.fees_payment_status,
-                registration_status: emp.registration_status,
-                provisional_fees_status: emp.provisional_fees_status,
-                handleRowClick: handleRowClick
-            };
-        });
-    }, [studentdata]);
 
-const handleEdit = (row) => {
-    const orgData = row.original;
-    console.log("orgDataedit----", orgData);
-    // setorgform({
-    //   id: orgData.id,
-    //   name: orgData.name,
-    //   level: orgData.level,
-    //   mode: orgData.mode,
-    //   mode_count: orgData.mode_count,
-    //   duration: orgData.duration,
-    //   organization_id: orgData.organization_id,
-    //   alias: orgData.alias,
-    //   // status:false
-    // });
-    // setparentorgidsub(orgData.id);
-    openaddItemModal();
-    setUpdatebtn(true);
 
-  }
 
-    // const handleSearch = (query) => {
-    //   setSearchQuery(query);
-    // };
-    // const filteredData = useMemo(() => {
-    //   if (!searchQuery) {
-    //     return data;
-    //   }
-    //   return data.filter((org) =>
-    //     org.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    //     org.email.toLowerCase().includes(searchQuery.toLowerCase())
-    //     // org.id.toString().includes(searchQuery)
-    //   );
-    // }, [searchQuery, data]);
-    const handleSearchold = async (query) => {
-        setSearchQuery(query);
-        const url = `students/get-students/?search=${query}&page=1`; // Always reset to page 1 when searching
-        const response = await getData(url);
-        setStudentsdata(response.results || []);
-        setTotalCount(response.count || 0);
-        setgetstudentsdataId(response?.results[0]?.user_id || null);
-    };
+
+    const handleEdit = (row) => {
+        const orgData = row.original;
+        console.log("orgDataedit----", orgData);
+        // setorgform({
+        //   id: orgData.id,
+        //   name: orgData.name,
+        //   level: orgData.level,
+        //   mode: orgData.mode,
+        //   mode_count: orgData.mode_count,
+        //   duration: orgData.duration,
+        //   organization_id: orgData.organization_id,
+        //   alias: orgData.alias,
+        //   // status:false
+        // });
+        // setparentorgidsub(orgData.id);
+        openaddItemModal();
+        setUpdatebtn(true);
+
+    }
+
     const handleSearch = async (query) => {
-        setSearchQuery(query);
+        // setSearchQuery(query);
 
-        const queryParams = new URLSearchParams();
+        // const queryParams = new URLSearchParams();
 
-        // Add existing filter query params if any
-        if (filterQueryString) {
-            const existingParams = new URLSearchParams(filterQueryString);
-            existingParams.forEach((value, key) => {
-                queryParams.append(key, value);
-            });
-        }
+        // // Add existing filter query params if any
+        // if (filterQueryString) {
+        //     const existingParams = new URLSearchParams(filterQueryString);
+        //     existingParams.forEach((value, key) => {
+        //         queryParams.append(key, value);
+        //     });
+        // }
 
-        // Add search and reset to page 1
-        queryParams.set("search", query);
-        queryParams.set("page", "1");
+        // // Add search and reset to page 1
+        // queryParams.set("search", query);
+        // queryParams.set("page", "1");
 
-        const finalUrl = `students/get-students/?${queryParams.toString()}`;
+        // const finalUrl = `students/get-students/?${queryParams.toString()}`;
 
-        try {
-            const response = await getData(finalUrl);
-            setStudentsdata(response?.results || []);
-            setTotalCount(response?.count || 0);
-            setgetstudentsdataId(response?.results[0]?.user_id || null);
-            setFilterQueryString(queryParams.toString()); // Save updated string
-        } catch (err) {
-            console.error("Search failed:", err);
-        }
+        // try {
+        //     const response = await getData(finalUrl);
+        //     setStudentsdata(response?.results || []);
+        //     setTotalCount(response?.count || 0);
+        //     setgetstudentsdataId(response?.results[0]?.user_id || null);
+        //     setFilterQueryString(queryParams.toString()); // Save updated string
+        // } catch (err) {
+        //     console.error("Search failed:", err);
+        // }
     };
 
 
@@ -307,53 +214,14 @@ const handleEdit = (row) => {
         return () => debouncedSearch.cancel(); // cleanup
     }, []);
 
-    const handleEditClick = (userId, row) => {
-        setSelectedUserId(userId);
-        setregistrationnumforhead(row?.original.permanent_registration_number);
-        setmainnamehead(row.original.name);
-        setstudentid(userId);
-        setIsEditMode(true);
-        setregMode(false);
-        setIsModalOpen(true); // open the modal
-    };
-    const handleregisClick = (userId, row) => {
-        setSelectedUserId(userId);
-        setregistrationnumforhead(row.original.permanent_registration_number);
-        setmainnamehead(row.original.name);
-        setstudentid(userId);
-        setIsEditMode(true);
-        setregMode(true);
-        setIsModalOpen(true); // open the modal
-    };
-    const handleStatus = async (row) => {
-        const newStatus = !row.original.status;
-        setstatus(newStatus) // Toggle status for that specific row
-        // Update the status for that row in your table
-        row.original.status = newStatus;
 
-        // Optionally, make an API call here to update the status on the backend
-        // const url = `administration/organizations/${row.original.id}/`;
-        const url = `students/update-student-status/${row.original.id}/`;
-        const response = await patchData(url, { status: newStatus });
 
-        if (response && !response.error) {
-            displayToast('Status Updated successfully!', 'success');
-            // getorgdata()
-        } else if (response && response.error) {
-            const errorMsg = response.error?.[0] || 'Error Updating Status.';
-            displayToast(errorMsg, 'danger');
-        } else {
-            displayToast('Unexpected error occurred.', 'danger');
-        }
-        // Log or handle response as needed
-        console.log("Updated Status:", response);
-    };
- 
 
     const columns = useMemo(() => [
         {
             Header: <input type="checkbox" />,
             accessor: 'checkbox',
+            disableSortBy: true,
             Cell: ({ row }) => (
                 <input
                     type="checkbox"
@@ -363,17 +231,30 @@ const handleEdit = (row) => {
             ),
         },
         {
-            Header: 'Item Name (SKU CODE)',
-            accessor: 'name', // changed from 'img' to 'name'
+            Header: () => <p style={{ color: '#222F3E', fontWeight: 500, margin: 0, textAlign: 'start' }} className='itemName'>Item Name  <span style={{ fontSize: '10px' }}> (SKU CODE)</span> </p>,
+            accessor: 'name',
             Cell: ({ row }) => (
-                <div style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <div
+                    style={{
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                    }}
+                    onClick={() => handleRowClick(row.original.id, row)}
+                >
                     <div>
-                        <p style={{ margin: 0, color: '#222F3E', fontWeight: 'bold', textAlign: 'start' }}>{row.original.name}</p>
-                        <p style={{ margin: 0, textAlign: 'start', color: '#222F3E', fontWeight: 'bold', fontSize: '11px' }}>({row.original.sku_code})</p>
+                        <p style={{ margin: 0, color: '#222F3E', fontWeight: 'bold', textAlign: 'start' }}>
+                            {row.original.name}
+                        </p>
+                        <p style={{ margin: 0, textAlign: 'start', color: '#222F3E', fontWeight: 'bold', fontSize: '11px' }}>
+                            ({row.original.sku_code})
+                        </p>
                     </div>
                 </div>
             ),
         },
+
         {
             Header: "Item Group",
             accessor: 'item_group',
@@ -404,21 +285,25 @@ const handleEdit = (row) => {
         },
         {
             Header: 'Last Purchased',
-            accessor: 'last_purchased',
-            Cell: ({ value }) => (
-                <p style={{ color: '#222F3E', fontWeight: 500, margin: 0, textAlign: 'start' }}>{value}</p>
-            ),
+            accessor: 'combined_info', // virtual accessor, since you'll use `Cell` to render manually
+            Cell: ({ row }) => {
+                const lastPurchased = row.original.last_purchased;
+                const supplier = row.original.supplier;
+
+                return (
+                    <div style={{ textAlign: 'start' }}>
+                        <p style={{ color: '#222F3E', fontWeight: 500, margin: 0,textAlign: 'start' }}>{lastPurchased}</p>
+                        <p style={{ color: '', fontWeight: 400, margin: 0 ,textAlign: 'start'}}>({supplier})</p>
+                    </div>
+                );
+            },
+            disableSortBy: true // optional
         },
-        {
-            Header: 'Supplier',
-            accessor: 'supplier',
-            Cell: ({ value }) => (
-                <p style={{ color: '#222F3E', fontWeight: 500, margin: 0, textAlign: 'start' }}>{value}</p>
-            ),
-        },
+
         {
             Header: 'Stock Status',
             accessor: 'stock_status',
+            disableSortBy: true,
             Cell: ({ value }) => (
                 <h6 style={{ color: value === 'REORDER ITEM' ? 'red' : 'green', fontWeight: 'bolder', margin: 0, textAlign: 'start' }}>
                     {value}
@@ -427,6 +312,7 @@ const handleEdit = (row) => {
         },
         {
             Header: 'Action',
+            disableSortBy: true,
             Cell: ({ row }) => (
                 <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                     <div className="form-check form-switch custom-switch">
@@ -435,7 +321,7 @@ const handleEdit = (row) => {
                             type="checkbox"
                             role="switch"
                             checked={row.original.status}
-                            onChange={() => handleStatus(row.original)}
+                            // onChange={() => handleStatus(row.original)}
                             style={{ cursor: 'pointer' }}
                         />
                     </div>
@@ -445,7 +331,7 @@ const handleEdit = (row) => {
                         style={{ cursor: 'pointer' }}
                         onClick={() => {
                             handleEdit(row.original);
-                           
+
                         }}
                     />
 
@@ -457,163 +343,20 @@ const handleEdit = (row) => {
     const handlePageChange = (data) => {
         setCurrentPage(data.selected); // updates useEffect trigger
     };
-    // useEffect(() => {
-    //   const fetchStudents = async (page = 0) => {
-    //     const url = `students/get-students/?page=${page + 1}`; 
-    //     const response = await getData(url);
-    //     setStudentsdata(response.results || []);
-    //     setTotalCount(response.count || 0);
-    //     setgetstudentsdataId(response.results[0]?.user_id)
-    //   };
-    //   fetchStudents(currentPage)
-    // }, [currentPage, generatedregno])
-    useEffect(() => {
-        const fetchStudents = async (page = 0) => {
-            const url = filterQueryString
-                ? `students/get-students/?${filterQueryString}&page=${page + 1}`
-                : `students/get-students/?page=${page + 1}`;
-            const response = await getData(url);
-            setStudentsdata(response?.results || []);
-            setTotalCount(response?.count || 0);
-            setgetstudentsdataId(response?.results[0]?.user_id);
-        };
-        fetchStudents(currentPage);
-    }, [currentPage, generatedregno, filterQueryString]);
-
-    const pageCounts = Math.ceil(totalCount / pageSize);
-    console.log("pageCounts--newSt", pageCounts)
 
 
-    useEffect(() => {
-        const fetchStudents = async (page = 0) => {
-            const url = `students/get-students/?page=${page + 1}`; // API is 1-indexed
-            const response = await getData(url);
-            setStudentsdata(response?.results || []);
-            setTotalCount(response?.count || 0);
-            setgetstudentsdataId(response?.results[0]?.user_id)
-        };
-        fetchStudents(currentPage)
-    }, [status])
 
 
-    useEffect(() => {
-        const handleRowClick = async () => {
-            const token = window.localStorage.getItem("token");
-
-            try {
-                // const response = await fetch(`https://bgi.sortstring.com/api/v1/students/get-students/${getstudentsdataId}/`, {
-                //   method: 'GET',
-                //   headers: {
-                //     Authorization: `Token ${token}`
-                //   }
-                // });
-                const response = await getData(`students/get-students/${getstudentsdataId}/`)
-
-                // if (!response.ok) {
-                //   throw new Error("Failed to fetch employee details");
-                // }
-
-                // const employeeData = await response.json();
-                setSelectedOrgDetails(response);
-                // Save data in state or localStorage (depending on your use case)
-                localStorage.setItem("selectedEmployeeData", JSON.stringify(response));
-                console.log("✅ Employee Data:", response);
-
-                // Optionally, update state to use in a modal
-                // setSelectedEmployeeData(employeeData); // if you're using it in a modal later
-
-            } catch (error) {
-                console.error("❌ Error fetching employee data:", error);
-            }
-        };
-        handleRowClick()
-    }, [getstudentsdataId]);
-    // useEffect(() => {
-    //   const fetchAllData = async () => {
-    //     if (isEditMode && selectedUserId) {
-    //       try {
-    //         const token = window.localStorage.getItem("token");
-
-    //         const [basicRes, academicRes, officialRes, uploadDocRes] = await Promise.all([
-    //           fetch(`https://bgi.sortstring.com/api/v1/students/student-onboarding-basic-details/${selectedUserId}/`, { headers: { Authorization: `Token ${token}` } }),
-    //           fetch(`https://bgi.sortstring.com/api/v1/students/get-student-onboarding-qualification-details/${selectedUserId}/`, { headers: { Authorization: `Token ${token}` } }),
-    //           fetch(`https://bgi.sortstring.com/api/v1/students/get-student-onboarding-official-details/${selectedUserId}/`, { headers: { Authorization: `Token ${token}` } }),
-    //           fetch(`https://bgi.sortstring.com/api/v1/students/student-onboarding-documents-details/get-student-documents/?student_id=${selectedUserId}`, { headers: { Authorization: `Token ${token}` } }),
-    //           // fetch(`staff/attendance-settings/${selectedUserId}/`, { headers: { Authorization: `Token ${token}` } }),
-    //         ]);
-
-    //         const basicData = await basicRes.json();
-    //         const academicData = await academicRes.json();
-    //         const officialData = await officialRes.json();
-    //         const uploadData = await uploadDocRes.json();
-
-    //         if (basicData) {
-    //           setbasicdata(basicData);
-    //         }
-    //         if (academicData) {
-    //           setacademicdata(academicData);
-    //         }
-    //         if (officialData) {
-    //           setofficialdata(officialData);
-    //         }
-    //         if (uploadData) {
-    //           setdocdata(uploadData);
-    //         }
 
 
-    //       } catch (err) {
-    //         console.error("❌ Failed to fetch employee data:", err);
-    //       }
-    //     }
-    //   };
-
-    //   fetchAllData();
-    // }, [isEditMode, selectedUserId, currentStep]);
 
 
-    useEffect(() => {
-        const fetchAllData = async () => {
-            if (isEditMode && selectedUserId) {
-                try {
-                    const [
-                        basicData,
-                        academicData,
-                        officialData,
-                        uploadData
-                    ] = await Promise.all([
-                        getData(`students/student-onboarding-basic-details/${selectedUserId}/`),
-                        getData(`students/get-student-onboarding-qualification-details/${selectedUserId}/`),
-                        getData(`students/get-student-onboarding-official-details/${selectedUserId}/`),
-                        getData(`students/student-onboarding-documents-details/get-student-documents/?student_id=${selectedUserId}`),
-                    ]);
 
-                    if (basicData) setbasicdata(basicData);
-                    if (academicData) setacademicdata(academicData);
-                    if (officialData) setofficialdata(officialData);
-                    if (uploadData) setdocdata(uploadData);
 
-                } catch (err) {
-                    console.error("❌ Failed to fetch student onboarding data:", err);
-                }
-            }
-        };
 
-        fetchAllData();
-    }, [isEditMode, selectedUserId, currentStep]);
 
-    const getallpercentages = async () => {
-        let url = 'students/student-dashboard-percentages/';
-        let res = await getData(url);
-        if (res) {
-            setpercentage(res)
-        }
-    }
-    useEffect(() => {
-        getallpercentages();
-    }, [generatedregno])
-    useEffect(() => {
-        getallpercentages();
-    }, [])
+
+
     const searchInputRef = useRef(null);
 
     useEffect(() => {
@@ -640,22 +383,6 @@ const handleEdit = (row) => {
                         </button>
 
                     </div>
-                    {/* <div>
-            <a
-              href="/admissionform"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="add-btn"
-              style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px' }}
-            >
-              <span className='me-2'>
-                <svg width="12" height="12" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M20.4286 13.3537H12.5714V21.2108C12.5714 21.6276 12.4059 22.0273 12.1112 22.322C11.8165 22.6167 11.4168 22.7822 11 22.7822C10.5832 22.7822 10.1835 22.6167 9.88883 22.322C9.59413 22.0273 9.42857 21.6276 9.42857 21.2108V13.3537H1.57143C1.15466 13.3537 0.754961 13.1881 0.460261 12.8934C0.165561 12.5987 0 12.199 0 11.7822C0 11.3655 0.165561 10.9658 0.460261 10.6711C0.754961 10.3764 1.15466 10.2108 1.57143 10.2108H9.42857V2.35366C9.42857 1.93689 9.59413 1.53719 9.88883 1.24249C10.1835 0.947787 10.5832 0.782227 11 0.782227C11.4168 0.782227 11.8165 0.947787 12.1112 1.24249C12.4059 1.53719 12.5714 1.93689 12.5714 2.35366V10.2108H20.4286C20.8453 10.2108 21.245 10.3764 21.5397 10.6711C21.8344 10.9658 22 11.3655 22 11.7822C22 12.199 21.8344 12.5987 21.5397 12.8934C21.245 13.1881 20.8453 13.3537 20.4286 13.3537Z" fill="white" />
-                </svg>
-              </span>
-              New Provisional Form
-            </a>
-          </div> */}
 
                 </div>
                 <div className="dashboard-cards row mt-2" style={{ padding: "20px" }} >
@@ -695,15 +422,7 @@ const handleEdit = (row) => {
                         circleColor=" #2A62C8"
                         numbers={percentage.fees_payment_count}
                     />
-                    {/* <ProfileStatus
-            label="ID Card/Biometric"
-            icon={profileicon5}
-            percentage={percentage.id_card_bometric_percentage}
-            iconColor=" #F19289"
-            bgColor=" #F192890D"
-            circleColor="#F19289"
-            numbers={percentage.id_card_bometric_count}
-          /> */}
+
                 </div>
                 <div className='row mt-2'>
                     <div className="col-md-12">
@@ -716,7 +435,7 @@ const handleEdit = (row) => {
                                     <SearchBar data={studentdata} onSearch={debouncedSearch} ref={searchInputRef} placeholder={'Serach by Item Name, S K U code..'} />
                                     <button
                                         className="filter-btn"
-                                        onClick={handleFilterClick}
+                                        // onClick={handleFilterClick}
                                         style={{ height: '43px' }}
                                     >
                                         <img src={filtericon}></img>
@@ -724,8 +443,8 @@ const handleEdit = (row) => {
                                     <button
                                         className="filter-btn"
                                         style={{ background: '#7F56DA', border: '1px solid black', height: '43px', color: "white", border: "none" }}
-                                        // onClick={handleFilterClick}
-                                        onClick={handleExportExcel}
+                                    // onClick={handleFilterClick}
+                                    // onClick={handleExportExcel}
                                     >
                                         <img src={exporticon} alt='Filter icon'></img>
                                     </button>
@@ -736,19 +455,19 @@ const handleEdit = (row) => {
                             <div className="col-md-12">
                                 {/* <Table columns={columns}
                   pageCounts={pageCounts} handlePageChange={handlePageChange} selectedOrgDetails={selectedOrgDetails} data={data} /> */}
-                                {data.length > 0 ? (
-                                    <Table
-                                        columns={columns}
-                                        pageCounts={pageCounts}
-                                        handlePageChange={handlePageChange}
-                                        selectedOrgDetails={selectedOrgDetails}
-                                        data={mockData}
-                                    />
-                                ) : (
+                                {/* {data.length > 0 ? ( */}
+                                <Table
+                                    columns={columns}
+                                    pageCounts={pageCounts}
+                                    handlePageChange={handlePageChange}
+                                    selectedOrgDetails={selectedOrgDetails}
+                                    data={mockData}
+                                />
+                                {/* ) : (
                                     <div className="no-data-message" style={{ textAlign: 'center', padding: '40px', color: '#888' }}>
                                         No data available
                                     </div>
-                                )}
+                                )} */}
 
                             </div>
                         </div>
@@ -790,12 +509,7 @@ const handleEdit = (row) => {
                 </div>
 
             )}
-            {paymentmodal && <IDValidityModal setshowvaliditymodal={setshowvaliditymodal} setcardpreview={setcardpreview} setpaymentmodal={setpaymentmodal} setvaliditydata={setvaliditydata} validtydata
-                ={validtydata} setFingerprints={setFingerprints} setCapturedPhoto={setCapturedPhoto} selectedOrgDetails={selectedOrgDetails} setidcarddata={setidcarddata} idcarddata={idcarddata} />}
 
-            {cardpreview && <IDPreviewModal setcardpreview={setcardpreview} selectedOrgDetails={selectedOrgDetails} fingerprints={fingerprints} imgurl={imgurl} setFingerprints={setFingerprints} setCapturedPhoto={setCapturedPhoto} capturedPhoto={capturedPhoto} setidcarddata={setidcarddata} idcarddata={idcarddata} />}
-            {filtermodal && <Filter setfiltermodal={setfiltermodal} setStudentsdata={setStudentsdata}
-                filterQueryString={filterQueryString} setFilterQueryString={setFilterQueryString} setTotalCount={setTotalCount} setCurrentPage={setCurrentPage} />}
         </>
     );
 };

@@ -10,6 +10,7 @@ import ManageVendors from '../Pages/ManageVendors/ManageVendors';
 import ManageStocks from '../Pages/ManageStocks/ManageStocks';
 import ManagePOs from '../Pages/ManagePOs/ManagePo';
 import ManageIndents from '../Pages/ManageIndents/ManageIndent';
+import ItemLedgerDetails from '../Pages/ManageItems/ItemLedgerDetails';
 
 
 const Routing = () => {
@@ -19,15 +20,16 @@ const Routing = () => {
             <Routes>
                 <Route path="/" element={<ProtectedRoutes element={<ProtectedRoutes element={<CommonLayout><ManageItems /></CommonLayout>} />} />} />
                 <Route path="/Login" element={<Login />} />
-                
+
                 <Route path="/manageItems" element={<ProtectedRoutes element={<CommonLayout><ManageItems /></CommonLayout>} />} />
+                 <Route path="/manageItems/:id" element={<ProtectedRoutes element={<CommonLayout><ItemLedgerDetails /></CommonLayout>} />} />
                 <Route path="/manageVendors" element={<ProtectedRoutes element={<CommonLayout><ManageVendors /></CommonLayout>} />} />
                 <Route path="/manageStocks" element={<ProtectedRoutes element={<CommonLayout><ManageStocks /></CommonLayout>} />} />
-                  <Route path="/managePOs" element={<ProtectedRoutes element={<CommonLayout><ManagePOs /></CommonLayout>} />} />
-                    <Route path="/manageIndents" element={<ProtectedRoutes element={<CommonLayout><ManageIndents /></CommonLayout>} />} />
+                <Route path="/managePOs" element={<ProtectedRoutes element={<CommonLayout><ManagePOs /></CommonLayout>} />} />
+                <Route path="/manageIndents" element={<ProtectedRoutes element={<CommonLayout><ManageIndents /></CommonLayout>} />} />
 
 
-              
+
             </Routes>
         </>
     )

@@ -215,3 +215,12 @@
     border-radius: 50%;
     transition: left 0.3s ease;
 } */
+
+th.sort-asc::after {
+  content: " 🔼";
+  font-size: 12px;
+}
+th.sort-desc::after {
+  content: " 🔽";
+  font-size: 12px;
+}

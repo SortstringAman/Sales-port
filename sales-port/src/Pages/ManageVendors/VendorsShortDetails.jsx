@@ -5,9 +5,9 @@ import studentShortpic from '../../assets/Images/stushortpic.png';
 import std from '../../assets/Images/unnaemmeduser.png'
 import nexticon from '../../assets/icons/icon.svg';
 
-export const VendorShortDetails = ({ navigate, selectedOrgDetails }) => {
-    if (!selectedOrgDetails) return null;
-    console.log("selected vendor Detailsshort--", selectedOrgDetails)
+export const VendorShortDetails = ({ navigate, selectedVendor }) => {
+    if (!selectedVendor) return null;
+    console.log("selected vendor Detailsshort--", selectedVendor)
 
 
 
@@ -51,100 +51,119 @@ export const VendorShortDetails = ({ navigate, selectedOrgDetails }) => {
     //     : 'N/A';
     // const imageUrl = profile_picture;
     return (
-        <div>
-            <div className="col-md-12">
-                <p style={{
-                    background: '#F9F9F9',
-                    padding: '16px',
-                    borderRadius: '8px',
-                    textAlign: 'left',
-                    fontWeight: 500,
-                    color: "#222F3E"
-                }}>
-                    VENDOR'S SHORT DETAILS:
-                </p>
-            </div>
+        <>
 
-            <div className="row">
+            <div>
                 <div className="col-md-12">
-                    <div className="stu-pro">
-                        <div className='stu-pro-inner'>
-                            <div style={{ display: 'flex', gap: "15px", flexDirection: "column", alignItems: 'start', justifyContent: 'space-between' }}>
+                    <p style={{
+                        background: '#F9F9F9',
+                        padding: '16px',
+                        borderRadius: '8px',
+                        textAlign: 'left',
+                        fontWeight: 500,
+                        color: "#222F3E"
+                    }}>
+                        VENDOR'S SHORT DETAILS:
+                    </p>
+                </div>
+
+                <div className="row">
+                    <div className="col-md-12">
+                        <div className="stu-pro" style={{ marginTop: '6px' }}>
+                            <div className='stu-pro-inner'>
+                                <div style={{ display: 'flex', gap: "15px", flexDirection: "column", alignItems: 'start', justifyContent: 'space-between' }}>
+                                    <div>
+                                        <h4 className='fm-pr-hd' style={{
+                                            margin: 0, marginBottom: "10px", fontWeight: '600', fontSize: "18px", textTransform: 'uppercase'
+                                        }}>{selectedVendor.name}</h4>
+                                        <p className='sd-p'>
+                                            {selectedVendor.permanent_registration_number || 'N/A'}
+                                        </p>
+                                    </div>
+
+                                    <div>
+                                        <p className='sd-p'>Vendor Type</p>
+                                        <p className='alg-l'>{selectedVendor.vendor_type || 'N/A'}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
                                 <div>
-                                    <h4 className='fm-pr-hd' style={{ margin: 0, marginBottom: "10px",fontWeight:'600' ,fontSize:"18px",textTransform:'uppercase'
-                                     }}>{selectedOrgDetails.name}</h4>
-                                    <p className='sd-p'>
-                                        {selectedOrgDetails.permanent_registration_number || 'N/A'}
+                                    <p className='sd-p'>Contact Person</p>
+                                    <p className='alg-l'>{selectedVendor.contact_person_name || 'N/A'}</p>
+                                </div>
+
+                            </div>
+
+                            <div>
+                                <p className='sd-p'>Contact Numbers</p>
+                                {selectedVendor.contacts?.map((contact, i) => (
+                                    <p className='alg-l' key={i}>
+                                        {contact.contact_type}: {contact.number}
+                                        {/* /{contact.is_available_on_whatsapp ? ' (WhatsApp)' : ''} */}
                                     </p>
-                                </div>
-                                
+                                )) || 'N/A'}
+                            </div>
+
+                            <div>
+                                <p className='sd-p'>Billing Address</p>
+                                <p className='alg-l'>{selectedVendor.billing_address || 'N/A'}</p>
+                            </div>
+
+                            <div>
+                                <h4 className='fm-pr-hd mt-3' >BANK'S DETAILS</h4>
                                 <div>
-                                    <p className='sd-p'>Vendor Type</p>
-                                    <p className='alg-l'>{selectedOrgDetails.vendor_type || 'N/A'}</p>
+                                    <p className='sd-p'>Bank Name</p>
+                                    <p className='alg-l'>{selectedVendor?.bank_details?.bank_name || 'N/A'}</p>
+                                </div>
+                                <div>
+                                    <p className='sd-p'>A/C Number</p>
+                                    <p className='alg-l'>{selectedVendor?.bank_details?.account_number || 'N/A'}</p>
+                                </div>
+                                <div>
+                                    <p className='sd-p'>IFSC Code</p>
+                                    <p className='alg-l'>{selectedVendor?.bank_details?.ifsc_code || 'N/A'}</p>
+                                </div>
+                                 <div>
+                                    <p className='sd-p'>Payment Terms</p>
+                                    <p className='alg-l'>{selectedVendor?.bank_details?.ifsc_code || 'N/A'}</p>
                                 </div>
                             </div>
-                        </div>
 
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
-                            <div>
-                                <p className='sd-p'>Contact Person</p>
-                                <p className='alg-l'>{selectedOrgDetails.contact_person_name || 'N/A'}</p>
-                            </div>
-                            
-                        </div>
+                           
 
-                        <div>
-                            <p className='sd-p'>Contact Numbers</p>
-                            {selectedOrgDetails.contacts?.map((contact, i) => (
-                                <p className='alg-l' key={i}>
-                                    {contact.contact_type}: {contact.number}
-                                    {/* /{contact.is_available_on_whatsapp ? ' (WhatsApp)' : ''} */}
-                                </p>
-                            )) || 'N/A'}
                         </div>
-
-                        <div>
-                            <p className='sd-p'>Billing Address</p>
-                            <p className='alg-l'>{selectedOrgDetails.billing_address || 'N/A'}</p>
-                        </div>
-
-                        <div>
-                            <h4 className='fm-pr-hd mt-3' >BANK'S DETAILS</h4>
-                            <div>
-                                <p className='sd-p'>Bank Name</p>
-                                <p className='alg-l'>{selectedOrgDetails?.bank_details?.bank_name || 'N/A'}</p>
-                            </div>
-                            <div>
-                                <p className='sd-p'>A/C Number</p>
-                                <p className='alg-l'>{selectedOrgDetails?.bank_details?.account_number || 'N/A'}</p>
-                            </div>
-                            <div>
-                                <p className='sd-p'>IFSC Code</p>
-                                <p className='alg-l'>{selectedOrgDetails?.bank_details?.ifsc_code || 'N/A'}</p>
-                            </div>
-                        </div>
-
-                        <div>
-                            <h4 className='fm-pr-hd mt-3' >TAX & COMPLIANCE</h4>
-                            <div>
-                                <p className='sd-p'>GST Number</p>
-                                <p className='alg-l'>{selectedOrgDetails?.tax_compliance?.gst_number || 'N/A'}</p>
-                            </div>
-                            <div>
-                                <p className='sd-p'>PAN Number</p>
-                                <p className='alg-l'>{selectedOrgDetails?.tax_compliance?.pan_number || 'N/A'}</p>
-                            </div>
-                            <div>
-                                <p className='sd-p'>MSME Registration Number</p>
-                                <p className='alg-l'>{selectedOrgDetails?.tax_compliance?.msme_registration_no || 'N/A'}</p>
-                            </div>
-                        </div>
-
-                         
                     </div>
                 </div>
             </div>
-        </div>
+
+
+            <div style={{
+                marginTop:'10px',
+                background: '#F9F9F9',
+                padding: '16px',
+                borderRadius: '8px',
+                textAlign: 'left',
+                fontWeight: 500,
+                color: "#222F3E"
+            }}>
+                <h4 className='fm-pr-hd mt-3' >TAX & COMPLIANCE</h4>
+                <div>
+                    <p className='sd-p'>GST Number</p>
+                    <p className='alg-l'>{selectedVendor?.tax_compliance?.gst_number || 'N/A'}</p>
+                </div>
+                <div>
+                    <p className='sd-p'>PAN Number</p>
+                    <p className='alg-l'>{selectedVendor?.tax_compliance?.pan_number || 'N/A'}</p>
+                </div>
+                <div>
+                    <p className='sd-p'>MSME Registration Number</p>
+                    <p className='alg-l'>{selectedVendor?.tax_compliance?.msme_registration_no || 'N/A'}</p>
+                </div>
+            </div>
+
+        </>
 
     );
 };

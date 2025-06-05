@@ -4,7 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 import close from '../../assets/icons/close.svg';
 import useAutoFocus from '../../Utils/autoFocus';
-
+import '../../assets/css/Modal.css'; // Make sure to import the CSS
 import { reactSelectStyles } from '../../Utils/selectboxStyle';
 import { VendorSchema } from '../../Pages/ManageVendors/schema';
 

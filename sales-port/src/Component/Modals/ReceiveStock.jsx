@@ -5,7 +5,7 @@ import { BsUpload } from 'react-icons/bs';
 import close from '../../assets/icons/close.svg';
 import { VendorSchema } from '../../Pages/ManageVendors/schema';
 import { reactSelectStyles } from '../../Utils/selectboxStyle';
-
+import '../../assets/css/Modal.css'; // Make sure to import the CSS
 export const ReceiveStock = ({ isOpen, onClose }) => {
     // Internal options
     const poNumberOptions = [

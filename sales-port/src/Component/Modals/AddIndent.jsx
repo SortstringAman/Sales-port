@@ -7,7 +7,7 @@ import { VendorSchema } from '../../Pages/ManageVendors/schema';
 import { reactSelectStyles } from '../../Utils/selectboxStyle';
 import { IndentSchema } from '../../Pages/ManageIndents/schema';
 import { UploadBox } from '../../Utils/uploadFile';
-
+import '../../assets/css/Modal.css';
 export const AddIndent = ({ isOpen, onClose }) => {
     // Internal options
     const departMentOptions = [
