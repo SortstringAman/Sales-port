@@ -267,9 +267,6 @@ const closeIssueStockModal=()=>{
         []
     );
 
-
-
-
     const handlePageChange = (data) => {
         setCurrentPage(data.selected); // updates useEffect trigger
     };

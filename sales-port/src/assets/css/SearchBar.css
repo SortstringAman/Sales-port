@@ -1,46 +1,97 @@
 /* SearchBar.css */
 .search-bar {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
-    max-width: 600px;
-    /* margin: 20px; */
-    position:relative;
-  }
-  .searchicon{
-    position: absolute;
-    right:10px;
-    top:7px;
-  }
-  .search-input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    background: #F9F9F9;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 600px;
+  /* margin: 20px; */
+  position: relative;
+}
 
-    border-radius: 6px;
-    font-size: 14px;
-    /* margin-bottom: 10px; */
-  }
+.searchicon {
+  position: absolute;
+  right: 18px;
+  top: 12px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  background: #F9F9F9;
+
+  border-radius: 6px;
+  font-size: 14px;
+  /* margin-bottom: 10px; */
+}
+
+.search-results {
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: #fff;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+.search-item {
+  padding: 5px 0;
+  font-size: 14px;
+}
+
+.no-results {
+  font-size: 14px;
+  color: #888;
+}
+
+
+.filterbtn img {
+  color: white !important
+}
+
+.filterreport .svg-icon{
+  position: absolute;
+  top: 15px;
+  left: 36px;
+     
+}
+
+.filterreport img{
+  position: absolute;
+  top: 15px;
+  left: 36px;
   
-  .search-results {
-    width: 100%;
-    max-height: 200px;
-    overflow-y: auto;
-    background-color: #fff;
-    border-radius: 6px;
-    border: 1px solid #ddd;
-    padding: 10px;
-  }
-  
-  .search-item {
-    padding: 5px 0;
-    font-size: 14px;
-  }
-  
-  .no-results {
-    font-size: 14px;
-    color: #888;
-  }
-  
+}
+
+.filterreport .react-select__input{
+  min-width: 100% !important;
+  grid-area: unset !important;
+  padding: 0px !important;
+ color:black !important
+}
+
+.custom-date-input {
+  background-color: #F9F9F9 !important;
+  border: none !important;
+  height: 40px !important;
+  font-size: 14px !important;
+  text-align: center !important;
+  box-shadow: none !important;
+  outline: none !important;
+  width: 100% !important;
+  padding: 0 8px !important;
+  color: #333 !important;
+}
+
+.custom-date-input:focus {
+  box-shadow: 0 0 0 1px #7F56DA !important;
+}
+
+
+.custom-date-input::-webkit-calendar-picker-indicator {
+  filter: invert(37%) sepia(78%) saturate(471%) hue-rotate(239deg) brightness(92%) contrast(90%);
+  cursor: pointer;
+  font-size: 20px;
+}

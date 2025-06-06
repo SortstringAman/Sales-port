@@ -29,45 +29,25 @@ export const Sidebar = () => {
 
 
   const [isLogoutConfirmationModalOpen, setLogoutConfirmationModalOpen] = useState(false);
-
+  // Auto open submenu based on current route
   useEffect(() => {
-    const masterSubmenuPaths = [
-      "/OrganisationDashboard",
-      "/courseDashboard",
-      "/classDashboard",
+    const misSubmenuPaths = ["/manageVendors", "/mis-report"];
+ 
+
+    const allSubmenuPaths = [
+      ...misSubmenuPaths,
     ];
 
-    const financeSubmenuPaths = [
-      "/finance/manage-fee",
-      "/finance/payment-report"
-    ];
-
-    const closePaths = [
-      "/enquiry",
-      "/employeedashboard",
-      "/",
-      "/DesignationDashboard"
-    ];
-
-    const dashboardSubmenuPaths = [
-      "/enquiry-dashbord",
-      "/employeedashboard"
-    ];
-
-    if (isCollapsed && [...masterSubmenuPaths, ...financeSubmenuPaths, ...dashboardSubmenuPaths].includes(location.pathname)) {
+    // Collapse all menus if sidebar is collapsed and path is in any submenu
+    if (isCollapsed && allSubmenuPaths.includes(location.pathname)) {
       setOpenMenu(null);
+      return;
     }
 
-    if (closePaths.includes(location.pathname)) {
-      setOpenMenu(null);
-    } else if (masterSubmenuPaths.includes(location.pathname)) {
-      if (!isCollapsed) setOpenMenu("master");
-    } else if (financeSubmenuPaths.includes(location.pathname)) {
-      if (!isCollapsed) setOpenMenu("finance");
-    } else if (dashboardSubmenuPaths.includes(location.pathname)) {
-      if (!isCollapsed) setOpenMenu("dashboard");
-    }
-    else {
+    // Expand appropriate menu based on pathname
+    if (misSubmenuPaths.includes(location.pathname)) {
+      setOpenMenu("misreport");
+    } else{
       setOpenMenu(null);
     }
   }, [location.pathname, isCollapsed]);
@@ -119,9 +99,25 @@ export const Sidebar = () => {
         <ul className="sidebar-ul">
           <li>
             <Link
+              to="/manageDashboard"
+              className={location.pathname === "/manageDashboard" ? "active" : ""}>
+              {/* <img src={stockImg} alt="Manage Stocks Icon" style={{ width: '20px', height: '20px' }} /> */}
+              <svg width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 11.704C1 9.415 1 8.271 1.52 7.323C2.038 6.374 2.987 5.786 4.884 4.608L6.884 3.367C8.889 2.122 9.892 1.5 11 1.5C12.108 1.5 13.11 2.122 15.116 3.367L17.116 4.608C19.013 5.786 19.962 6.374 20.481 7.323C21 8.272 21 9.415 21 11.703V13.225C21 17.125 21 19.076 19.828 20.288C18.656 21.5 16.771 21.5 13 21.5H9C5.229 21.5 3.343 21.5 2.172 20.288C1.001 19.076 1 17.126 1 13.225V11.704Z" stroke="#222F3E" stroke-width="1.5" />
+              </svg>
+              <span>Dashboard</span>
+            </Link>
+          </li>
+
+          <li>
+            <Link
               to="/manageStocks"
               className={location.pathname === "/manageStocks" ? "active" : ""}>
-              <img src={stockImg} alt="Manage Stocks Icon" style={{ width: '20px', height: '20px' }} />
+              {/* <img src={stockImg} alt="Manage Stocks Icon" style={{ width: '20px', height: '20px' }} /> */}
+              <svg width="20" height="20" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2.37451 7.25L12 2.8745L21.6255 7.25M2.37451 7.25L12 11.6255M2.37451 7.25V16.8755L12 22.1255M21.6255 7.25L12 11.6255M21.6255 7.25V16.8755L12 22.1255M12 11.6255V22.1255M15.75 20V14.75M18.75 18.5V13.25" stroke="#222F3E" stroke-width="1.5" stroke-linejoin="round" />
+              </svg>
+
               <span>Manage Stocks</span>
             </Link>
           </li>
@@ -131,6 +127,7 @@ export const Sidebar = () => {
               to="/manageItems"
               className={location.pathname === "/manageItems" ? "active" : ""}>
               <img src={itemImg} alt="Manage Items Icon" style={{ width: '20px', height: '20px' }} />
+
               <span>Manage Items</span>
             </Link>
           </li>
@@ -138,7 +135,13 @@ export const Sidebar = () => {
             <Link
               to="/manageIndents"
               className={location.pathname === "/manageIndents" ? "active" : ""} >
-              <img src={indentImg} alt="Manage Indents Icon" style={{ width: '20px', height: '20px' }} />
+              {/* <img src={indentImg} alt="Manage Indents Icon" style={{ width: '20px', height: '20px' }} /> */}
+              <svg width="20" height="20" viewBox="0 0 23 25" xmlns="http://www.w3.org/2000/svg" fill="black">
+                <path
+                  d="M22.7773 17.5273L16.25 24.0664L13.0977 20.9023L14.1523 19.8477L16.25 21.9336L21.7227 16.4727L22.7773 17.5273ZM11 8H6.5V6.5H11V8ZM11 11H6.5V9.5H11V11ZM6.5 12.5H11V14H6.5V12.5ZM5 8H3.5V6.5H5V8ZM5 11H3.5V9.5H5V11ZM3.5 12.5H5V14H3.5V12.5ZM12.5 8V2H2V23H12.5V24.5H0.5V0.5H13.5664L20 6.93359V15.5L18.5 17V8H12.5ZM14 6.5H17.4336L14 3.06641V6.5Z"
+                  fill="black"
+                />
+              </svg>
               <span>Manage Indents</span>
             </Link>
           </li>
@@ -146,7 +149,10 @@ export const Sidebar = () => {
             <Link
               to="/managePOs"
               className={location.pathname === "/managePOs" ? "active" : ""}>
-              <img src={poImg} alt="Manage POs Icon" style={{ width: '20px', height: '20px' }} />
+              {/* <img src={poImg} alt="Manage POs Icon" style={{ width: '20px', height: '20px' }} /> */}
+              <svg width="22" height="15" viewBox="0 0 22 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 0H2C1.60218 0 1.22064 0.158035 0.93934 0.43934C0.658035 0.720644 0.5 1.10218 0.5 1.5V13.5C0.5 13.8978 0.658035 14.2794 0.93934 14.5607C1.22064 14.842 1.60218 15 2 15H20C20.3978 15 20.7794 14.842 21.0607 14.5607C21.342 14.2794 21.5 13.8978 21.5 13.5V1.5C21.5 1.10218 21.342 0.720644 21.0607 0.43934C20.7794 0.158035 20.3978 0 20 0ZM20 1.5V3.75H2V1.5H20ZM2 13.5V5.25H20V13.5H2Z" fill="#222F3E" />
+              </svg>
               <span>Manage POS</span>
             </Link>
           </li>
@@ -154,25 +160,70 @@ export const Sidebar = () => {
             <Link
               to="/manageVendors"
               className={location.pathname === "/manageVendors" ? "active" : ""}>
-              <img src={vendorImg} alt="Manage Vendors Icon" style={{ width: '20px', height: '20px' }} />
+              {/* <img src={vendorImg} alt="Manage Vendors Icon" style={{ width: '20px', height: '20px' }} /> */}
+              <svg width="20" height="20" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19 16.25C19 14.16 17.33 11.182 15 10.523M13 16.25C13 13.599 10.314 10.25 7 10.25C3.686 10.25 1 13.599 1 16.25M13 6.75C13.7956 6.75 14.5587 6.43393 15.1213 5.87132C15.6839 5.30871 16 4.54565 16 3.75C16 2.95435 15.6839 2.19129 15.1213 1.62868C14.5587 1.06607 13.7956 0.75 13 0.75M10 3.75C10 4.54565 9.68393 5.30871 9.12132 5.87132C8.55871 6.43393 7.79565 6.75 7 6.75C6.20435 6.75 5.44129 6.43393 4.87868 5.87132C4.31607 5.30871 4 4.54565 4 3.75C4 2.95435 4.31607 2.19129 4.87868 1.62868C5.44129 1.06607 6.20435 0.75 7 0.75C7.79565 0.75 8.55871 1.06607 9.12132 1.62868C9.68393 2.19129 10 2.95435 10 3.75Z" stroke="#222F3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+
               <span>Manage Vendors</span>
             </Link>
           </li>
-            <li>
-            <Link
-              to="/manageReports"
-              className={location.pathname === "/manageReports" ? "active" : ""}>
-              <img src={barchart} alt="Manage Report Icon" style={{ width: '20px', height: '20px',borderRadius:"0px" }} />
-              <span>MIS Reports</span>
-            </Link>
+
+          <li className='submenu-container'>
+            <div
+              className={location.pathname === "/manageDashboard" || location.pathname === "/manageDashboard"
+                ? "active menu-item"
+                : "menu-item"}
+              onClick={() => toggleMenu("misreport")}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 21.5H15M9 21.5V16.5M9 21.5H3.6C3.44087 21.5 3.28826 21.4368 3.17574 21.3243C3.06321 21.2117 3 21.0591 3 20.9V17.1C3 16.9409 3.06321 16.7883 3.17574 16.6757C3.28826 16.5632 3.44087 16.5 3.6 16.5H9M15 21.5V9.5M15 21.5H20.4C20.5591 21.5 20.7117 21.4368 20.8243 21.3243C20.9368 21.2117 21 21.0591 21 20.9V4.1C21 3.94087 20.9368 3.78826 20.8243 3.67574C20.7117 3.56321 20.5591 3.5 20.4 3.5H15.6C15.4409 3.5 15.2883 3.56321 15.1757 3.67574C15.0632 3.78826 15 3.94087 15 4.1V9.5M9 16.5V10.1C9 9.94087 9.06321 9.78826 9.17574 9.67574C9.28826 9.56321 9.44087 9.5 9.6 9.5H15" stroke="#222F3E" stroke-width="1.5" />
+              </svg>
+              <span>MIS Report</span>
+              {!isCollapsed && (
+                <svg viewBox="0 0 24 24" style={{ marginLeft: '17px' }} fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(180)" stroke="#ffffff" height="22" width="22">
+                  <path d="M18.2929 15.2893C18.6834 14.8988 18.6834 14.2656 18.2929 13.8751L13.4007 8.98766C12.6195 8.20726 11.3537 8.20757 10.5729 8.98835L5.68257 13.8787C5.29205 14.2692 5.29205 14.9024 5.68257 15.2929C6.0731 15.6835 6.70626 15.6835 7.09679 15.2929L11.2824 11.1073C11.673 10.7168 12.3061 10.7168 12.6966 11.1073L16.8787 15.2893C17.2692 15.6798 17.9024 15.6798 18.2929 15.2893Z" fill="#0F0F0F"></path>
+                </svg>
+              )}
+            </div>
+            {openMenu === "misreport" && (
+              <ul className={`submenu ${isCollapsed ? 'submenu-float' : ''}`}>
+                <li style={!isCollapsed ? { marginLeft: '15px' } : {}}>
+                  <Link
+                    to="/mis-report"
+                    className={location.pathname === "/mis-report" ? "active" : ""}
+                    onClick={handleSubmenuClick}
+                  >
+                    MIS Reports
+                  </Link>
+
+                </li>
+                <li style={!isCollapsed ? { marginLeft: '15px' } : {}}>
+
+                  <Link
+                    to="/manageVendors"
+                    className={location.pathname === "/manageVendors" ? "active" : ""}
+                    onClick={handleSubmenuClick}
+                  >
+                    MIS Reports2
+                  </Link>
+                </li>
+              </ul>
+            )}
           </li>
+
+
+
+
+
+
         </ul>
       </nav>
 
       {/* Bottom icons/profile */}
       <div style={{ padding: '12px 20px' }}>
         <ul className="sidebar-ul bottom-section" style={{ gap: '10px', display: 'inline-flex' }}>
-{/* 
+          {/* 
           <li>
             <img src={profileimg} alt="Profile" style={{ position: "relative", left: "-3px" }} />
           </li> */}
@@ -212,6 +263,7 @@ export const Sidebar = () => {
     </div>
   );
 };
+
 const MainContent = ({ children }) => {
   return (
     <div className="main-content">
