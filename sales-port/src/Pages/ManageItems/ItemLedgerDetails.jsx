@@ -39,7 +39,7 @@ const ItemLedgerDetails = () => {
         }
     }, []);
 
-const navigate = useNavigate()
+    const navigate = useNavigate()
 
     const handlePageChange = (data) => {
         setCurrentPage(data.selected); // updates useEffect trigger
@@ -92,63 +92,63 @@ const navigate = useNavigate()
 
 
     const debouncedSearch = useMemo(() => debounce(handleSearch, 100), []);
-const columns = useMemo(() => [
-  {
-    Header: 'Date of Transaction',
-    accessor: 'date',
-    disableSortBy: false,
-    Cell: ({ row }) => (
-      <div
-        style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}
-        onClick={() => handleRowClick(row.original.id, row)}
-      >
-        <div>
-          <p style={{ margin: 0, color: '#222F3E', fontWeight: 'bold', textAlign: 'start' }}>
-            {row.original.date}
-          </p>
-        </div>
-      </div>
-    ),
-  },
-  {
-    Header: 'Transaction No.',
-    accessor: 'transactionNo',
-    disableSortBy: false,
-    Cell: ({ value }) => (
-      <p style={{ margin: 0, fontWeight: 500, color: '#222F3E', textAlign: 'start' }}>{value}</p>
-    ),
-  },
-  {
-    Header: () => <div style={{ textAlign: 'right', width: '100%' }}>Credit</div>,
-    accessor: 'credit',
-    disableSortBy: true, // ✅ Disable sorting
-    Cell: ({ value }) => (
-      <p style={{ margin: 0, fontWeight: 500, color: '#222F3E', textAlign: 'right' }}>
-        {value.toFixed(2)}
-      </p>
-    ),
-  },
-  {
-    Header: () => <div style={{ textAlign: 'right', width: '100%' }}>Debit</div>,
-    accessor: 'debit',
-    disableSortBy: true, // ✅ Disable sorting
-    Cell: ({ value }) => (
-      <p style={{ margin: 0, fontWeight: 500, color: '#222F3E', textAlign: 'right' }}>
-        {value.toFixed(2)}
-      </p>
-    ),
-  },
-  {
-    Header: () => <div style={{ textAlign: 'right', width: '100%' }}>Balance</div>,
-    accessor: 'balance',
-    disableSortBy: true, // ✅ Disable sorting
-    Cell: ({ value }) => (
-      <p style={{ margin: 0, fontWeight: 500, color: '#222F3E', textAlign: 'right' }}>
-        {value.toFixed(2)}
-      </p>
-    ),
-  },
-], []);
+    const columns = useMemo(() => [
+        {
+            Header: 'Date of Transaction',
+            accessor: 'date',
+            disableSortBy: false,
+            Cell: ({ row }) => (
+                <div
+                    style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}
+                    onClick={() => handleRowClick(row.original.id, row)}
+                >
+                    <div>
+                        <p style={{ margin: 0, color: '#222F3E', fontWeight: '500',fontSize:'14px', textAlign: 'start' }}>
+                            {row.original.date}
+                        </p>
+                    </div>
+                </div>
+            ),
+        },
+        {
+            Header: 'Transaction No.',
+            accessor: 'transactionNo',
+            disableSortBy: false,
+            Cell: ({ value }) => (
+                <p style={{ margin: 0, fontWeight: 400, color: '#222F3E', textAlign: 'start' }}>{value}</p>
+            ),
+        },
+        {
+            Header: () => <div style={{ textAlign: 'right', width: '100%' }}>Credit</div>,
+            accessor: 'credit',
+            disableSortBy: true, // ✅ Disable sorting
+            Cell: ({ value }) => (
+                <p style={{ margin: 0, fontWeight: 400,fontSize:'14px', color: '#222F3E', textAlign: 'right' }}>
+                    {value.toFixed(2)}
+                </p>
+            ),
+        },
+        {
+            Header: () => <div style={{ textAlign: 'right', width: '100%' }}>Debit</div>,
+            accessor: 'debit',
+            disableSortBy: true, // ✅ Disable sorting
+            Cell: ({ value }) => (
+                <p style={{ margin: 0, fontWeight: 400,fontSize:'14px', color: '#222F3E', textAlign: 'right' }}>
+                    {value.toFixed(2)}
+                </p>
+            ),
+        },
+        {
+            Header: () => <div style={{ textAlign: 'right', width: '100%' }}>Balance</div>,
+            accessor: 'balance',
+            disableSortBy: true, // ✅ Disable sorting
+            Cell: ({ value }) => (
+                <p style={{ margin: 0, fontWeight: 400,fontSize:'14px', color: '#222F3E', textAlign: 'right' }}>
+                    {value.toFixed(2)}
+                </p>
+            ),
+        },
+    ], []);
 
 
     return (
@@ -157,7 +157,7 @@ const columns = useMemo(() => [
                 {/* Content for the Dashboard */}
                 <div style={{ display: "flex", justifyContent: 'space-between' }}>
                     <div >
-                        <h2 className='main-heading'  > <span style={{ textDecoration: 'underline',cursor:'pointer' }} onClick={()=>navigate('/manageItems')}>Manage Items</span>
+                        <h2 className='main-heading'  > <span style={{ textDecoration: 'underline', cursor: 'pointer' }} onClick={() => navigate('/manageItems')}>Manage Items</span>
                             <svg
                                 class="rightarrow"
                                 viewBox="0 0 24 24"

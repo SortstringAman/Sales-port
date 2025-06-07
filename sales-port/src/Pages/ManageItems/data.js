@@ -35,7 +35,7 @@ export const mockData = [
     reorder_level: "60 Pcs",
     last_purchased: "2023-05-01",
     supplier: "Clean Supplies Co.",
-    stock_status: "STOCK OK",
+    stock_status: "SOS",
     status: true,
   },
 ];

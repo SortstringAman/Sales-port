@@ -231,7 +231,7 @@ const ManageItems = () => {
             ),
         },
         {
-            Header: () => <p style={{ color: '#222F3E', fontWeight: 500, margin: 0, textAlign: 'start' }} className='itemName'>Item Name  <span style={{ fontSize: '10px' }}> (SKU CODE)</span> </p>,
+            Header: () => <span style={{ color: '#222F3E', fontWeight: 500, fontSize: '14px', margin: 0, textAlign: 'start', }} className='itemName'>Item Name  <span style={{ fontSize: '10px', fontWeight: 500 }}> (SKU CODE)</span> </span>,
             accessor: 'name',
             Cell: ({ row }) => (
                 <div
@@ -244,10 +244,10 @@ const ManageItems = () => {
                     onClick={() => handleRowClick(row.original.id, row)}
                 >
                     <div>
-                        <p style={{ margin: 0, color: '#222F3E', fontWeight: 'bold', textAlign: 'start' }}>
+                        <p style={{ margin: 0, color: '#222F3E', fontWeight: 500, fontSize: '14px', textAlign: 'start' }}>
                             {row.original.name}
                         </p>
-                        <p style={{ margin: 0, textAlign: 'start', color: '#222F3E', fontWeight: 'bold', fontSize: '11px' }}>
+                        <p style={{ margin: 0, textAlign: 'start', color: '#222F3E', fontWeight: 700, fontSize: '10px' }}>
                             ({row.original.sku_code})
                         </p>
                     </div>
@@ -259,28 +259,28 @@ const ManageItems = () => {
             Header: "Item Group",
             accessor: 'item_group',
             Cell: ({ value }) => (
-                <p style={{ color: '#222F3E', fontWeight: 500, margin: 0, textAlign: 'start' }}>{value}</p>
+                <p style={{ color: '#222F3E', fontWeight: 400, margin: 0, fontSize: '14px', textAlign: 'start' }}>{value}</p>
             ),
         },
         {
             Header: 'Available Stock',
             accessor: 'available_stock',
             Cell: ({ value }) => (
-                <p style={{ color: '#222F3E', fontWeight: 500, margin: 0, textAlign: 'start' }}>{value}</p>
+                <p style={{ color: '#222F3E', fontWeight: 400, fontSize: '14px', margin: 0, textAlign: 'start' }}>{value}</p>
             ),
         },
         {
             Header: 'Min Stock Level',
             accessor: 'min_stock_level',
             Cell: ({ value }) => (
-                <p style={{ color: '#222F3E', fontWeight: 500, margin: 0, textAlign: 'start' }}>{value}</p>
+                <p style={{ color: '#222F3E', fontWeight: 400, fontSize: '14px', margin: 0, textAlign: 'start' }}>{value}</p>
             ),
         },
         {
             Header: 'Reorder Level',
             accessor: 'reorder_level',
             Cell: ({ value }) => (
-                <p style={{ color: '#222F3E', fontWeight: 500, margin: 0, textAlign: 'start' }}>{value}</p>
+                <p style={{ color: '#222F3E', fontWeight: 400, fontSize: '14px', margin: 0, textAlign: 'start' }}>{value}</p>
             ),
         },
         {
@@ -292,8 +292,8 @@ const ManageItems = () => {
 
                 return (
                     <div style={{ textAlign: 'start' }}>
-                        <p style={{ color: '#222F3E', fontWeight: 500, margin: 0, textAlign: 'start' }}>{lastPurchased}</p>
-                        <p style={{ color: '', fontWeight: 400, margin: 0, textAlign: 'start' }}>({supplier})</p>
+                        <p style={{ color: '#222F3E', fontWeight: 400, fontSize: '14px', margin: 0, textAlign: 'start' }}>{lastPurchased}</p>
+                        <p style={{ color: '#222F3E', fontWeight: 400, margin: 0, fontSize: '14px', textAlign: 'start' }}>({supplier})</p>
                     </div>
                 );
             },
@@ -304,14 +304,29 @@ const ManageItems = () => {
             Header: 'Stock Status',
             accessor: 'stock_status',
             disableSortBy: true,
-            Cell: ({ value }) => (
-                <h6 style={{ color: value === 'REORDER ITEM' ? 'red' : 'green', fontWeight: 'bolder', margin: 0, textAlign: 'start' }}>
-                    {value}
-                </h6>
-            ),
+            Cell: ({ value }) => {
+                let color = '#39886F'; // Default for AVAILABLE
+
+                if (value === 'REORDER ITEM') color = '#FF9B04';
+                else if (value === 'SOS') color = '#EC4232';
+
+                return (
+                    <h6 style={{
+                        color,
+                        fontWeight: 700,
+                        fontSize: '16px',
+                        margin: 0,
+                        textAlign: 'start',
+                        textTransform: 'uppercase'
+                    }}>
+                        {value}
+                    </h6>
+                );
+            }
         },
         {
             Header: 'Action',
+
             disableSortBy: true,
             Cell: ({ row }) => (
                 <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
@@ -460,7 +475,7 @@ const ManageItems = () => {
                                     columns={columns}
                                     pageCounts={pageCounts}
                                     handlePageChange={handlePageChange}
-                                   selectedData={selectedOrgDetails}
+                                    selectedData={selectedOrgDetails}
                                     data={mockData}
                                 />
                                 {/* ) : (

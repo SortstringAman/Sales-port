@@ -4,10 +4,29 @@ import ReactPaginate from 'react-paginate';
 import '../assets/css/Table.css';
 import prev from '../assets/icons/Vector 2.svg'
 
+const SortIcon = ({ isSorted, isSortedDesc }) => (
+  <svg width="12" height="15" viewBox="0 0 7 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* Up arrow */}
+    <path
+      d="M1 3L3.5 1L6 3"
+      stroke={isSorted && !isSortedDesc ? "#6B778C" : "#A0A0A0"}
+      strokeWidth="1.1"
+      strokeLinecap="round"
+    />
+    {/* Down arrow */}
+    <path
+      d="M1 7L3.5 9L6 7"
+      stroke={isSortedDesc ? "#6B778C" : "#A0A0A0"}
+      strokeWidth="1.1"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+
 const Table = ({ data, columns, selectedData, handlePageChange, pageCounts }) => {
 
   const [selectedRow, setSelectedRow] = useState(null);
- 
+
   useEffect(() => {
     if (selectedData?.id) {
       setSelectedRow(selectedData.id);
@@ -41,7 +60,7 @@ const Table = ({ data, columns, selectedData, handlePageChange, pageCounts }) =>
     nextPage,
     previousPage,
     setPageSize,
-  
+
   } = useTable(
     {
       columns,
@@ -54,7 +73,7 @@ const Table = ({ data, columns, selectedData, handlePageChange, pageCounts }) =>
     },
     useSortBy,
     usePagination,
-    useRowSelect,  
+    useRowSelect,
   );
 
 
@@ -74,22 +93,15 @@ const Table = ({ data, columns, selectedData, handlePageChange, pageCounts }) =>
           {headerGroups?.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers?.map(column => (
-                <th {...column.getHeaderProps(column.getSortByToggleProps())} style={{ cursor: 'pointer' }}>
+                <th {...column.getHeaderProps(column.getSortByToggleProps())} style={{ cursor: 'pointer',  }}>
                   {column.render('Header')}
-                  {/* Always show arrows if sorting is enabled */}
                   {column.canSort && (
-                    <span style={{ marginLeft: '10px', display: 'inline-flex', flexDirection: 'column', fontSize: '12px', lineHeight: '6px', gap: '3px' }}>
-                      {/* Up arrow */}
-                      <span style={{ color: column.isSorted && !column.isSortedDesc ? '#6B778C' : '#6B778C' }}>
-                        &#x2C4;
-                      </span>
-                      {/* Down arrow */}
-                      <span style={{ color: column.isSortedDesc ? '#6B778C' : '#6B778C' }}>
-                        &#x2C5;
-                      </span>
+                    <span style={{ marginLeft: '10px', display: 'inline-flex', alignItems: 'center' }}>
+                      <SortIcon isSorted={column.isSorted} isSortedDesc={column.isSortedDesc} />
                     </span>
                   )}
                 </th>
+
               ))}
             </tr>
           ))}

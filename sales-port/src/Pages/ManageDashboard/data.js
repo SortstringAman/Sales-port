@@ -38,7 +38,7 @@ export const dashboardData = [
     value: "₹8.5L",
     subtitle: "Current inventory",
     icon: stockValueIcon,
-    color: "warning",
+    color:"#A16207"
   },
 ];
  

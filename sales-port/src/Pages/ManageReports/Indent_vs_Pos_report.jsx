@@ -1,5 +1,7 @@
 
 
+
+
 import { useState, useMemo, useEffect, useRef } from 'react';
 import CommonLayout from '../../Component/CommonLayout';
 import profileicon from '../../assets/icons/solar_square-academic-cap-2-outline.svg'
@@ -29,13 +31,13 @@ import checkgif from '../../assets/gif/successfullgif.gif';
 import close from '../../assets/icons/close.svg';
 import { Filter } from '../../Component/Filter/Filter';
 import debounce from 'lodash.debounce';
-import { inventoryData } from './data';
+import { consumptionReportData, indentVsPoData, inventoryData, reorderReportData } from './data';
 import Select from 'react-select';
 import { reactSelectStyles } from '../../Utils/selectboxStyle';
 import FilterBar from '../../Utils/FilterReport';
 
 
-const ManageReport = () => {
+const IndentVsPOsCompareReport= () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [submit, setsubmit] = useState(false);
   const [currentPage, setCurrentPage] = useState(0); // Starts from 0
@@ -159,123 +161,113 @@ const ManageReport = () => {
     // setIsModalOpen(true); // open the modal
   };
 
-  const columns = useMemo(
-    () => [
-      {
-        Header: 'Product Name',
-        accessor: 'productName',
-        disableSortBy: true,
-        Cell: ({ value, row }) => (
-          <div
-            style={{ cursor: 'pointer' }}
-            onClick={() => handleRowClick(row.original.id, row)}
+ const columns = useMemo(
+  () => [
+    {
+      Header: 'Indent Number',
+      accessor: 'indent_number',
+      disableSortBy: true,
+      Cell: ({ value }) => (
+        <p style={{ fontWeight: 500, fontSize: '14px', color: '#222F3E', margin: 0,textAlign:'start' }}>
+          {value}
+        </p>
+      ),
+    },
+    {
+      Header: 'Item Name',
+      accessor: 'item_name',
+      disableSortBy: true,
+      Cell: ({ value }) => (
+        <p style={{  textAlign:'start', fontSize: '14px',fontWeight: 500, color: '#222F3E' }}>
+          {value}
+        </p>
+      ),
+    },
+    {
+      Header: 'Requested Qty',
+      accessor: 'requested_quantity',
+      disableSortBy: true,
+      Cell: ({ value }) => (
+        <p style={{ margin: 0, fontSize: '14px', color: '#222F3E',textAlign:'center',textAlign:'start'  }}>
+          {value.toLocaleString()}
+        </p>
+      ),
+    },
+    {
+      Header: 'Approved Qty',
+      accessor: 'approved_quantity',
+      disableSortBy: true,
+      Cell: ({ value }) => (
+        <p style={{ margin: 0, fontSize: '14px', color: '#222F3E',textAlign:'start'  }}>
+          {value.toLocaleString()}
+        </p>
+      ),
+    },
+    {
+      Header: 'PO Number',
+      accessor: 'po_number',
+      disableSortBy: true,
+      Cell: ({ value }) => (
+        <p style={{ fontWeight: 500, fontSize: '14px', color: '#222F3E', margin: 0,textAlign:'start' }}>
+          {value}
+        </p>
+      ),
+    },
+    {
+      Header: 'PO Qty',
+      accessor: 'po_qty',
+      disableSortBy: true,
+      Cell: ({ value }) => (
+        <p style={{ margin: 0, fontSize: '14px', color: '#222F3E' ,textAlign:'start' }}>
+          {value.toLocaleString()}
+        </p>
+      ),
+    },
+    {
+      Header: 'PO Status',
+      accessor: 'po_status',
+      disableSortBy: true,
+      Cell: ({ value }) => {
+        const isCompleted = value === 'Completed';
+        const bgColor = isCompleted ? '#dff9fb' : '#feca5733';
+        const textColor = isCompleted ? '#39886F' : '#FF9A04';
+
+        return (
+          <span
+            style={{
+              padding: '4px 10px',
+              backgroundColor: bgColor,
+              color: textColor,
+              borderRadius: '12px',
+              fontSize: '13px',
+              fontWeight: 700,
+              display: 'inline-block',
+              minWidth: '75px',
+              textAlign: 'center',
+            }}
           >
-            <p style={{ margin: 0, fontWeight: 'bold', color: '#7F56DA', textAlign: 'start' }}>
-              {value} <br />
-              <span style={{ fontSize: '12px', color: '#222F3E' }}>({row.original.skuCode})</span>
-            </p>
-          </div>
-        ),
+            {value}
+          </span>
+        );
       },
-      {
-        Header: 'UOM',
-        accessor: 'uom',
-        disableSortBy: true,
-        Cell: ({ value }) => (
-          <p style={{ textAlign: 'start', margin: 0 }}>{value || '-'}</p>
-        ),
-      },
-      {
-        Header: 'Opening Stock',
-        accessor: 'openingStock',
-        disableSortBy: true,
-        Cell: ({ value }) => (
-          <p style={{ textAlign: 'start', margin: 0 }}>{value?.toLocaleString() || '-'}</p>
-        ),
-      },
-      {
-        Header: 'Stock In',
-        accessor: 'stockIn',
-        disableSortBy: true,
-        Cell: ({ value }) => (
-          <p style={{ textAlign: 'start', margin: 0 }}>{value?.toLocaleString() || '-'}</p>
-        ),
-      },
-      {
-        Header: 'Stock Out',
-        accessor: 'stockOut',
-        disableSortBy: true,
-        Cell: ({ value }) => (
-          <p style={{ textAlign: 'start', margin: 0 }}>{value?.toLocaleString() || '-'}</p>
-        ),
-      },
-      {
-        Header: 'Current Stock',
-        accessor: 'currentStock',
-        disableSortBy: true,
-        Cell: ({ value }) => (
-          <p style={{ textAlign: 'start', fontWeight: 'bold', margin: 0, color: '#222F3E' }}>{value?.toLocaleString() || '-'}</p>
-        ),
-      },
-      {
-        Header: 'Reorder Level',
-        accessor: 'reorderLevel',
-        disableSortBy: true,
-        Cell: ({ value }) => (
-          <p style={{ textAlign: 'start', margin: 0 }}>{value?.toLocaleString() || '-'}</p>
-        ),
-      },
-      {
-        Header: 'Min Level',
-        accessor: 'minLevel',
-        disableSortBy: true,
-        Cell: ({ value }) => (
-          <p style={{ textAlign: 'start', margin: 0 }}>{value?.toLocaleString() || '-'}</p>
-        ),
-      },
-      {
-        Header: () => (
-          <div style={{ textAlign: '' }}>
-            Status
-          </div>
-        ),
-        accessor: 'status',
-        disableSortBy: true,
-        Cell: ({ value }) => {
-          let bgColor = '#dff9fb';
-          let textColor = '#10ac84';
+    },
+    {
+     
+       Header: () => (<div style={{ textAlign: 'center' }}>Department</div>),
+      accessor: 'department',
+      disableSortBy: true,
+      Cell: ({ value }) => (
+        <p style={{ margin: 0, fontSize: '14px', color: '#222F3E' }}>
+          {value}
+        </p>
+      ),
+    },
+  ],
+  []
+);
 
-          if (value === 'SOS') {
-            bgColor = '#ff6b6b33';
-            textColor = '#ee5253';
-          } else if (value === 'Reorder') {
-            bgColor = '#feca5733';
-            textColor = '#f79f1f';
-          }
 
-          return (
-            <span
-              style={{
-                padding: '4px 8px',
-                backgroundColor: bgColor,
-                color: textColor,
-                borderRadius: '12px',
-                fontSize: '13px',
-                fontWeight: 600,
-                display: 'inline-block',
-                minWidth: '75px',
-                textAlign: 'center',
-              }}
-            >
-              {value}
-            </span>
-          );
-        },
-      }
 
-    ],
-    []
-  );
 
 
   const handlePageChange = (data) => {
@@ -305,7 +297,7 @@ const ManageReport = () => {
         {/* Content for the Dashboard */}
         <div style={{ display: "flex", justifyContent: 'space-between', marginBottom: '28px' }}>
           <div >
-            <h2 className='main-heading'>Current Inventry Report</h2>
+            <h2 className='main-heading'>Indent VS PO Comparison Report</h2>
           </div>
           <div style={{ display: "flex", gap: "25px" }} >
           </div>
@@ -322,7 +314,7 @@ const ManageReport = () => {
             <div className="row" style={{ alignItems: 'center' }}>
               <div className="col-md-6">
                 {/* <h4 className='text-primary'>All Stock  </h4> */}  <div className="col-md-6">
-                  <h4 className='text-primary' style={{ fontWeight: 'bold' }}>Stock Level Overview</h4>
+                  {/* <h4 className='text-primary' style={{ fontWeight: 'bold' }}>Consumption Overview</h4> */}
                 </div>
               </div>
               <div className="col-md-6">
@@ -356,7 +348,7 @@ const ManageReport = () => {
                   pageCounts={pageCounts}
                   handlePageChange={handlePageChange}
                   selectedData={selectedStockDetails}
-                  data={inventoryData}
+                  data={indentVsPoData}
                 />
                 {/* ) : ( */}
                 {/* <div className="no-data-message" style={{ textAlign: 'center', padding: '40px', color: '#888' }}>
@@ -413,6 +405,6 @@ const ManageReport = () => {
 
 
 
-
-export default ManageReport
  
+
+export default IndentVsPOsCompareReport

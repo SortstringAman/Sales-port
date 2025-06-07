@@ -29,13 +29,13 @@ import checkgif from '../../assets/gif/successfullgif.gif';
 import close from '../../assets/icons/close.svg';
 import { Filter } from '../../Component/Filter/Filter';
 import debounce from 'lodash.debounce';
-import { transactionsData } from './data';
-import StockShortDetails from './StockShortDetail';
-import { ReceiveStock } from '../../Component/Modals/ReceiveStock';
-import { IssueStock } from '../../Component/Modals/IssueStock';
+import { indentReportData, inventoryData, stockInReportData, stockOutReportData } from './data';
+import Select from 'react-select';
+import { reactSelectStyles } from '../../Utils/selectboxStyle';
+import FilterBar from '../../Utils/FilterReport';
 
 
-const ManageStocks = () => {
+const IndentReport = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [submit, setsubmit] = useState(false);
     const [currentPage, setCurrentPage] = useState(0); // Starts from 0
@@ -71,6 +71,7 @@ const ManageStocks = () => {
         fromdate: today,
         Todate: ''
     })
+
     const [imgurl, setimgurl] = useState('')
     const [fingerprints, setFingerprints] = useState([null, null, null]);
     const [mainnamehead, setmainnamehead] = useState('');
@@ -93,39 +94,7 @@ const ManageStocks = () => {
     };
 
 
-    const [isReceiveStockModalOpen, setReceiveStockModalOpen] = useState(false);
-    const [isIssueStockModal, setIsIssueStockModal] = useState(false)
 
-
-    const openIssueStockModal = () => {
-        setIsIssueStockModal(true)
-    }
-
-    const closeIssueStockModal = () => {
-        setIsIssueStockModal(false)
-        setIsEditMode(false);
-    }
-    const openReceiveStockModal = () => {
-        setReceiveStockModalOpen(true)
-    }
-
-
-    const closeReceiveStockModal = () => {
-        setReceiveStockModalOpen(false)
-        setIsEditMode(false);
-    }
-
-    const openModal = () => {
-        setIsModalOpen(true);
-    };
-
-    const closeModal = () => {
-        setIsModalOpen(false);
-        setIsEditMode(false);
-        setidcardmodal(false);
-        setFingerprints([null, null, null]);
-        setCapturedPhoto();
-    };
     const submitclose = () => {
         setsubmit(false);
     };
@@ -189,98 +158,227 @@ const ManageStocks = () => {
         // setregMode(false);
         // setIsModalOpen(true); // open the modal
     };
-
-
-    const columns = useMemo(
-        () => [
-            {
-                Header: 'Date of Transaction',
-                accessor: 'date',
-                disableSortBy: false,
-                Cell: ({ value, row }) => (
-                    <div
-                        style={{ cursor: 'pointer' }}
-                        onClick={() => handleRowClick(row.original.id, row)}
-                    >
-                        <p style={{ margin: 0, color: '#222F3E', fontWeight: '500',fontSize:'14px', textAlign: 'start' }}>{value || '-'}</p>
-                    </div>
-                ),
-            },
-            {
-                Header: 'Transaction No.',
-                accessor: 'transaction_no',
-                disableSortBy: false,
-                Cell: ({ value }) => (
-                    <p style={{ textAlign: 'left',color: '#222F3E', fontSize: '14px', fontWeight: 400, margin: 0 }}>{value || '-'}</p>
-                ),
-            },
-            {
-                Header: 'Type',
-                accessor: 'type',
-                disableSortBy: true,
-                Cell: ({ value }) => (
-                    <h6
+    const columns = [
+        {
+            Header: 'Indent Number',
+            accessor: 'indent_number',
+            disableSortBy: true,
+            Cell: ({ value, row }) => (
+                <div
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => handleRowClick(row.original.id, row)}
+                >
+                    <p
                         style={{
-                            color: value === 'Stock Received' ? 'green' : 'red',
-                            fontWeight: 600,
-                            textAlign: 'left',
-                            fontWeight: 'bolder'
+                            margin: 0,
+                            fontWeight: 500,
+                            fontSize: '14px',
+                            color: '#222F3E',
+                            textAlign: 'start',
                         }}
                     >
                         {value || '-'}
-                    </h6>
-                ),
-            },
-            {
-                Header: 'Received By',
-                accessor: 'received_by',
-                disableSortBy: true,
-                Cell: ({ value }) => (
-                    <p style={{ textAlign: 'left', margin: 0 , fontSize: '14px', fontWeight: 400,color: '#222F3E'}}>{value || '-'}</p>
-                ),
-            },
-            {
-                Header: 'Issued By',
-                accessor: 'issued_by',
-                disableSortBy: true,
-                Cell: ({ value }) => (
-                    <p style={{ textAlign: 'left', margin: 0, fontSize: '14px', fontWeight: 400 ,color: '#222F3E'}}>{value || '-'}</p>
-                ),
-            },
-            {
-                Header: () => (
-                    <div style={{ textAlign: 'center' }}>
-                        Document
-                    </div>
-                ),
-                accessor: 'document',
-                disableSortBy: true,
-                Cell: () => (
-                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="22"
-                            height="22"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="currentColor"
-                            style={{ cursor: 'pointer', color: '#7A4FF5' }}
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"
-                            />
-                        </svg>
-                    </div>
-                ),
-            }
+                    </p>
+                </div>
+            ),
+        },
+        {
+            Header: 'Date',
+            accessor: 'date',
+            disableSortBy: true,
+            Cell: ({ value }) => (
+                <p
+                    style={{
+                        textAlign: 'start',
+                        margin: 0,
+                        color: '#222F3E',
+                        fontWeight: 400,
+                        fontSize: '14px',
+                    }}
+                >
+                    {value || '-'}
+                </p>
+            ),
+        },
+        {
+            Header: 'Raised By',
+            accessor: 'raised_by',
+            disableSortBy: true,
+            Cell: ({ value }) => (
+                <p
+                    style={{
+                        textAlign: 'start',
+                        margin: 0,
+                        color: '#222F3E',
+                        fontWeight: 400,
+                        fontSize: '14px',
+                    }}
+                >
+                    {value || '-'}
+                </p>
+            ),
+        },
+        {
+            Header: 'Department',
+            accessor: 'department',
+            disableSortBy: true,
+            Cell: ({ value }) => (
+                <p
+                    style={{
+                        textAlign: 'start',
+                        margin: 0,
+                        color: '#222F3E',
+                        fontWeight: 400,
+                        fontSize: '14px',
+                    }}
+                >
+                    {value || '-'}
+                </p>
+            ),
+        },
+        {
+            Header: 'Product Name',
+            accessor: 'product_name',
+            disableSortBy: true,
+            Cell: ({ value }) => (
+                <p
+                    style={{
+                        textAlign: 'start',
+                        margin: 0,
+                        color: '#222F3E',
+                        fontWeight: 400,
+                        fontSize: '14px',
+                    }}
+                >
+                    {value || '-'}
+                </p>
+            ),
+        },
+        {
+            Header: 'Request Qty',
+            accessor: 'request_quantity',
+            disableSortBy: true,
+            Cell: ({ value }) => (
+                <p
+                    style={{
+                        textAlign: 'start',
+                        margin: 0,
+                        color: '#222F3E',
+                        fontWeight: 400,
+                        fontSize: '14px',
+                    }}
+                >
+                    {value ? `${value} Pcs` : '-'}
+                </p>
+            ),
+        },
+        {
+            Header: 'Approved Qty',
+            accessor: 'approved_quantity',
+            disableSortBy: true,
+            Cell: ({ value }) => (
+                <p
+                    style={{
+                        textAlign: 'start',
+                        margin: 0,
+                        color: '#222F3E',
+                        fontWeight: 400,
+                        fontSize: '16px',
+                    }}
+                >
+                    {value ? `${value} Pcs` : '-'}
+                </p>
+            ),
+        },
+        {
+            Header: () => (<div style={{ textAlign: '' }}>Status </div>),
+            accessor: 'indent_status',
+            disableSortBy: true,
+            Cell: ({ value }) => {
+                let bgColor = '#dff9fb';
+                let textColor = '#10ac84';
 
-            ,
-        ],
-        []
-    );
+                if (value === 'SOS') {
+                    bgColor = '#ff6b6b33';
+                    textColor = '#ee5253';
+                } else if (value === 'Reorder') {
+                    bgColor = '#feca5733';
+                    textColor = '#f79f1f';
+                } else if (value === 'Approved') {
+                    bgColor = '#dff9fb';
+                    textColor = '#10ac84';
+                } else if (value === 'Pending') {
+                    bgColor = '#feca5733';
+                    textColor = '#f79f1f';
+                } else if (value === 'Rejected') {
+                    bgColor = '#ff6b6b33';
+                    textColor = '#ee5253';
+                }
+
+                return (
+                    <span
+                        style={{
+                            padding: '4px 8px',
+                            backgroundColor: bgColor,
+                            color: textColor,
+                            borderRadius: '12px',
+                            fontSize: '13px',
+                            fontWeight: 600,
+                            display: 'inline-block',
+                            minWidth: '75px',
+                            textAlign: 'center',
+                        }}
+                    >
+                        {value || '-'}
+                    </span>
+                );
+            },
+        },
+        ,
+        {
+            Header: 'Linked PO',
+            accessor: 'linked_po',
+            disableSortBy: true,
+            Cell: ({ value }) => (
+                <p
+                    style={{
+                        textAlign: 'start',
+                        margin: 0,
+                        color: '#7F56DA',
+                        textDecoration:'underline',
+                        fontWeight: 600,
+                        fontSize: '14px',
+                        cursor: value ? 'pointer' : 'default',
+                    }}
+                >
+                    {value || '-'}
+                </p>
+            ),
+        },
+        {
+            Header: 'Remark',
+            accessor: 'remark',
+            disableSortBy: true,
+            Cell: ({ value }) => (
+                <p
+                    style={{
+                        textAlign: 'start',
+                        margin: 0,
+                      color: '#222F3E',
+                        fontWeight: 400,
+                        fontSize: '14px',
+                    }}
+                >
+                    {value || '-'}
+                </p>
+            ),
+        },
+    ];
+
+
+
+
+
 
     const handlePageChange = (data) => {
         setCurrentPage(data.selected); // updates useEffect trigger
@@ -297,48 +395,41 @@ const ManageStocks = () => {
             searchInputRef.current.focus();
         }
     }, []);
+
+    const itemOptions = [
+        { value: 'Item 1', label: 'Item 1' },
+        { value: 'Item 2', label: 'Item 2' },
+        { value: 'Item 3', label: 'Item 3' },
+    ];
     return (
         <>
             <div className="dashboard">
                 {/* Content for the Dashboard */}
                 <div style={{ display: "flex", justifyContent: 'space-between', marginBottom: '28px' }}>
                     <div >
-                        <h2 className='main-heading'>Manage Stock</h2>
+                        <h2 className='main-heading'>Indent Report</h2>
                     </div>
                     <div style={{ display: "flex", gap: "25px" }} >
-
-                        <button className='add-btn'
-                            onClick={openIssueStockModal}
-                        >
-                            <span className='me-2'>
-                                <svg width="12" height="12" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M1.57143 10.2108C1.15466 10.2108 0.754961 10.3764 0.460261 10.6711C0.165561 10.9658 0 11.3655 0 11.7822C0 12.199 0.165561 12.5987 0.460261 12.8934C0.754961 13.1881 1.15466 13.3537 1.57143 13.3537H20.4286C20.8453 13.3537 21.245 13.1881 21.5397 12.8934C21.8344 12.5987 22 12.199 22 11.7822C22 11.3655 21.8344 10.9658 21.5397 10.6711C21.245 10.3764 20.8453 10.2108 20.4286 10.2108H1.57143Z" fill="white" />
-                                </svg>
-
-                            </span>Issue Stock
-                        </button>
-                        <button className='add-btn' onClick={openReceiveStockModal}>
-                            <span className='me-2'>
-                                <svg width="12" height="12" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M20.4286 13.3537H12.5714V21.2108C12.5714 21.6276 12.4059 22.0273 12.1112 22.322C11.8165 22.6167 11.4168 22.7822 11 22.7822C10.5832 22.7822 10.1835 22.6167 9.88883 22.322C9.59413 22.0273 9.42857 21.6276 9.42857 21.2108V13.3537H1.57143C1.15466 13.3537 0.754961 13.1881 0.460261 12.8934C0.165561 12.5987 0 12.199 0 11.7822C0 11.3655 0.165561 10.9658 0.460261 10.6711C0.754961 10.3764 1.15466 10.2108 1.57143 10.2108H9.42857V2.35366C9.42857 1.93689 9.59413 1.53719 9.88883 1.24249C10.1835 0.947787 10.5832 0.782227 11 0.782227C11.4168 0.782227 11.8165 0.947787 12.1112 1.24249C12.4059 1.53719 12.5714 1.93689 12.5714 2.35366V10.2108H20.4286C20.8453 10.2108 21.245 10.3764 21.5397 10.6711C21.8344 10.9658 22 11.3655 22 11.7822C22 12.199 21.8344 12.5987 21.5397 12.8934C21.245 13.1881 20.8453 13.3537 20.4286 13.3537Z" fill="white" />
-                                </svg>
-                            </span>Receive Stock
-                        </button>
-
                     </div>
-
-
                 </div>
 
                 <div className='row mt-2'>
-                    <div className="col-md-9">
+                    <div className="col-md-12">
+                        <FilterBar />
+                    </div>
+                </div>
+
+                <div className='row mt-5'>
+                    <div className="col-md-12">
                         <div className="row" style={{ alignItems: 'center' }}>
                             <div className="col-md-6">
-                                {/* <h4 className='text-primary'>All Stock  </h4> */}
+                                {/* <h4 className='text-primary'>All Stock  </h4> */}  <div className="col-md-6">
+                                    {/* <h4 className='text-primary' style={{ fontWeight: 'bold' }}>Issued Stock List</h4> */}
+                                </div>
                             </div>
                             <div className="col-md-6">
                                 <div style={{ display: "flex", justifyContent: 'end' }}>
-                                    <SearchBar data={studentdata} onSearch={debouncedSearch} ref={searchInputRef} placeholder={'Serach by Name, Reg. No, Phone No, Email..'} />
+                                    <SearchBar data={studentdata} onSearch={debouncedSearch} ref={searchInputRef} placeholder={'Serach by Item Name, SQU Code..'} />
                                     <button
                                         className="filter-btn"
                                         onClick={handleFilterClick}
@@ -367,7 +458,7 @@ const ManageStocks = () => {
                                     pageCounts={pageCounts}
                                     handlePageChange={handlePageChange}
                                     selectedData={selectedStockDetails}
-                                    data={transactionsData}
+                                    data={indentReportData}
                                 />
                                 {/* ) : ( */}
                                 {/* <div className="no-data-message" style={{ textAlign: 'center', padding: '40px', color: '#888' }}>
@@ -379,17 +470,14 @@ const ManageStocks = () => {
                         </div>
                     </div>
                     <div className="col-md-3">
-                        <StockShortDetails navigate={navigate} selectedStockDetails={selectedStockDetails}
-                        // getstudentsdataId={getstudentsdataId}
-                        />
+                        {/* <StockShortDetails navigate={navigate} selectedStockDetails={selectedStockDetails} */}
+                        {/* // getstudentsdataId={getstudentsdataId} */}
+
                     </div>
                 </div>
             </div >
 
 
-
-            <ReceiveStock isOpen={isReceiveStockModalOpen} onClose={closeReceiveStockModal} />
-            <IssueStock isOpen={isIssueStockModal} onClose={closeIssueStockModal} />
 
             {showToast && (
                 <div
@@ -427,4 +515,6 @@ const ManageStocks = () => {
 
 
 
-export default ManageStocks
+
+
+export default IndentReport

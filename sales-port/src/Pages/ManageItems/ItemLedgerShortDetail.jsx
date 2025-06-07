@@ -45,8 +45,8 @@ export const ItemLedgerShortDetails = ({ navigate, selectedItemLedgerDetails }) 
                         <div className='stu-pro-inner'>
                             <div style={{ display: 'flex', gap: "15px", flexDirection: "column", alignItems: 'start', justifyContent: 'space-between' }}>
                                 <div>
-                                    <h4 className='fm-pr-hd' style={{ margin: 0, marginBottom: "10px",fontWeight:"bold",fontSize:"17px" }}>RS/2025-26/25</h4>
-                                    <p style={{ textAlign: 'left' , fontWeight: 600, color: "#222F3E" }}>{selectedItemLedgerDetails?.date} </p>
+                                    <h4 className='fm-pr-hd' style={{ margin: 0, marginBottom: "10px",fontWeight:"600",fontSize:"18px" }}>RS/2025-26/25</h4>
+                                    <p style={{ textAlign: 'left' , fontWeight:"600",fontSize:"14px" , color: "#222F3E" }}>{selectedItemLedgerDetails?.date} </p>
                                 </div>
                                 <div>
                                     <p className='sd-p'>Bill No</p>

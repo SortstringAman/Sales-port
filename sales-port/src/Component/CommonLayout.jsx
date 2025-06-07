@@ -31,8 +31,8 @@ export const Sidebar = () => {
   const [isLogoutConfirmationModalOpen, setLogoutConfirmationModalOpen] = useState(false);
   // Auto open submenu based on current route
   useEffect(() => {
-    const misSubmenuPaths = ["/manageVendors", "/mis-report"];
- 
+    const misSubmenuPaths = ["/stockInReport", "/inventoryReport", "/stockOutReport", "/indentReport", "/purchaseOfferReport", "/reorderReport", '/itemConsumptionReport', '/compareReport'];
+
 
     const allSubmenuPaths = [
       ...misSubmenuPaths,
@@ -46,8 +46,8 @@ export const Sidebar = () => {
 
     // Expand appropriate menu based on pathname
     if (misSubmenuPaths.includes(location.pathname)) {
-      setOpenMenu("misreport");
-    } else{
+      setOpenMenu("misReport");
+    } else {
       setOpenMenu(null);
     }
   }, [location.pathname, isCollapsed]);
@@ -102,9 +102,11 @@ export const Sidebar = () => {
               to="/manageDashboard"
               className={location.pathname === "/manageDashboard" ? "active" : ""}>
               {/* <img src={stockImg} alt="Manage Stocks Icon" style={{ width: '20px', height: '20px' }} /> */}
-              <svg width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1 11.704C1 9.415 1 8.271 1.52 7.323C2.038 6.374 2.987 5.786 4.884 4.608L6.884 3.367C8.889 2.122 9.892 1.5 11 1.5C12.108 1.5 13.11 2.122 15.116 3.367L17.116 4.608C19.013 5.786 19.962 6.374 20.481 7.323C21 8.272 21 9.415 21 11.703V13.225C21 17.125 21 19.076 19.828 20.288C18.656 21.5 16.771 21.5 13 21.5H9C5.229 21.5 3.343 21.5 2.172 20.288C1.001 19.076 1 17.126 1 13.225V11.704Z" stroke="#222F3E" stroke-width="1.5" />
+              <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2 12.704C2 10.415 2 9.271 2.52 8.323C3.038 7.374 3.987 6.786 5.884 5.608L7.884 4.367C9.889 3.122 10.892 2.5 12 2.5C13.108 2.5 14.11 3.122 16.116 4.367L18.116 5.608C20.013 6.786 20.962 7.374 21.481 8.323C22 9.272 22 10.415 22 12.703V14.225C22 18.125 22 20.076 20.828 21.288C19.656 22.5 17.771 22.5 14 22.5H10C6.229 22.5 4.343 22.5 3.172 21.288C2.001 20.076 2 18.126 2 14.225V12.704Z" stroke="#222F3E" stroke-width="1.5" />
+                <path d="M12 15.5V18.5" stroke="#222F3E" stroke-width="1.5" stroke-linecap="round" />
               </svg>
+
               <span>Dashboard</span>
             </Link>
           </li>
@@ -174,7 +176,7 @@ export const Sidebar = () => {
               className={location.pathname === "/manageDashboard" || location.pathname === "/manageDashboard"
                 ? "active menu-item"
                 : "menu-item"}
-              onClick={() => toggleMenu("misreport")}
+              onClick={() => toggleMenu("misReport")}
             >
               <svg width="20" height="20" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M9 21.5H15M9 21.5V16.5M9 21.5H3.6C3.44087 21.5 3.28826 21.4368 3.17574 21.3243C3.06321 21.2117 3 21.0591 3 20.9V17.1C3 16.9409 3.06321 16.7883 3.17574 16.6757C3.28826 16.5632 3.44087 16.5 3.6 16.5H9M15 21.5V9.5M15 21.5H20.4C20.5591 21.5 20.7117 21.4368 20.8243 21.3243C20.9368 21.2117 21 21.0591 21 20.9V4.1C21 3.94087 20.9368 3.78826 20.8243 3.67574C20.7117 3.56321 20.5591 3.5 20.4 3.5H15.6C15.4409 3.5 15.2883 3.56321 15.1757 3.67574C15.0632 3.78826 15 3.94087 15 4.1V9.5M9 16.5V10.1C9 9.94087 9.06321 9.78826 9.17574 9.67574C9.28826 9.56321 9.44087 9.5 9.6 9.5H15" stroke="#222F3E" stroke-width="1.5" />
@@ -186,28 +188,94 @@ export const Sidebar = () => {
                 </svg>
               )}
             </div>
-            {openMenu === "misreport" && (
+            {openMenu === "misReport" && (
               <ul className={`submenu ${isCollapsed ? 'submenu-float' : ''}`}>
                 <li style={!isCollapsed ? { marginLeft: '15px' } : {}}>
                   <Link
-                    to="/mis-report"
-                    className={location.pathname === "/mis-report" ? "active" : ""}
+                    to="/inventoryReport"
+                    className={location.pathname === "/inventoryReport" ? "active" : ""}
                     onClick={handleSubmenuClick}
                   >
-                    MIS Reports
+                    Inventory Reports
                   </Link>
 
                 </li>
                 <li style={!isCollapsed ? { marginLeft: '15px' } : {}}>
-
                   <Link
-                    to="/manageVendors"
-                    className={location.pathname === "/manageVendors" ? "active" : ""}
+                    to="/stockInReport"
+                    className={location.pathname === "/stockInReport" ? "active" : ""}
                     onClick={handleSubmenuClick}
                   >
-                    MIS Reports2
+                    Stock In Report
                   </Link>
+
                 </li>
+                <li style={!isCollapsed ? { marginLeft: '15px' } : {}}>
+                  <Link
+                    to="/stockOutReport"
+                    className={location.pathname === "/stockOutReport" ? "active" : ""}
+                    onClick={handleSubmenuClick}
+                  >
+                    Stock Out Report
+                  </Link>
+
+                </li>
+
+                <li style={!isCollapsed ? { marginLeft: '15px' } : {}}>
+                  <Link
+                    to="/indentReport"
+                    className={location.pathname === "/indentReport" ? "active" : ""}
+                    onC lick={handleSubmenuClick}
+                  >
+                    Indent Report
+                  </Link>
+
+                </li>
+                <li style={!isCollapsed ? { marginLeft: '15px' } : {}}>
+                  <Link
+                    to="/purchaseOfferReport"
+                    className={location.pathname === "/purchaseOfferReport" ? "active" : ""}
+                    onC lick={handleSubmenuClick}
+                  >
+                    Purchase Order Report
+                  </Link>
+
+                </li>
+
+
+                <li style={!isCollapsed ? { marginLeft: '15px' } : {}}>
+                  <Link
+                    to="/reorderReport"
+                    className={location.pathname === "/reorderReport" ? "active" : ""}
+                    onC lick={handleSubmenuClick}
+                  >
+                    Reorder Report
+                  </Link>
+
+                </li>
+
+                <li style={!isCollapsed ? { marginLeft: '15px' } : {}}>
+                  <Link
+                    to="/itemConsumptionReport"
+                    className={location.pathname === "/itemConsumptionReport" ? "active" : ""}
+                    onC lick={handleSubmenuClick}
+                  >
+                    Item Wise Consumption Report
+                  </Link>
+
+                </li>
+
+                <li style={!isCollapsed ? { marginLeft: '15px' } : {}}>
+                  <Link
+                    to="/compareReport"
+                    className={location.pathname === "/compareReport" ? "active" : ""}
+                    onC lick={handleSubmenuClick}
+                  >
+                    Indent VS POs Report Comparison
+                  </Link>
+
+                </li>
+
               </ul>
             )}
           </li>

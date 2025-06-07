@@ -19,6 +19,10 @@
     font-weight: 400;
     /* border-radius: 6px; */
 }
+.student-table tbody tr p {
+  font-family: Poppins;
+}
+
 
 .student-table tbody tr {
     /* background-color: #f4f4f4; */

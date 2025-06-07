@@ -7,13 +7,14 @@ const POsShortDetails = ({ selectedStockDetails }) => {
             <div className="col-md-12">
                 <p style={{
                     background: '#F9F9F9',
-                    padding: '16px',
+                    padding: '14px',
                     borderRadius: '8px',
                     textAlign: 'left',
-                    fontWeight: 500,
-                    color: "#222F3E"
+                   
+                    color: "#222F3E",
+                    fontWeight: 600, color: "#222F3E" 
                 }}>
-                    PO DETAILS:
+                    PO DETAILS
                 </p>
             </div>
 
@@ -24,9 +25,9 @@ const POsShortDetails = ({ selectedStockDetails }) => {
                             <div style={{ display: 'flex', gap: "15px", flexDirection: "column", alignItems: 'start', justifyContent: 'space-between' }}>
                                 <div>
                                     <h4 className='fm-pr-hd' style={{
-                                        margin: 0, marginBottom: "10px", fontWeight: '600', fontSize: "18px", textTransform: 'uppercase'
+                                        margin: 0, marginBottom: "10px", fontWeight: '700', fontSize: "18px", textTransform: 'uppercase'
                                     }}>{selectedStockDetails?.po_no}</h4>
-                                    <p className='alg-l' style={{ color: '#222F3E', fontWeight: 'bold' }}>
+                                    <p className='alg-l' style={{ color: '#222F3E', fontWeight: '500' }}>
                                         {selectedStockDetails?.date || 'N/A'}
                                     </p>
                                 </div>

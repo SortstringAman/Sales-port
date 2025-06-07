@@ -95,9 +95,13 @@
     color: #3730A3;
     border: 1px solid #C7D2FE;
     background: #EEF2FF;
-    padding: 5px 13px;
+    padding: 5px 10px;
     border-radius: 9px;
     font-size: 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 9px;
 }
 
 .stockdata-dashboard th {
@@ -143,75 +147,93 @@
     font-size: 14px;
     letter-spacing: 1px;
 }
+
 .low-stock-table td {
     color: #000000;
     font-size: 14px;
 
 }
 
-.export-btn{
-    border: 1px solid #E5E7EB;
+.export-btn {
+    /* border: 1px solid #E5E7EB; */
     background: #F3F4F6;
     color: #374151;
-    padding: 4px 20px;
+    padding: 4px 15px;
     display: flex;
-    gap:6px
-
-
+    gap: 6px;
+    
+}
+.export-btn span{
+     font-size: 14px;
+    font-weight: 400;
+}
+.export-btn-container {
+    display: flex;
+    gap: 10px
 }
 
-.export-btn-container{
-    display: flex;
-    gap:10px
-}
-
-.stock-action-btn{
+.stock-action-btn {
     background: #3B82F6;
-border: 1px solid #E5E7EB;
-color: #FFFFFF;
-font-size: 12px;
-font-weight: 400;
-padding: 5px 12px;
+    border: 1px solid #E5E7EB;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 400;
+    padding: 5px 12px;
 
 
 }
 
 
-.alert-suggestion-container p{
-text-align: start;
-color: #374151;
-  display:  flex;  
-  gap: 5px;
+.alert-suggestion-container p {
+    text-align: start;
+    color: #374151;
+    display: flex;
+    gap: 5px;
 }
 
-.alert-suggestion-container{
- display: flex;
+.alert-suggestion-container {
+    display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-.alert-suggestion-container p span{
+.alert-suggestion-container p span {
     margin-left: 8px;
 }
 
-.send-mail-btn{
+.send-mail-btn {
     background: #4338CA;
-border: 1px solid #E5E7EB;
-color:#ffffff;
-padding: 7px 18px;
+    border: 1px solid #E5E7EB;
+    color: #ffffff;
+    padding: 7px 18px;
 }
 
-.send-mail-btn span{
+.send-mail-btn span {
     font-size: 14px;
     font-weight: 400;
 }
 
-.alert-action{
-    color:  #4338CA !important;
+.alert-action {
+    color: #4338CA !important;
     cursor: pointer;
     text-decoration: underline;
     margin-left: 10px;
     font-size: 12px;
     font-weight: 600;
+}
 
+.low-stock-table tbody td,
+.low-stock-table thead tr {
+    border-bottom: 1px solid #E5E7EB
+}
+
+.stockdata-dashboard thead.custom-head th {
+    background: #EEF2FF !important;
+    color: #4B5563;
+
+}
+
+table.stockdata-dashboard tbody tr:hover td {
+    background-color: #EEF2FF !important;
+    /* color: white !important; */
 }

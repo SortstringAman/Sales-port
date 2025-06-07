@@ -234,7 +234,7 @@ const ManageVendors = () => {
                         style={{ cursor: 'pointer' }}
                         onClick={() => handleRowClick(row.original.id, row)}
                     >
-                        <p style={{ color: '#222F3E', fontWeight: 'bold', textAlign: 'start', margin: 0 }}>
+                        <p style={{  color: '#222F3E', fontWeight: 500,fontSize:'14px', textAlign: 'start', margin: 0 }}>
                             {row.original.name}
                         </p>
                         <p style={{ textAlign: 'left', margin: 0 }}>
@@ -249,7 +249,7 @@ const ManageVendors = () => {
                 Cell: ({ value, row }) => {
 
                     return (
-                        <p style={{ textAlign: 'left', color: '#222F3E', fontWeight: 500, margin: 0 }}>
+                        <p style={{ textAlign: 'left', color: '#222F3E', fontWeight: 400, margin: 0 }}>
                             {value || '-'}
                         </p>
                     );
@@ -292,7 +292,7 @@ const ManageVendors = () => {
                 accessor: 'email',
                 disableSortBy: true,
                 Cell: ({ value }) => (
-                    <p style={{ textAlign: 'left', color: '#222F3E', fontWeight: 500, margin: 0 }}>
+                    <p style={{ textAlign: 'left', color: '#222F3E', fontWeight: 400, margin: 0 }}>
                         {value || '-'}
                     </p>
                 ),
@@ -302,7 +302,7 @@ const ManageVendors = () => {
                 accessor: 'location',
                 disableSortBy: true,
                 Cell: ({ value }) => (
-                    <p style={{ textAlign: 'left', color: '#222F3E', fontWeight: 500, margin: 0 }}>
+                    <p style={{ textAlign: 'left', color: '#222F3E', fontWeight: 400, margin: 0 }}>
                         {value || '-'}
                     </p>
                 ),

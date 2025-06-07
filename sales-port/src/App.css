@@ -227,7 +227,7 @@ margin-top: 10px;
 
 .raiseOn{
   font-size: 10px !important;
-font-weight: bolder !important;
+font-weight: 700 !important;
 }
 
 .any{
@@ -245,7 +245,8 @@ font-weight: bolder !important;
    margin: 0px 10px 0px 15px;
 }
 .itemName{
-  color: #222F3E !important;
+  /* color: #222F3E !important; */
+  color: #6B778C !important;
 }
 
 .pos-content{

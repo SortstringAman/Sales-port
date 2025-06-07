@@ -28,61 +28,77 @@ const ManageDashboard = () => {
                     </div>
                 </div>
 
-                <div className="row d-flex justify-content-center" style={{ gap: '20px' }}>
-                    {dashboardData.map((item, index) => (
-                        <div className="col-md-2" key={index}>
-                            <div
-                                className="border shadow-sm"
-                                style={{
-                                    width: "270px",
-                                    padding: "20px",
-                                    borderRadius: "20px",
-                                    height: "160px",
-                                }}
-                            >
-                                <div className="d-flex align-items-center mb-3">
-                                    <img
-                                        src={item.icon}
-                                        alt={item.title}
+                <div className="row "  >
+                    <div className='col-md-10' style={{ margin: 'auto' }}>
+                        <div className='row d-flex  justify-content-center' style={{ gap: '40px' }} >
+
+
+                            {dashboardData.map((item, index) => (
+                                <div className="col-md-2" key={index}>
+                                    <div
+                                        className="border shadow-sm"
                                         style={{
-                                            width: "24px",
-                                            height: "24px",
-                                            marginRight: "10px",
-                                            objectFit: "contain",
-                                        }}
-                                    />
-                                    <h6
-                                        className="mb-0"
-                                        style={{
-                                            fontSize: "18px",
-                                            fontWeight: "400",
-                                            color: "#000000",
+                                            width: "240px",
+                                            padding: "20px",
+                                            borderRadius: "20px",
+                                            height: "170px",
                                         }}
                                     >
-                                        {item.title}
-                                    </h6>
+                                        <div className="d-flex align-items-center mb-3">
+                                            <img
+                                                src={item.icon}
+                                                alt={item.title}
+                                                style={{
+                                                    width: "24px",
+                                                    height: "24px",
+                                                    marginRight: "10px",
+                                                    objectFit: "contain",
+                                                }}
+                                            />
+                                            <h6
+                                                className="mb-0"
+                                                style={{
+                                                    fontSize: "18px",
+                                                    fontWeight: "400",
+                                                    color: "#000000",
+                                                    wordSpacing: '7px'
+                                                }}
+                                            >
+                                                {item.title}
+                                            </h6>
+                                        </div>
+                                        <h4 className={`text-${item.color} fw-400 mb-2 `} style={{ fontSize: '30px' }}>{item.value}</h4>
+                                        <small className="" style={{ color: "#9CA3AF" }}>
+                                            {item.subtitle}
+                                        </small>
+                                    </div>
                                 </div>
-                                <h4 className={`text-${item.color} fw-bold mb-2`}>{item.value}</h4>
-                                <small className="" style={{ color: "#9CA3AF" }}>
-                                    {item.subtitle}
-                                </small>
-                            </div>
+                            ))}
                         </div>
-                    ))}
-
-                </div>
-
-                <div className='row mt-5'>
-                    <div className="col-md-11" style={{ margin: 'auto', display: 'flex', justifyContent: 'space-between' }}>
-                        <h6 className='dashboard-product'>Product  Below Record Level</h6>
-                        <button className='export-excel'>  📄 Export Excel</button>
                     </div>
                 </div>
 
                 <div className='row mt-5'>
-                    <div className="col-md-11" style={{ margin: 'auto', display: 'flex', justifyContent: 'space-between' }}>
-                        <table className="table  table-hover table-borderless stockdata-dashboard">
-                            <thead className="table-light">
+                    <div className="col-md-10" style={{ margin: 'auto', display: 'flex', justifyContent: 'space-between' }}>
+                        <h6 className='dashboard-product'>Product  Below Record Level</h6>
+                        <button className='export-excel'>  <svg width="10" height="12" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_175_21600)">
+                                <path d="M2.17188 0C1.34453 0 0.671875 0.672656 0.671875 1.5V10.5C0.671875 11.3273 1.34453 12 2.17188 12H8.17188C8.99922 12 9.67188 11.3273 9.67188 10.5V3.75H6.67188C6.25703 3.75 5.92188 3.41484 5.92188 3V0H2.17188ZM6.67188 0V3H9.67188L6.67188 0ZM4.32109 5.86406L5.17188 7.08047L6.02266 5.86406C6.20078 5.60859 6.55234 5.54766 6.80547 5.72578C7.05859 5.90391 7.12188 6.25547 6.94375 6.50859L5.85859 8.0625L6.94609 9.61406C7.12422 9.86953 7.06328 10.2188 6.80781 10.3969C6.55234 10.575 6.20312 10.5141 6.025 10.2586L5.17188 9.04219L4.32109 10.2586C4.14297 10.5141 3.79141 10.575 3.53828 10.3969C3.28516 10.2188 3.22187 9.86719 3.4 9.61406L4.48516 8.0625L3.39766 6.51094C3.21953 6.25547 3.28047 5.90625 3.53594 5.72812C3.79141 5.55 4.14063 5.61094 4.31875 5.86641L4.32109 5.86406Z" fill="#4338CA" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_175_21600">
+                                    <path d="M0.671875 0H9.67188V12H0.671875V0Z" fill="white" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                            <span>Export Excel</span> </button>
+                    </div>
+                </div>
+
+                <div className='row mt-5'>
+                    <div className="col-md-10" style={{ margin: 'auto', display: 'flex', justifyContent: 'space-between', padding: '0px 25px' }}>
+                        <table className="table  table-hover table-borderless stockdata-dashboard ">
+                            <thead className="custom-head">
                                 <tr>
                                     <th>Product Name</th>
                                     <th>Current Stock</th>
@@ -123,7 +139,7 @@ const ManageDashboard = () => {
                 </div>
 
                 <div className='row mt-5'>
-                    <div className="col-md-12" style={{ margin: 'auto', }}>
+                    <div className="col-md-11" style={{ margin: 'auto', }}>
                         <div className='row' style={{ margin: 'auto', display: 'flex', justifyContent: 'space-evenly' }}>
                             <div className='col-md-5 border  shadow-sm p-4' style={{ borderRadius: '8px', }} >
                                 <div className='d-flex' style={{ gap: '13px' }}>
@@ -142,7 +158,7 @@ const ManageDashboard = () => {
                                 <div className='mt-3'>
                                     <table className="table  table-hover table-borderless low-stock-table">
                                         <thead  >
-                                            <tr>
+                                            <tr className='mb-2'>
                                                 <th>Product Name</th>
                                                 <th>Current</th>
                                                 <th>Reorder</th>

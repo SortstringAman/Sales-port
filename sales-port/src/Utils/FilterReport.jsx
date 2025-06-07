@@ -42,9 +42,9 @@ const reactSelectStyles = {
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    color: 'black',
-    fontWeight:'500',
-    fontSize:'15px'
+    color: '#222F3E',
+    fontWeight:'400',
+    fontSize:'16px'
   }),
   option: (base, state) => ({
     ...base,

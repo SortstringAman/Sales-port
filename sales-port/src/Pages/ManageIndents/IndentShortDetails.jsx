@@ -65,7 +65,7 @@ export const IndentShortDetails = ({ navigate, selectedIndentDetails }) => {
                             <div style={{ display: 'flex', gap: "15px", flexDirection: "column", alignItems: 'start', justifyContent: 'space-between' }}>
                                 <div>
                                     <h4 className='fm-pr-hd' style={{ margin: 0, marginBottom: "10px", fontWeight: "bold", fontSize: "17px" }}>IND/2025-26/25</h4>
-                                    <p style={{ textAlign: 'left' }}>16/05/25 10:15AM</p>
+                                    <p style={{ textAlign: 'left' , fontWeight: 600}}>16/05/25 10:15AM</p>
                                 </div>
                                 <div>
                                     <p className='sd-p'>Department</p>

@@ -199,7 +199,7 @@ const ManageIndents = () => {
                     style={{ cursor: 'pointer' }}
                     onClick={() => handleRowClick(row.original.id, row)}
                 >
-                    <p className="item-values" style={{ color: '#222F3E', fontWeight: 'bold', }}>{value}</p>
+                    <p className="item-values" style={{ color: '#222F3E',  fontWeight: 500,fontSize:'14px', }}>{value}</p>
                 </div>),
         },
         {

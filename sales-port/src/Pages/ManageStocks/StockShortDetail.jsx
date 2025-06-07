@@ -1,7 +1,7 @@
 
 
-  const StockShortDetails = ({selectedStockDetails }) => {
-    console.log("selectedStockDetails clcik",selectedStockDetails)
+const StockShortDetails = ({ selectedStockDetails }) => {
+    console.log("selectedStockDetails clcik", selectedStockDetails)
     return (
         <div>
             <div className="col-md-12">
@@ -10,23 +10,25 @@
                     padding: '16px',
                     borderRadius: '8px',
                     textAlign: 'left',
-                    fontWeight: 500,
-                    color: "#222F3E"
+
+                    fontWeight: 600, color: "#222F3E"
                 }}>
-                    STOCK'S SHORT DETAILS:
+                    STOCK'S SHORT DETAILS
                 </p>
             </div>
 
             <div className="row">
                 <div className="col-md-12">
-                    <div className="stu-pro" style={{marginTop:'6px'}}>
+                    <div className="stu-pro" style={{ marginTop: '6px' }}>
                         <div className='stu-pro-inner'>
                             <div style={{ display: 'flex', gap: "15px", flexDirection: "column", alignItems: 'start', justifyContent: 'space-between' }}>
                                 <div>
                                     <h4 className='fm-pr-hd' style={{
                                         margin: 0, marginBottom: "10px", fontWeight: '600', fontSize: "18px", textTransform: 'uppercase'
                                     }}>{selectedStockDetails?.transaction_no}</h4>
-                                    <p className='sd-p'>
+                                    <p className='' style={{
+                                        fontWeight: 600, color: "#222F3E"
+                                    }}>
                                         {selectedStockDetails?.date || 'N/A'}
                                     </p>
                                 </div>
@@ -74,7 +76,7 @@
                         </div>
 
                         <div>
-                            <h4 className='fm-pr-hd mt-3' >STOCK'S DETAILS</h4>
+                            <h4 className='fm-pr-hd mt-3' style={{fontWeight:'500',fontSize:'14px'}} >STOCK'S DETAILS</h4>
                             <div>
                                 <p className='sd-p'>Item Name</p>
                                 <p className='alg-l'>{selectedStockDetails?.stock_details?.item_name || 'N/A'}</p>
