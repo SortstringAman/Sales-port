@@ -345,7 +345,7 @@ const IndentReport = () => {
                         textAlign: 'start',
                         margin: 0,
                         color: '#7F56DA',
-                        textDecoration: 'underline',
+                        textDecoration:'underline',
                         fontWeight: 600,
                         fontSize: '14px',
                         cursor: value ? 'pointer' : 'default',
@@ -364,7 +364,7 @@ const IndentReport = () => {
                     style={{
                         textAlign: 'start',
                         margin: 0,
-                        color: '#222F3E',
+                      color: '#222F3E',
                         fontWeight: 400,
                         fontSize: '14px',
                     }}
@@ -418,10 +418,10 @@ const IndentReport = () => {
                         <FilterBar />
                     </div>
                 </div>
+
                 <div className='row mt-5'>
                     <div className="col-md-12">
-                        
-                       <div className="row align-items-center">
+                          <div className="row align-items-center">
               {/* Heading Column */}
               <div className="col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-2">
                 <h4 className="text-primary fw-bold">Indent Report</h4>
@@ -446,8 +446,8 @@ const IndentReport = () => {
                   <button
                     className="filter-btn"
                     style={{
-                      background: 'white',
-                      border: '1px solid black',
+                     background: 'white',
+                      border: '1px solid #7F56DA',
                       height: '43px',
                     }}
                   >
@@ -456,7 +456,6 @@ const IndentReport = () => {
                 </div>
               </div>
             </div>
-
                         <div className="row">
                             <div className="col-md-12">
                                 {/* <Table columns={columns}
@@ -467,7 +466,7 @@ const IndentReport = () => {
                                     pageCounts={pageCounts}
                                     handlePageChange={handlePageChange}
                                     selectedData={selectedStockDetails}
-                                    data={inventoryData}
+                                    data={indentReportData}
                                 />
                                 {/* ) : ( */}
                                 {/* <div className="no-data-message" style={{ textAlign: 'center', padding: '40px', color: '#888' }}>

@@ -355,7 +355,7 @@ const ManagePOs = () => {
                 </div>
                 <div className='row mt-2'>
                     <div className="col-md-9">
-                          <div className="row align-items-center">
+          <div className="row align-items-center">
               {/* Heading Column */}
               <div className="col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-2">
                 {/* <h4 className="text-primary fw-bold">Stock Level Overview</h4> */}
@@ -381,7 +381,7 @@ const ManagePOs = () => {
                     className="filter-btn"
                     style={{
                       background: 'white',
-                      border: '1px solid black',
+                      border: '1px solid #7F56DA',
                       height: '43px',
                     }}
                   >

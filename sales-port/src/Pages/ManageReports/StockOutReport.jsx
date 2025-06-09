@@ -287,7 +287,7 @@ const StockOutReport = () => {
                          <div className="row align-items-center">
               {/* Heading Column */}
               <div className="col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-2">
-                <h4 className="text-primary fw-bold">Stock  Out Report</h4>
+                <h4 className="text-primary fw-bold">Issued Stock List</h4>
               </div>
 
               {/* Search + Buttons Column */}
@@ -309,8 +309,8 @@ const StockOutReport = () => {
                   <button
                     className="filter-btn"
                     style={{
-                      background: 'white',
-                      border: '1px solid black',
+                        background: 'white',
+                      border: '1px solid #7F56DA',
                       height: '43px',
                     }}
                   >

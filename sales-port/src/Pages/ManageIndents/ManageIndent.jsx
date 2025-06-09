@@ -379,9 +379,9 @@ const ManageIndents = () => {
                                     <button
                                         className="filter-btn"
                                         style={{
-                                            // background: 'white',
-                                            // border: '1px solid black',
-                                            height: '43px',
+                                             background: 'white',
+                      border: '1px solid #7F56DA',
+                      height: '43px',
                                         }}
                                     >
                                         <img src={exporticon} alt="Export" />

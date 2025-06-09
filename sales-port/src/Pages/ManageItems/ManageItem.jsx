@@ -481,8 +481,8 @@ const ManageItems = () => {
                   <button
                     className="filter-btn"
                     style={{
-                //    /   background: 'white',
-                    //   border: '1px solid black',
+                 background: 'white',
+                      border: '1px solid #7F56DA',
                       height: '43px',
                     }}
                   >
