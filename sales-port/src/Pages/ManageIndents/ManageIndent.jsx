@@ -22,7 +22,7 @@ import tablelast from '../../assets/icons/tablelast.svg';
 import edit from '../../assets/icons/editnew.svg';
 import { useNavigate } from 'react-router-dom';
 import confirmadicon from '../../assets/icons/confirm-admission.svg';
-import exporticon from '../../assets/icons/export-data-white.svg';
+import exporticon from '../../assets/icons/export-data.svg';
 import { Tooltip } from 'react-tooltip';
 import checkgif from '../../assets/gif/successfullgif.gif';
 import close from '../../assets/icons/close.svg';

@@ -6,6 +6,7 @@ import profileicon3 from '../../assets/icons/solar_documents-minimalistic-linear
 import profileicon4 from '../../assets/icons/hugeicons_manager.svg'
 import profileicon5 from '../../assets/icons/hugeicons_biometric-device.svg'
 import ProfileStatus from '../../Component/ProfileStatus';
+ 
 import filtericon from '../../assets/icons/mage_filter-fill.svg'
 import '../../assets/css/StudentDashboard.css'
 import SearchBar from '../../Component/SearchBar';
@@ -22,7 +23,8 @@ import edit from '../../assets/icons/editnew.svg';
 import { useNavigate } from 'react-router-dom';
 
 import confirmadicon from '../../assets/icons/confirm-admission.svg';
-import exporticon from '../../assets/icons/export-data-white.svg';
+ 
+import exporticon from '../../assets/icons/export-data.svg';
 import { Tooltip } from 'react-tooltip';
 import checkgif from '../../assets/gif/successfullgif.gif';
 import close from '../../assets/icons/close.svg';
@@ -406,7 +408,7 @@ const ManageItems = () => {
                     // gap: '1rem',
                     padding: '20px',
                     //  justifyContent:'center'
-                    gap:'10px'
+                    gap: '10px'
                 }}>
                     <ProfileStatus
                         label="No Of Products"
@@ -416,7 +418,7 @@ const ManageItems = () => {
                         bgColor="#39886F0D"
                         circleColor=" #39886F"
                         numbers={percentage.all_students}
-                       colClass="col-12 col-sm-12 col-md-5 col-lg-4  col-xl-3 mb-3"
+                        colClass="col-12 col-sm-12 col-md-5 col-lg-4  col-xl-3 mb-3"
 
                     />
                     <ProfileStatus
@@ -427,7 +429,7 @@ const ManageItems = () => {
                         bgColor="#0E9DED0D"
                         circleColor="#0E9DED"
                         numbers={percentage.provisional_fees_count}
-                      colClass="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3 mb-3"
+                        colClass="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3 mb-3"
 
                     />
                     <ProfileStatus
@@ -438,7 +440,7 @@ const ManageItems = () => {
                         bgColor="#FF9B040D"
                         circleColor=" #FF9B04"
                         numbers={percentage.registration_count}
-                       colClass="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3 mb-3"
+                        colClass="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3 mb-3"
 
                     />
                     <ProfileStatus
@@ -449,48 +451,53 @@ const ManageItems = () => {
                         bgColor=" #2A62C80D"
                         circleColor=" #2A62C8"
                         numbers={percentage.fees_payment_count}
-                    colClass="col-12 col-sm-12 col-md-5 col-lg-4  col-xl-3 mb-3"
+                        colClass="col-12 col-sm-12 col-md-5 col-lg-4  col-xl-3 mb-3"
 
                     />
 
                 </div>
                 <div className='row mt-2'>
                     <div className="col-md-12">
-                         <div className="row align-items-center">
-              {/* Heading Column */}
-              <div className="col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-2">
-                <h4 className="text-primary fw-bold">All Items</h4>
-              </div>
+                       
+                       <div className="row align-items-center">
+                            {/* Heading Column */}
+                            <div className="col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-2">
+                                <h4 className="text-primary fw-bold">All Items</h4>
+                            </div>
 
-              {/* Search + Buttons Column */}
-              <div className="col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-2">
-                <div className="d-flex justify-content-lg-end  gap-2">
-                  <SearchBar
-                    data={studentdata}
-                    onSearch={debouncedSearch}
-                    ref={searchInputRef}
-                    placeholder={'Search by Item Name, SQU Code..'}
-                  />
-                  <button
-                    className="filter-btn"
-                    onClick={handleFilterClick}
-                    style={{ height: '43px' }}
-                  >
-                    <img src={filtericon} alt="Filter" />
-                  </button>
-                  <button
-                    className="filter-btn"
-                    style={{
-                 background: 'white',
-                      border: '1px solid #7F56DA',
-                      height: '43px',
-                    }}
-                  >
-                    <img src={exporticon} alt="Export" />
-                  </button>
-                </div>
-              </div>
-            </div>
+                            {/* Search + Buttons Column */}
+                            <div className="col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-2">
+                                <div className="d-flex justify-content-lg-end  gap-2">
+                                    <SearchBar
+                                        data={studentdata}
+                                        onSearch={debouncedSearch}
+                                        ref={searchInputRef}
+                                        placeholder={'Search by Item Name, SQU Code..'}
+                                    />
+                                    <button
+                                        className="filter-btn"
+                                        onClick={handleFilterClick}
+                                        style={{ height: '43px' }}
+                                    >
+                                        <img src={filtericon} alt="Filter" />
+                                    </button>
+                                    <button
+                                        className="filter-btn"
+                                        style={{
+                                            background: 'white',
+                                            border: '1px solid #7F56DA',
+                                            height: '43px',
+                                        }}
+                                    >
+                                        <img src={exporticon} alt="Export" />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
                         <div className="row">
                             <div className="col-md-12">
                                 {/* <Table columns={columns}

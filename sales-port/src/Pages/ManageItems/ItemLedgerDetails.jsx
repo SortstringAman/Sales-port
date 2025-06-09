@@ -8,7 +8,7 @@ import profileicon3 from '../../assets/icons/solar_documents-minimalistic-linear
 import profileicon4 from '../../assets/icons/hugeicons_manager.svg'
 import profileicon5 from '../../assets/icons/hugeicons_biometric-device.svg'
 import SearchBar from "../../Component/SearchBar";
-import exporticon from '../../assets/icons/export-data-white.svg';
+import exporticon from '../../assets/icons/export-data.svg';
 import filtericon from '../../assets/icons/mage_filter-fill.svg'
 import Table from "../../Component/Table";
 import debounce from "lodash.debounce";

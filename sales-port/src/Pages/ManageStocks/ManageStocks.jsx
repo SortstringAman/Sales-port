@@ -202,7 +202,7 @@ const ManageStocks = () => {
                         style={{ cursor: 'pointer' }}
                         onClick={() => handleRowClick(row.original.id, row)}
                     >
-                        <p style={{ margin: 0, color: '#222F3E', fontWeight: '500',fontSize:'14px', textAlign: 'start' }}>{value || '-'}</p>
+                        <p style={{ margin: 0, color: '#222F3E', fontWeight: '500', fontSize: '14px', textAlign: 'start' }}>{value || '-'}</p>
                     </div>
                 ),
             },
@@ -211,7 +211,7 @@ const ManageStocks = () => {
                 accessor: 'transaction_no',
                 disableSortBy: false,
                 Cell: ({ value }) => (
-                    <p style={{ textAlign: 'left',color: '#222F3E', fontSize: '14px', fontWeight: 400, margin: 0 }}>{value || '-'}</p>
+                    <p style={{ textAlign: 'left', color: '#222F3E', fontSize: '14px', fontWeight: 400, margin: 0 }}>{value || '-'}</p>
                 ),
             },
             {
@@ -236,7 +236,7 @@ const ManageStocks = () => {
                 accessor: 'received_by',
                 disableSortBy: true,
                 Cell: ({ value }) => (
-                    <p style={{ textAlign: 'left', margin: 0 , fontSize: '14px', fontWeight: 400,color: '#222F3E'}}>{value || '-'}</p>
+                    <p style={{ textAlign: 'left', margin: 0, fontSize: '14px', fontWeight: 400, color: '#222F3E' }}>{value || '-'}</p>
                 ),
             },
             {
@@ -244,7 +244,7 @@ const ManageStocks = () => {
                 accessor: 'issued_by',
                 disableSortBy: true,
                 Cell: ({ value }) => (
-                    <p style={{ textAlign: 'left', margin: 0, fontSize: '14px', fontWeight: 400 ,color: '#222F3E'}}>{value || '-'}</p>
+                    <p style={{ textAlign: 'left', margin: 0, fontSize: '14px', fontWeight: 400, color: '#222F3E' }}>{value || '-'}</p>
                 ),
             },
             {
@@ -332,41 +332,41 @@ const ManageStocks = () => {
 
                 <div className='row mt-2'>
                     <div className="col-md-9">
-                       <div className="row align-items-center">
-              {/* Heading Column */}
-              <div className="col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-2">
-                {/* <h4 className="text-primary fw-bold">Stock Level Overview</h4> */}
-              </div>
+                        <div className="row align-items-center">
+                            {/* Heading Column */}
+                            <div className="col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-2">
+                                {/* <h4 className="text-primary fw-bold">Stock Level Overview</h4> */}
+                            </div>
 
-              {/* Search + Buttons Column */}
-              <div className="col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-2">
-                <div className="d-flex justify-content-lg-end  gap-2">
-                  <SearchBar
-                    data={studentdata}
-                    onSearch={debouncedSearch}
-                    ref={searchInputRef}
-                    placeholder={'Search by Item Name, SQU Code..'}
-                  />
-                  <button
-                    className="filter-btn"
-                    onClick={handleFilterClick}
-                    style={{ height: '43px' }}
-                  >
-                    <img src={filtericon} alt="Filter" />
-                  </button>
-                  <button
-                    className="filter-btn"
-                    style={{
-                       background: 'white',
-                      border: '1px solid #7F56DA',
-                      height: '43px',
-                    }}
-                  >
-                    <img src={exporticon} alt="Export" />
-                  </button>
-                </div>
-              </div>
-            </div>
+                            {/* Search + Buttons Column */}
+                            <div className="col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-2">
+                                <div className="d-flex justify-content-lg-end  gap-2">
+                                    <SearchBar
+                                        data={studentdata}
+                                        onSearch={debouncedSearch}
+                                        ref={searchInputRef}
+                                        placeholder={'Search by Item Name, SQU Code..'}
+                                    />
+                                    <button
+                                        className="filter-btn"
+                                        onClick={handleFilterClick}
+                                        style={{ height: '43px' }}
+                                    >
+                                        <img src={filtericon} alt="Filter" />
+                                    </button>
+                                    <button
+                                        className="filter-btn"
+                                        style={{
+                                            background: 'white',
+                                            border: '1px solid #7F56DA',
+                                            height: '43px',
+                                        }}
+                                    >
+                                        <img src={exporticon} alt="Export" />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                         <div className="row">
                             <div className="col-md-12">
                                 {/* <Table columns={columns}
