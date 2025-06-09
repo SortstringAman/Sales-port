@@ -31,31 +31,29 @@ const ManageDashboard = () => {
                 <div className="row "  >
                     <div className='col-md-10' style={{ margin: 'auto' }}>
                         <div className='row d-flex  justify-content-center' style={{ gap: '40px' }} >
-
-
                             {dashboardData.map((item, index) => (
-                                <div className="col-md-2" key={index}>
+                                <div    className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"  key={index}>
                                     <div
-                                        className="border shadow-sm"
+                                        className="border shadow-sm dashboard-card"
                                         style={{
-                                            width: "240px",
-                                            padding: "20px",
+                                            width: "100%",
+                                            padding: "15px",
                                             borderRadius: "20px",
-                                            height: "170px",
+                                         height: "150px",
                                         }}
                                     >
-                                        <div className="d-flex align-items-center mb-3">
+                                        <div className="d-flex align-items-center mb-3 div" style={{gap:'5px'}}>
                                             <img
                                                 src={item.icon}
                                                 alt={item.title}
                                                 style={{
-                                                    width: "24px",
-                                                    height: "24px",
-                                                    marginRight: "10px",
-                                                    objectFit: "contain",
+                                                    // width: "10vw",
+                                                    // height: "24px",
+                                                    // marginRight: "10px",
+                                                    // objectFit: "contain",
                                                 }}
                                             />
-                                            <h6
+                                            <span
                                                 className="mb-0"
                                                 style={{
                                                     fontSize: "18px",
@@ -65,7 +63,7 @@ const ManageDashboard = () => {
                                                 }}
                                             >
                                                 {item.title}
-                                            </h6>
+                                            </span>
                                         </div>
                                         <h4 className={`text-${item.color} fw-400 mb-2 `} style={{ fontSize: '30px' }}>{item.value}</h4>
                                         <small className="" style={{ color: "#9CA3AF" }}>
@@ -79,7 +77,7 @@ const ManageDashboard = () => {
                 </div>
 
                 <div className='row mt-5'>
-                    <div className="col-md-10" style={{ margin: 'auto', display: 'flex', justifyContent: 'space-between' }}>
+                    <div className="col-md-10 product-btn-container" style={{ margin: 'auto', display: 'flex', justifyContent: 'space-between' }}>
                         <h6 className='dashboard-product'>Product  Below Record Level</h6>
                         <button className='export-excel'>  <svg width="10" height="12" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g clip-path="url(#clip0_175_21600)">
@@ -140,7 +138,7 @@ const ManageDashboard = () => {
 
                 <div className='row mt-5'>
                     <div className="col-md-11" style={{ margin: 'auto', }}>
-                        <div className='row' style={{ margin: 'auto', display: 'flex', justifyContent: 'space-evenly' }}>
+                        <div className='row alertContainerMain' style={{ margin: 'auto', display: 'flex', justifyContent: 'space-evenly' }}>
                             <div className='col-md-5 border  shadow-sm p-4' style={{ borderRadius: '8px', }} >
                                 <div className='d-flex' style={{ gap: '13px' }}>
                                     <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -262,7 +260,7 @@ const ManageDashboard = () => {
                                     </svg>
                                         <span>9 POs pending delivery</span><p className='alert-action'>Track</p> </p>
                                 </div>
-                                <div className='mt-5'>
+                                <div className='mt-5 mailcontainer'>
                                     <button className='send-mail-btn'>
                                         <svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g clip-path="url(#clip0_177_21780)">

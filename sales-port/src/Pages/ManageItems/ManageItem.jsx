@@ -400,7 +400,14 @@ const ManageItems = () => {
                     </div>
 
                 </div>
-                <div className="dashboard-cards row mt-2" style={{ padding: "20px" }} >
+                <div className="dashboard-cards item row mt-2" style={{
+                    // display: 'flex',
+                    //  flexWrap: 'wrap',
+                    // gap: '1rem',
+                    padding: '20px',
+                    //  justifyContent:'center'
+                    gap:'10px'
+                }}>
                     <ProfileStatus
                         label="No Of Products"
                         icon={profileicon}
@@ -409,6 +416,8 @@ const ManageItems = () => {
                         bgColor="#39886F0D"
                         circleColor=" #39886F"
                         numbers={percentage.all_students}
+                       colClass="col-12 col-sm-12 col-md-5 col-lg-4  col-xl-3 mb-3"
+
                     />
                     <ProfileStatus
                         label="Item Groups"
@@ -418,6 +427,8 @@ const ManageItems = () => {
                         bgColor="#0E9DED0D"
                         circleColor="#0E9DED"
                         numbers={percentage.provisional_fees_count}
+                      colClass="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3 mb-3"
+
                     />
                     <ProfileStatus
                         label="Record Level"
@@ -427,6 +438,8 @@ const ManageItems = () => {
                         bgColor="#FF9B040D"
                         circleColor=" #FF9B04"
                         numbers={percentage.registration_count}
+                       colClass="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3 mb-3"
+
                     />
                     <ProfileStatus
                         label="Min Stock Level"
@@ -436,36 +449,48 @@ const ManageItems = () => {
                         bgColor=" #2A62C80D"
                         circleColor=" #2A62C8"
                         numbers={percentage.fees_payment_count}
+                    colClass="col-12 col-sm-12 col-md-5 col-lg-4  col-xl-3 mb-3"
+
                     />
 
                 </div>
                 <div className='row mt-2'>
                     <div className="col-md-12">
-                        <div className="row" style={{ alignItems: 'center' }}>
-                            <div className="col-md-6">
-                                <h4 className='text-primary'>All Items {/*totalCount*/}</h4>
-                            </div>
-                            <div className="col-md-6">
-                                <div style={{ display: "flex", justifyContent: 'end' }}>
-                                    <SearchBar data={studentdata} onSearch={debouncedSearch} ref={searchInputRef} placeholder={'Serach by Item Name, S K U code..'} />
-                                    <button
-                                        className="filter-btn"
-                                        // onClick={handleFilterClick}
-                                        style={{ height: '43px' }}
-                                    >
-                                        <img src={filtericon}></img>
-                                    </button>
-                                    <button
-                                        className="filter-btn"
-                                        style={{ background: '#7F56DA', height: '43px', color: "white", border: "none" }}
-                                    // onClick={handleFilterClick}
-                                    // onClick={handleExportExcel}
-                                    >
-                                        <img src={exporticon} alt='Filter icon'></img>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                         <div className="row align-items-center">
+              {/* Heading Column */}
+              <div className="col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-2">
+                <h4 className="text-primary fw-bold">All Items</h4>
+              </div>
+
+              {/* Search + Buttons Column */}
+              <div className="col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-2">
+                <div className="d-flex justify-content-lg-end  gap-2">
+                  <SearchBar
+                    data={studentdata}
+                    onSearch={debouncedSearch}
+                    ref={searchInputRef}
+                    placeholder={'Search by Item Name, SQU Code..'}
+                  />
+                  <button
+                    className="filter-btn"
+                    onClick={handleFilterClick}
+                    style={{ height: '43px' }}
+                  >
+                    <img src={filtericon} alt="Filter" />
+                  </button>
+                  <button
+                    className="filter-btn"
+                    style={{
+                //    /   background: 'white',
+                    //   border: '1px solid black',
+                      height: '43px',
+                    }}
+                  >
+                    <img src={exporticon} alt="Export" />
+                  </button>
+                </div>
+              </div>
+            </div>
                         <div className="row">
                             <div className="col-md-12">
                                 {/* <Table columns={columns}

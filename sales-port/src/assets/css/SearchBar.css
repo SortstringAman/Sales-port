@@ -95,3 +95,80 @@
   cursor: pointer;
   font-size: 20px;
 }
+
+@media (max-width: 991.98px) {
+  /* Styles for most laptop screens */
+  .filterbtn {
+    width: unset !important;
+  }
+
+  .filterbtnContainer{
+    display: flex;
+    justify-content: end;
+   
+    margin-top: 10px;
+  }
+
+  .filterbtn{
+     padding: 12px 50px !important;
+  }
+}
+
+
+@media (max-width: 1025px) {
+  /* Styles for most laptop screens */
+  .filterbtn {
+    width: unset !important;
+  }
+
+  .filterbtnContainer{
+    display: flex;
+    justify-content: end;
+   
+    margin-top: 10px;
+  }
+
+  .filterbtn{
+     padding: 12px 50px !important;
+  }
+}
+
+
+.filterreport {
+  position: relative;
+}
+
+.custom-date-input {
+  min-height: 40px;
+  font-size: 14px;
+}
+
+.filterbtnContainer .filterbtn {
+  border: none;
+  font-size: 16px;
+}
+
+.svg-icon {
+  position: absolute;
+  right: 10px;
+  top: 12px;
+}
+
+.btn-filter {
+  color: #7F56DA;
+  border: 1px solid #7F56DA;
+  background-color: transparent;
+  outline: none;
+  font-weight: 500;
+}
+
+.btn-filter:hover {
+  background-color: #7F56DA10; /* Light purple hover effect */
+  border-color: #7F56DA;
+  color: #7F56DA;
+}
+
+.btn-filter:focus {
+  box-shadow: 0 0 0 0.2rem rgba(127, 86, 218, 0.3);
+  outline: none;
+}

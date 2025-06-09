@@ -426,7 +426,7 @@ const ManageVendors = () => {
 
 
                 </div>
-                <div className="dashboard-cards row mt-2" style={{ padding: "20px" }} >
+                <div className="dashboard-cards row mt-2" style={{ padding: "20px",gap:'50px' }} >
                     <ProfileStatus
                         label="No of Vendors"
                         icon={profileicon}
@@ -437,6 +437,7 @@ const ManageVendors = () => {
                         circleColor=" #39886F"
                         // numbers={percentage.all_students}
                         numbers="150"
+                         colClass="col-12 col-sm-12 col-md-5 col-lg-3 mb-3"
                     />
                     <ProfileStatus
                         label="Active"
@@ -448,7 +449,8 @@ const ManageVendors = () => {
                         circleColor="#0E9DED"
                         // numbers={percentage.provisional_fees_count}
                         numbers="220"
-                        width='600px'
+                        
+                         colClass="col-12 col-sm-12 col-md-5 col-lg-4 mb-3"
                     />
                     <ProfileStatus
                         label="DEACTIVE"
@@ -460,38 +462,48 @@ const ManageVendors = () => {
                         circleColor=" #FF9B04"
                         // numbers={percentage.registration_count}
                         numbers="30"
-                        width='600px'
+                       colClass="col-12 col-sm-12 col-md-5 col-lg-4 mb-3"
                     />
 
 
                 </div>
                 <div className='row mt-2'>
                     <div className="col-md-9">
-                        <div className="row" style={{ alignItems: 'center' }}>
-                            <div className="col-md-6">
-                                <h4 className='text-primary'>All Vendors ({totalCount})</h4>
-                            </div>
-                            <div className="col-md-6">
-                                <div style={{ display: "flex", justifyContent: 'end' }}>
-                                    <SearchBar data={studentdata} onSearch={debouncedSearch} ref={searchInputRef} placeholder={'Serach by Name, Reg. No, Phone No, Email..'} />
-                                    <button
-                                        className="filter-btn"
-                                        onClick={handleFilterClick}
-                                        style={{ height: '43px' }}
-                                    >
-                                        <img src={filtericon}></img>
-                                    </button>
-                                    <button
-                                        className="filter-btn"
-                                        style={{ background: 'white', border: '1px solid black', height: '43px' }}
-                                    // onClick={handleFilterClick}
-                                    // onClick={handleExportExcel}
-                                    >
-                                        <img src={exporticon} alt='Filter icon'></img>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                        <div className="row align-items-center">
+              {/* Heading Column */}
+              <div className="col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-2">
+                {/* <h4 className="text-primary fw-bold">Stock Level Overview</h4> */}
+              </div>
+
+              {/* Search + Buttons Column */}
+              <div className="col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-2">
+                <div className="d-flex justify-content-lg-end  gap-2">
+                  <SearchBar
+                    data={studentdata}
+                    onSearch={debouncedSearch}
+                    ref={searchInputRef}
+                    placeholder={'Search by Item Name, SQU Code..'}
+                  />
+                  <button
+                    className="filter-btn"
+                    onClick={handleFilterClick}
+                    style={{ height: '43px' }}
+                  >
+                    <img src={filtericon} alt="Filter" />
+                  </button>
+                  <button
+                    className="filter-btn"
+                    style={{
+                      background: 'white',
+                      border: '1px solid black',
+                      height: '43px',
+                    }}
+                  >
+                    <img src={exporticon} alt="Export" />
+                  </button>
+                </div>
+              </div>
+            </div>
                         <div className="row">
                             <div className="col-md-12">
                                 {/* <Table columns={columns}

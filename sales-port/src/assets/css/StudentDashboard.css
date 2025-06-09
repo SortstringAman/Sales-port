@@ -237,3 +237,61 @@ table.stockdata-dashboard tbody tr:hover td {
     background-color: #EEF2FF !important;
     /* color: white !important; */
 }
+
+
+
+@media (max-width: 768px) {
+   .dashboard-card{
+  
+    text-align: center;
+   }
+
+   .dashboard-card .div{
+    justify-content:center;
+   }
+
+   .low-stock-table th ,.stockdata-dashboard th {
+    font-size: 7px !important;
+    letter-spacing: unset !important;
+    font-weight: 400 !important;
+   }
+
+   .stockdata-dashboard td ,.low-stock-table td {
+    font-size: 7px !important
+   }
+
+   .alertContainerMain{
+    gap: 15px !important;
+   }
+
+   .mailcontainer{
+    text-align: center;
+   }
+
+   .dashboard-product{
+    font-size: 15px !important;
+   }
+
+   .export-btn-container {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.product-btn-container{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.main-heading{
+    font-size: 23px;
+}
+.dashboard-p {
+font-size: 16px !important;
+}
+}

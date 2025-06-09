@@ -546,6 +546,7 @@ const ItemDetails = () => {
                         bgColor="#39886F0D"
                         circleColor=" #39886F"
                         numbers={percentage.all_students}
+                        width='18vw'
 
                     />
                     <ProfileStatus
@@ -556,6 +557,7 @@ const ItemDetails = () => {
                         bgColor="#0E9DED0D"
                         circleColor="#0E9DED"
                         numbers={percentage.provisional_fees_count}
+                        width='20vw'
                     />
                     <ProfileStatus
                         label="Min Stock Level"
@@ -565,6 +567,7 @@ const ItemDetails = () => {
                         bgColor="#FF9B040D"
                         circleColor=" #FF9B04"
                         numbers={percentage.registration_count}
+                         width='20vw'
                     />
                 </div>
                 <div className='row mt-2'>

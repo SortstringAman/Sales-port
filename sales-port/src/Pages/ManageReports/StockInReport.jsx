@@ -285,11 +285,41 @@ const StockInReport = () => {
                 <div className='row mt-5'>
                     <div className="col-md-12">
                         <div className="row" style={{ alignItems: 'center' }}>
-                            <div className="col-md-6">
-                                {/* <h4 className='text-primary'>All Stock  </h4> */}  <div className="col-md-6">
-                                    <h4 className='text-primary' style={{ fontWeight: 'bold' }}>All Stock In Transactions</h4>
-                                </div>
-                            </div>
+                             <div className="row align-items-center">
+              {/* Heading Column */}
+              <div className="col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-2">
+                <h4 className="text-primary fw-bold">Stock In Report</h4>
+              </div>
+
+              {/* Search + Buttons Column */}
+              <div className="col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-2">
+                <div className="d-flex justify-content-lg-end  gap-2">
+                  <SearchBar
+                    data={studentdata}
+                    onSearch={debouncedSearch}
+                    ref={searchInputRef}
+                    placeholder={'Search by Item Name, SQU Code..'}
+                  />
+                  <button
+                    className="filter-btn"
+                    onClick={handleFilterClick}
+                    style={{ height: '43px' }}
+                  >
+                    <img src={filtericon} alt="Filter" />
+                  </button>
+                  <button
+                    className="filter-btn"
+                    style={{
+                      background: 'white',
+                      border: '1px solid black',
+                      height: '43px',
+                    }}
+                  >
+                    <img src={exporticon} alt="Export" />
+                  </button>
+                </div>
+              </div>
+            </div>
                             <div className="col-md-6">
                                 <div style={{ display: "flex", justifyContent: 'end' }}>
                                     <SearchBar data={studentdata} onSearch={debouncedSearch} ref={searchInputRef} placeholder={'Serach by Item Name, SQU Code..'} />
