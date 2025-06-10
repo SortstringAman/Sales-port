@@ -6,6 +6,7 @@ import Notify from '../Utils/notify';
 // import { logOut, removeToken } from '../store/auth.slice';
 
 axios.interceptors.request.use(function (config) {
+
     config.headers = {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -21,6 +22,7 @@ axios.interceptors.request.use(function (config) {
 
 // Add a response interceptor
 axios.interceptors.response.use(function (response) {
+
     // Do something with response data 
     // 200 OR 20*
     // SUCESS: if request by PUT/POST/DELETE
@@ -59,6 +61,7 @@ export default class HTTP {
             axios(request)
                 .then(response => resolve(response))
                 .catch(error => {
+                    console.log("error is interceptors",error)
                     if (error.errors) {
                         Notify.error(error.errors[0]);
                     } else {

@@ -298,6 +298,8 @@ export const RightPart = () => {
   useEffect(() => {
     otpInputs.current[0]?.focus();
   }, []);
+
+  
   return (
     <div className='lg-rg-main '>
       <div>

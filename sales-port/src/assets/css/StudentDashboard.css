@@ -79,7 +79,7 @@
 .dashboard-p {
     color: #6B778C !important;
     font-size: 20px !important;
-    font-style: oblique;
+    font-style: italic;
     margin-top: 10px;
     margin-bottom: 5px;
 }
@@ -144,8 +144,8 @@
 .low-stock-table th {
     color: #6B778C;
     font-weight: 400;
-    font-size: 14px;
-    letter-spacing: 1px;
+    font-size: 12px;
+    /* letter-spacing: 1px; */
 }
 
 .low-stock-table td {

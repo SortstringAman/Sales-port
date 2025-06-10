@@ -40,7 +40,7 @@ getOrgData()
                                             width: "100%",
                                             padding: "15px",
                                             borderRadius: "20px",
-                                         height: "170px",
+                                         height: "150px",
                                         }}
                                     >
                                         <div className="d-flex align-items-center mb-3 div" style={{gap:'5px'}}>
@@ -57,7 +57,7 @@ getOrgData()
                                             <span
                                                 className="mb-0"
                                                 style={{
-                                                    fontSize: "18px",
+                                                    fontSize: "14px",
                                                     fontWeight: "400",
                                                     color: "#000000",
                                                     wordSpacing: '7px'
