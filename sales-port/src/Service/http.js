@@ -6,12 +6,10 @@ import Notify from '../Utils/notify';
 // import { logOut, removeToken } from '../store/auth.slice';
 
 axios.interceptors.request.use(function (config) {
-
     config.headers = {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
     }
-
     if (isRequireToken(config.url)) {
       config.headers["Authorization"] = `Token ${session.get('token')}`;
          console.log("token::>", config.headers["Authorization"])    
