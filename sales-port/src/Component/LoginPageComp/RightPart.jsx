@@ -149,7 +149,6 @@ export const RightPart = () => {
   const Getotp = async () => {
     const data = { mobile: phoneNumber };
     const url = 'core/send-login-otp/';
-
     console.log("phoneNumber--", phoneNumber);
     console.log("url for sent", url);
 

@@ -21,6 +21,9 @@ import PurchseOfferReport from '../Pages/ManageReports/PurchaseOrderReport';
 import ReorderReport from '../Pages/ManageReports/ReorderReport';
 import ItemWiseConsumptionReport from '../Pages/ManageReports/ItemwIseConsumptionReport';
 import IndentVsPOsCompareReport from '../Pages/ManageReports/Indent_vs_Pos_report';
+import ManageMaters from '../Pages/ManageMasters/ManageDepartment/ManageDepartment';
+import ManageMeasurement from '../Pages/ManageMasters/ManageMeasure/ManageMeasurement';
+import ManageItemCategory from '../Pages/ManageMasters/ManageItemCategory/ManageItemCategory';
 
 
 const Routing = () => {
@@ -45,6 +48,12 @@ const Routing = () => {
                 <Route path="/reorderReport" element={<ProtectedRoutes element={<CommonLayout><ReorderReport/></CommonLayout>} />} />
                  <Route path="/itemConsumptionReport" element={<ProtectedRoutes element={<CommonLayout><ItemWiseConsumptionReport/></CommonLayout>} />} />
                  <Route path="/compareReport" element={<ProtectedRoutes element={<CommonLayout><IndentVsPOsCompareReport/></CommonLayout>} />} />
+
+                 {/* masters routes */}
+                 <Route path="/department" element={<ProtectedRoutes element={<CommonLayout><ManageMaters/></CommonLayout>}/>}/>
+
+                  <Route path="/measurement" element={<ProtectedRoutes element={<CommonLayout><ManageMeasurement/></CommonLayout>}/>}/>
+                            <Route path="/item-categories" element={<ProtectedRoutes element={<CommonLayout><ManageItemCategory/></CommonLayout>}/>}/>
                  
             </Routes>
         </>
