@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect, useRef } from 'react';
 import CommonLayout from '../../Component/CommonLayout';
 import profileicon from '../../assets/icons/solar_square-academic-cap-2-outline.svg'
 import profileicon2 from '../../assets/icons/solar_square-academic-cap-2-outline (1).svg'
-import profileicon3 from '../../assets/icons/solar_documents-minimalistic-linear.svg'
+import profileicon3 from '../../assets/icons/svgviewer-output.svg'
 import profileicon4 from '../../assets/icons/hugeicons_manager.svg'
 import profileicon5 from '../../assets/icons/hugeicons_biometric-device.svg'
 import ProfileStatus from '../../Component/ProfileStatus';
@@ -47,9 +47,7 @@ const ManageIndents = () => {
     const [selectedIndentDetails, setSelectedIndentDetails] = useState([]);
     const navigate = useNavigate();
     const pageSize = 10;
-    const [showToast, setShowToast] = useState(false);
-    const [toastVariant, setToastVariant] = useState('success');
-    const [toastMessage, setToastMessage] = useState('');
+ 
 
     const today = new Date().toISOString().split('T')[0];
     const [validtydata, setvaliditydata] = useState({
@@ -63,15 +61,7 @@ const ManageIndents = () => {
 
     const pageCounts = Math.ceil(totalCount / pageSize);
     const [isaddIndentModalOpen, setIsAddIndentModalOpen] = useState(false);
-
-
-    const displayToast = (message, variant = 'success') => {
-        setToastMessage(message);
-        setToastVariant(variant);
-        setShowToast(true);
-        // console.log("hiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
-        setTimeout(() => setShowToast(false), 3000);
-    };
+ 
     const handleFilterClick = () => {
         // onFilter(searchQuery); 
         setfiltermodal(true);
@@ -318,24 +308,24 @@ const ManageIndents = () => {
 
                     <ProfileStatus
                         label="APPROVED"
-                        icon={profileicon}
+                        icon={profileicon3}
                         // percentage={percentage.all_students}
                         iconColor="#39886F"
                         bgColor="#39886F0D"
                         circleColor=" #39886F"
                         numbers="100"
-                        colClass="col-12 col-sm-12 col-md-5 col-lg-3 mb-3"
+                        colClass="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 mb-3"
 
                     />
                     <ProfileStatus
                         label="OPEN"
-                        icon={profileicon2}
+                        icon={profileicon3}
                         // percentage={percentage.provisional_fees_percentage}
                         iconColor="#0E9DED"
                         bgColor="#0E9DED0D"
                         circleColor="#0E9DED"
                         numbers="10"
-                        colClass="col-12 col-sm-12 col-md-5 col-lg-3 mb-3"
+                        colClass="col-12 col-sm-12 col-md-5 col-lg-4  col-xl-4 mb-3"
 
                     />
                     <ProfileStatus
@@ -346,7 +336,7 @@ const ManageIndents = () => {
                         bgColor="#FF9B040D"
                         circleColor=" #FF9B04"
                         numbers="2"
-                        colClass="col-12 col-sm-12 col-md-5 col-lg-3 mb-3"
+                        colClass="col-12 col-sm-12 col-md-6 col-lg-3 clo-xl-4 mb-3"
 
                     />
 
@@ -421,35 +411,7 @@ const ManageIndents = () => {
                 <AddIndent isOpen={isaddIndentModalOpen} onClose={closeModal} />
             </div>
 
-
-            {showToast && (
-                <div
-                    className={`custom-toast toast align-items-center text-white bg-${toastVariant} border-0 position-fixed top-0 end-0 m-3`}
-                    role="alert"
-                    style={{
-                        display: 'block',
-                        minWidth: '300px',
-                        maxWidth: '400px',
-                        borderRadius: '8px',
-                        boxShadow: '0 6px 20px rgba(0,0,0,0.15)',
-                        fontSize: '15px',
-                        zIndex: 9999
-                    }}
-                >
-                    <div className="d-flex">
-                        <div className="toast-body" style={{ padding: '12px 16px' }}>
-                            <strong>{toastVariant === 'success' ? '✅' : '❌'} </strong> {toastMessage}
-                        </div>
-                        <button
-                            type="button"
-                            className="btn-close btn-close-white me-2 m-auto"
-                            onClick={() => setShowToast(false)}
-                            aria-label="Close"
-                        ></button>
-                    </div>
-                </div>
-
-            )}
+ 
 
         </>
     );

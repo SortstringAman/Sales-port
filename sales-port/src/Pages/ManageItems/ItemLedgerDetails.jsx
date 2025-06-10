@@ -27,9 +27,7 @@ const ItemLedgerDetails = () => {
     const pageSize = 10;
     const pageCounts = Math.ceil(totalCount / pageSize);
     const [itemLedgerdata, setItemLedgerdata] = useState([]);
-    const [showToast, setShowToast] = useState(false);
-    const [toastVariant, setToastVariant] = useState('success');
-    const [toastMessage, setToastMessage] = useState('');
+ 
 
     const searchInputRef = useRef(null);
 
@@ -192,7 +190,7 @@ const ItemLedgerDetails = () => {
                         bgColor="#39886F0D"
                         circleColor=" #39886F"
                         numbers="10000"
-                         colClass="col-12 col-sm-12 col-md-5 col-lg-4  col-xl-3 mb-3"
+                         colClass="col-12 col-sm-12 col-md-5 col-lg-3  col-xl-3 mb-3"
                     />
                     <ProfileStatus
                         label="Record Level"
@@ -290,35 +288,7 @@ const ItemLedgerDetails = () => {
             <div>
 
             </div>
-            {showToast && (
-                <div
-                    className={`custom-toast toast align-items-center text-white bg-${toastVariant} border-0 position-fixed top-0 end-0 m-3`}
-                    role="alert"
-                    style={{
-                        display: 'block',
-                        minWidth: '300px',
-                        maxWidth: '400px',
-                        borderRadius: '8px',
-                        boxShadow: '0 6px 20px rgba(0,0,0,0.15)',
-                        fontSize: '15px',
-                        zIndex: 9999
-                    }}
-                >
-                    <div className="d-flex">
-                        <div className="toast-body" style={{ padding: '12px 16px' }}>
-                            <strong>{toastVariant === 'success' ? '✅' : '❌'} </strong> {toastMessage}
-                        </div>
-                        <button
-                            type="button"
-                            className="btn-close btn-close-white me-2 m-auto"
-                            onClick={() => setShowToast(false)}
-                            aria-label="Close"
-                        ></button>
-                    </div>
-                </div>
-
-            )}
-
+         
         </>
 
 

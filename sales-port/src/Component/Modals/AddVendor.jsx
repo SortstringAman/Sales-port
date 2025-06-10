@@ -212,9 +212,11 @@ export const AddNewVendor = ({
                                     <Field name="pan" className="form-control input-height" placeholder="Enter PAN Number" />
                                     <ErrorMessage name="pan" component="div" className="text-danger error" />
                                 </div>
-                                <div className="col-md-2 mt-4">
+                                <div className="col-md-2 mx-3">
                                     <label className="form-check-label me-2">TDS Applicable</label>
-                                    <Field type="checkbox" name="tdsApplicable" className="form-check-input " />
+                                    <br/>
+                                    <Field type="checkbox" name="tdsApplicable" className="form-check-input mt-4" />
+                                    <label className="form-check-label mt-4 mx-1" style={{fontSize:'14px'}}>Yes</label>
                                 </div>
                                 <div className="col-md-2">
                                     <label>MSME Registration No</label>

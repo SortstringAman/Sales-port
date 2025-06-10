@@ -295,3 +295,11 @@ table.stockdata-dashboard tbody tr:hover td {
 font-size: 16px !important;
 }
 }
+
+@media (max-width:1024px) {
+    .dashboard-card-container{
+justify-content: center !important;
+ 
+gap:10px !important
+}
+}

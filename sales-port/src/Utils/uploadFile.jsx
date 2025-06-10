@@ -21,7 +21,7 @@ export const UploadBox = ({ label, name, onFileSelect, col = 'col-md-2' }) => {
 
   return (
     <div className={col}>
-      <label className="form-label fw-medium">{label}</label>
+      <label className="form-labell fw-medium">{label}</label>
       <div
         className="border rounded d-flex justify-content-between align-items-center p-3"
         style={{ cursor: 'pointer', color: '#7F56DA' }}

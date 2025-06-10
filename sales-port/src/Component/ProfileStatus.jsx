@@ -17,11 +17,11 @@ const ProfileStatus = ({
         <div style={{
           height: '44px',
           width: '44px',
-          borderRadius: '50%',
+          // borderRadius: '50%',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          background: bgColor,
+          // /background: bgColor,
           marginRight: "20px"
         }}>
           <img src={icon} alt={label} className="progress-card-icon" />

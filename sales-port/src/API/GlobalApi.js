@@ -1,28 +1,51 @@
-// src/api.js
-const api =  import.meta.env.VITE_API_DEV_URL;
-
-
+import HTTP from "../Service/http";
+const BASE_URL =  import.meta.env.VITE_API_DEV_URL;
 const api2 = 'https://bgi.bitevns.org/api/v1/'
 const token = localStorage.getItem('token');
-
+import { methods } from "../Constant";
+import Notifier from "../Utils/notify";
 // Create data
-export const Postdata = async (Url, data) => {
+
+export const Postdata = async (url, data) => {
   try {
-    console.log("data in post",data)
-    const response = await fetch(`${api}${Url}`, {
-      method: 'POST',
-      headers: {
-         'Content-Type': 'application/json',
-        ...(token && { 'Authorization': `Token ${token}` }),
-      },
-      body: JSON.stringify(data),
-      //   mode: 'no-cors',s
-    });
-    return await response.json();
+    const fullUrl = BASE_URL + url;
+    const response = await HTTP.Request(methods.POST, fullUrl, data);
+    return response;
   } catch (error) {
-    console.error("Error creating data:", error);
+    console.error("❌ Error in Postdata:", error);
+    return { error: error.message || error };
   }
 };
+
+
+
+export const getData = async (url) => {
+  try {
+       const fullUrl = BASE_URL + url;
+    const response = await HTTP.Request(methods.GET, fullUrl);
+    return response;
+  } catch (error) {
+    console.error("❌ Error in getData:", error);
+    Notifier.error(error?.error || "Failed to fetch data.");
+    return null;
+  }
+};
+
+
+
+
+export const updateData = async (url, updatedData) => {
+  try {
+    const fullUrl = BASE_URL + url;
+    const response = await HTTP.Request(methods.PUT, fullUrl, updatedData);
+    return response;
+  } catch (error) {
+    console.error("❌ Error updating data:", error);
+    Notifier.error(error?.error || "Failed to update data.");
+    return null;
+  }
+};
+
 
 
 export const PostdataWithJson = async (Url, data) => {
@@ -105,22 +128,7 @@ export const UpdateDataFormWithJson = async (Url, data) => {
 };
 
 // Get all data
-export const getData = async (Url) => {
-  try {
-    const response = await fetch(`${api}${Url}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        ...(token && { 'Authorization': `Token ${token}` }),
-      },
-      
-      //   mode: 'no-cors',s
-    });
-    return await response.json();
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-};
+
 export const getDataformap = async (Url) => {
   try {
     const response = await fetch(`${api2}${Url}`, {
@@ -175,22 +183,7 @@ export const getDataById = async (Url, id) => {
   }
 };
 
-// Update data by ID
-export const updateData = async (Url, updatedData) => {
-  try {
-    const response = await fetch(`${api}${Url}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        ...(token && { 'Authorization': `Token ${token}` }),
-      },
-      body: JSON.stringify(updatedData),
-    });
-    return await response.json();
-  } catch (error) {
-    console.error("Error updating data:", error);
-  }
-};
+
 
 // Delete data by ID
 export const deleteData = async (Url, id) => {

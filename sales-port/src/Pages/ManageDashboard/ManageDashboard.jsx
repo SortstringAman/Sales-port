@@ -2,24 +2,25 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
 import '../../assets/css/StudentDashboard.css'
 import { dashboardData, lowStockAlert, stockData } from './data';
-
+import '../../assets/css/SearchBar.css'
+import { getData } from '../../API/GlobalApi';
 const ManageDashboard = () => {
 
-    const [showToast, setShowToast] = useState(false);
-    const [toastVariant, setToastVariant] = useState('success');
-    const [toastMessage, setToastMessage] = useState('');
+    const getOrgData = async()=>{
+        const url = "administration/organizations"
+        const response = await getData(url)
+        console.log("testing for get data",response)
+    }
 
-    const displayToast = (message, variant = 'success') => {
-        setToastMessage(message);
-        setToastVariant(variant);
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 3000);
-    };
+    useEffect(()=>{
+getOrgData()
+    },[])
+   
     return (
         <>
             <div className="dashboard">
                 {/* Content for the Dashboard */}
-                <div style={{ display: "flex", justifyContent: 'space-between', marginBottom: '28px' }}>
+                <div style={{ display: "flex",  marginBottom: '28px' }} >
                     <div >
                         <h2 className='main-heading'> Inventry & Purchase Control</h2>
                         <p className='dashboard-p' style={{ fontSize: "20px" }}>Centralized view for Indent,Purchase Orders,Stock,and Alerts.</p>
@@ -30,16 +31,16 @@ const ManageDashboard = () => {
 
                 <div className="row "  >
                     <div className='col-md-10' style={{ margin: 'auto' }}>
-                        <div className='row d-flex  justify-content-center' style={{ gap: '40px' }} >
+                        <div className='row d-flex  justify-content-center dashboard-card-container' style={{ gap: '40px' }} clas>
                             {dashboardData.map((item, index) => (
-                                <div    className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"  key={index}>
+                                <div   className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"  key={index}>
                                     <div
                                         className="border shadow-sm dashboard-card"
                                         style={{
                                             width: "100%",
                                             padding: "15px",
                                             borderRadius: "20px",
-                                         height: "150px",
+                                         height: "170px",
                                         }}
                                     >
                                         <div className="d-flex align-items-center mb-3 div" style={{gap:'5px'}}>
@@ -286,34 +287,6 @@ const ManageDashboard = () => {
 
 
 
-            {showToast && (
-                <div
-                    className={`custom-toast toast align-items-center text-white bg-${toastVariant} border-0 position-fixed top-0 end-0 m-3`}
-                    role="alert"
-                    style={{
-                        display: 'block',
-                        minWidth: '300px',
-                        maxWidth: '400px',
-                        borderRadius: '8px',
-                        boxShadow: '0 6px 20px rgba(0,0,0,0.15)',
-                        fontSize: '15px',
-                        zIndex: 9999
-                    }}
-                >
-                    <div className="d-flex">
-                        <div className="toast-body" style={{ padding: '12px 16px' }}>
-                            <strong>{toastVariant === 'success' ? '✅' : '❌'} </strong> {toastMessage}
-                        </div>
-                        <button
-                            type="button"
-                            className="btn-close btn-close-white me-2 m-auto"
-                            onClick={() => setShowToast(false)}
-                            aria-label="Close"
-                        ></button>
-                    </div>
-                </div>
-
-            )}
 
         </>
     );

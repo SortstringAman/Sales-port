@@ -76,7 +76,7 @@
 //               <label className="form-check-label fw-lighter" style={{fontSize:"14px"}} htmlFor="rememberMe">Remember me</label>
 //             </div>
 //             <p className="" style={{color:"#7F56DA",fontSize:"14px"}}>Forgot password?</p>
-            
+
 //           </div>
 
 //           <button type="submit" className="btn btn-primary w-100" style={{ backgroundColor: '#7F56DA', border: 'none' ,padding:"13px 10px"}}>
@@ -125,7 +125,9 @@ import Logo from '../../assets/Images/logo.png';
 import clock from '../../assets/icons/clock.svg';
 // import { useNavigate } from 'react-router-dom'
 import { Postdata } from '../../API/GlobalApi';
-
+import Notifier from '../../Utils/notify';
+import Session from '../../Service/session';
+import { useNavigate } from 'react-router-dom';
 
 export const RightPart = () => {
   // const navigate = useNavigate();
@@ -138,16 +140,6 @@ export const RightPart = () => {
   const [getotpdisp, setgetotpdisp] = useState(false);
   const [token, settoken] = useState('');
   const otpInputs = useRef([]);
-  const [showToast, setShowToast] = useState(false);
-  const [toastVariant, setToastVariant] = useState('success');
-  const [toastMessage, setToastMessage] = useState('');
-  const displayToast = (message, variant = 'success') => {
-    setToastMessage(message);
-    setToastVariant(variant);
-    setShowToast(true);
-    // console.log("hiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
-    setTimeout(() => setShowToast(false), 3000);
-  };
 
 
   const handleChange = (e) => {
@@ -155,19 +147,28 @@ export const RightPart = () => {
     setPhoneNumber(value.replace(/\D/g, ''));
   };
   const Getotp = async () => {
+    const data = { mobile: phoneNumber };
+    const url = 'core/send-login-otp/';
 
-    const data = {
-      mobile: phoneNumber
-    }
     console.log("phoneNumber--", phoneNumber);
-    const url = "core/send-login-otp/"
-    const response = await Postdata(url, data)
-    console.log("response---", response);
-    if (!response.error) {
+    console.log("url for sent", url);
+
+    try {
+      const response = await Postdata(url, data);
+      console.log("response---", response);
+
+      if (response?.error) {
+        Notifier.error(response.error || "Something went wrong");
+        return;
+      }
+
+      Notifier.success("OTP sent successfully!");
       setgetotpdisp(true);
+
       if (!timerRunning) {
         setTimerRunning(true);
         setCountdown(60);
+
         const timer = setInterval(() => {
           setCountdown((prev) => {
             if (prev <= 1) {
@@ -179,12 +180,14 @@ export const RightPart = () => {
           });
         }, 1000);
       }
-      setgetotpdisp(true);
+
+    } catch (err) {
+      console.error("OTP Error:", err);
+      Notifier.error(err?.message || "Network error. Please try again.");
     }
-    else{
-       displayToast(response.error, 'danger');
-    }
-  }
+  };
+
+
   // const Getotp = async () => {
   //   const data = {
   //     mobile: phoneNumber,
@@ -243,29 +246,39 @@ export const RightPart = () => {
     }
   };
 
+
+  const navigate = useNavigate()
   const handleSubmit = async () => {
-    const url = "core/login/";
-    const data = {
-      mobile: phoneNumber,
-      otp: otp.join('')
-    }
-    console.log("data---", data)
-    const response = await Postdata(url, data);
-    if (response.token) {
-      setIsOtpVerified(true);
-      settoken(response.token);
-      window.sessionStorage.setItem('token', response.token);
-      window.localStorage.setItem('token', response.token);
-      window.location.href = "/studentDashboard/";
-    }
-    else {
-      alert("Wrong OTP")
-    }
+    try {
+      const url = 'core/login/';
+      const data = {
+        mobile: phoneNumber,
+        otp: otp.join('')
+      };
 
+      const response = await Postdata(url, data);
 
-    console.log("OTP Submitted:", otp.join(''));
+      console.log("✅ Response received: ater submit", response);
 
+      if (response.token) {
+        setIsOtpVerified(true);
+        settoken(response.token);
+        Session.set("token", response.token);
+        Notifier.success(response?.message)
+        navigate('/')
+      } else if (response.error) {
+        Notifier.error(response.error?.error); // Show proper error
+      } else {
+        Notifier.error("Unexpected error. Please try again.");
+      }
+
+    } catch (error) {
+      console.error("❗ Error during OTP submission:", error);
+      Notifier.error("Something went wrong. Please try again later.");
+    }
   };
+
+
   const handleResendOtp = () => {
     if (!timerRunning) {
       setTimerRunning(true);
@@ -448,34 +461,6 @@ export const RightPart = () => {
                 }
               </p></>)}
       </div>
-      {showToast && (
-        <div
-          className={`custom-toast toast align-items-center text-white bg-${toastVariant} border-0 position-fixed top-0 end-0 m-3`}
-          role="alert"
-          style={{
-            display: 'block',
-            minWidth: '300px',
-            maxWidth: '400px',
-            borderRadius: '8px',
-            boxShadow: '0 6px 20px rgba(0,0,0,0.15)',
-            fontSize: '15px',
-            zIndex: 9999
-          }}
-        >
-          <div className="d-flex">
-            <div className="toast-body" style={{ padding: '12px 16px' }}>
-              <strong>{toastVariant === 'success' ? '✅' : '❌'} </strong> {toastMessage}
-            </div>
-            <button
-              type="button"
-              className="btn-close btn-close-white me-2 m-auto"
-              onClick={() => setShowToast(false)}
-              aria-label="Close"
-            ></button>
-          </div>
-        </div>
-
-      )}
 
     </div>
 

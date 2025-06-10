@@ -20,6 +20,9 @@
   flex-direction: column;
   justify-content: space-between;
   /* transition: width 0.3s ease; */
+  overflow-y: auto;     /* Enable vertical scroll */
+  overflow-x: hidden;   /* Prevent horizontal scroll */
+  scroll-behavior: smooth;
 }
 
 .sidebar-header {

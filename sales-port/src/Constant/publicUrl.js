@@ -1,0 +1,1 @@
+export const PUBLIC_URLS = ["core/send-login-otp/","core/login/"];

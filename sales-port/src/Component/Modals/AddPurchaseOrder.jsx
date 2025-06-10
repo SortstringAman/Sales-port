@@ -216,7 +216,7 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
                                         Vendor Name<span className="astrisk">*</span>
                                     </label>
                                     <Select
-                                       
+
                                         classNamePrefix="react-select"
                                         options={indentNumberOptions}
                                         name="vendorname"
@@ -292,7 +292,7 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
                                         Payment Terms<span className="astrisk">*</span>
                                     </label>
                                     <Select
-                                         
+
                                         classNamePrefix="react-select"
                                         options={indentNumberOptions}
                                         name="paymentterms"
@@ -311,7 +311,7 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
                             </p>
                             {rows.map((row, index) => (
 
-                                <div className="row g-4">
+                                <div className="row g-4 item-details">
                                     <div className="col-md-2">
                                         <label className="form-labell">Item Name</label>
                                         <input
@@ -323,7 +323,7 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
                                         />
                                     </div>
                                     <div className="col-md-1">
-                                        <label className="form-labell" style={{fontSize:'13px'}}>Indent Number</label>
+                                        <label className="form-labell" style={{ fontSize: '13px' }}>Indent Number</label>
                                         <input
                                             type="text"
                                             className="form-control input-height"
@@ -451,7 +451,7 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
                             </p>
 
                             <div className="row d-flex justify-content-between mt-3">
-                                <div className="col-md-8 porupees" >
+                                <div className="col-md-7 porupees" >
                                     <div className="row d-flex g-5">
                                         <div className="col-md-2">
                                             <label className="form-labell">
@@ -462,8 +462,8 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
                                                 name="subtotal"
                                                 className={`form-control input-height ${touched.subtotal && errors.subtotal ? 'is-invalid' : ''
                                                     }`}
-                                                    placeholder="₹ 1800"
-                                                    
+                                                placeholder="₹ 1800"
+
                                             />
                                             <ErrorMessage name="subtotal" component="div" className="invalid-feedback error" />
                                         </div>
@@ -476,7 +476,7 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
                                                 name="totaltax"
                                                 className={`form-control input-height ${touched.totaltax && errors.totaltax ? 'is-invalid' : ''
                                                     }`}
-                                                      placeholder="₹ 800"
+                                                placeholder="₹ 800"
                                             />
                                             <ErrorMessage name="totaltax" component="div" className="invalid-feedback error" />
                                         </div>
@@ -490,17 +490,16 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
                                                 name="grandtotal"
                                                 className={`form-control input-height ${touched.grandtotal && errors.grandtotal ? 'is-invalid' : ''
                                                     }`}
-                                                      placeholder="₹ 1100"
+                                                placeholder="₹ 1100"
                                             />
                                             <ErrorMessage name="grandtotal" component="div" className="invalid-feedback error" />
                                         </div>
 
-                                        <div className="col-md-2">
+                                        <div className="col-md-3">
                                             <label className="form-labell">
                                                 Currency <span className="astrisk">*</span>
                                             </label>
                                             <Select
-                                           
                                                 classNamePrefix="react-select"
                                                 options={indentNumberOptions}
                                                 name="currency"
@@ -512,8 +511,7 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-md-4">
-
+                                <div className="col-md-5">
                                     <div className="row g-4">
                                         <UploadBox label="Upload Indent Copy  (pdf/Excel)" name="gstCert" onFileSelect={(name, file) => setFieldValue(name, file)} col="col-md-6" />
                                         <UploadBox label="Scope /Annexure (if any)" name="panCard" onFileSelect={(name, file) => setFieldValue(name, file)} col="col-md-5" />

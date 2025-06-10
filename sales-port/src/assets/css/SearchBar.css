@@ -18,12 +18,19 @@
 .search-input {
   width: 100%;
   padding: 12px;
-  border: 1px solid #ccc;
+  border: 1px solid #7F56DA;
   background: #F9F9F9;
 
-  border-radius: 6px;
+ border-radius: 4px;
+  outline-color: #7F56DA; /* <-- Your desired outline color */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
   font-size: 14px;
   /* margin-bottom: 10px; */
+}
+
+.search-input:focus {
+  border-color: #7F56DA;
+  /* box-shadow: 0 0 0 2px rgba(127, 86, 218, 0.3); Optional for soft glow effect */
 }
 
 .search-results {
@@ -171,4 +178,13 @@
 .btn-filter:focus {
   box-shadow: 0 0 0 0.2rem rgba(127, 86, 218, 0.3);
   outline: none;
+}
+
+
+.item-details .form-labell, .porupees  .form-labell{
+  font-size: 12px !important;
+}
+
+.pos{
+  width: 91% !important;
 }

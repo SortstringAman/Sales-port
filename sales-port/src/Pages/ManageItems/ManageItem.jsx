@@ -52,9 +52,7 @@ const ManageItems = () => {
     const [idcardmodal, setidcardmodal] = useState(false);
     const navigate = useNavigate();
     const pageSize = 10;
-    const [showToast, setShowToast] = useState(false);
-    const [toastVariant, setToastVariant] = useState('success');
-    const [toastMessage, setToastMessage] = useState('');
+    
     const [status, setstatus] = useState();
     const [showEditor, setShowEditor] = useState(false);
     const [showvaliditymodal, setshowvaliditymodal] = useState(false);
@@ -78,13 +76,6 @@ const ManageItems = () => {
     const [filtermodal, setfiltermodal] = useState(false);
     const [filterQueryString, setFilterQueryString] = useState('');
 
-    const displayToast = (message, variant = 'success') => {
-        setToastMessage(message);
-        setToastVariant(variant);
-        setShowToast(true);
-        // console.log("hiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
-        setTimeout(() => setShowToast(false), 3000);
-    };
     const handleFilterClick = () => {
         // onFilter(searchQuery); 
         setfiltermodal(true);
@@ -417,7 +408,7 @@ const ManageItems = () => {
                         iconColor="#39886F"
                         bgColor="#39886F0D"
                         circleColor=" #39886F"
-                        numbers={percentage.all_students}
+                        numbers="1560"
                         colClass="col-12 col-sm-12 col-md-5 col-lg-4  col-xl-3 mb-3"
 
                     />
@@ -428,7 +419,7 @@ const ManageItems = () => {
                         iconColor="#0E9DED"
                         bgColor="#0E9DED0D"
                         circleColor="#0E9DED"
-                        numbers={percentage.provisional_fees_count}
+                        numbers="50"
                         colClass="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3 mb-3"
 
                     />
@@ -439,8 +430,8 @@ const ManageItems = () => {
                         iconColor=" #FF9B04"
                         bgColor="#FF9B040D"
                         circleColor=" #FF9B04"
-                        numbers={percentage.registration_count}
-                        colClass="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3 mb-3"
+                        numbers="15"
+                        colClass="col-12 col-sm-12 col-md-5 col-lg-3 col-xl-3 mb-3"
 
                     />
                     <ProfileStatus
@@ -450,7 +441,7 @@ const ManageItems = () => {
                         iconColor=" #2A62C8"
                         bgColor=" #2A62C80D"
                         circleColor=" #2A62C8"
-                        numbers={percentage.fees_payment_count}
+                        numbers= "06"
                         colClass="col-12 col-sm-12 col-md-5 col-lg-4  col-xl-3 mb-3"
 
                     />
@@ -528,34 +519,7 @@ const ManageItems = () => {
             <div>
                 <AddItem isOpen={addItemModal} onClose={closeaddItemModal} />
             </div>
-            {showToast && (
-                <div
-                    className={`custom-toast toast align-items-center text-white bg-${toastVariant} border-0 position-fixed top-0 end-0 m-3`}
-                    role="alert"
-                    style={{
-                        display: 'block',
-                        minWidth: '300px',
-                        maxWidth: '400px',
-                        borderRadius: '8px',
-                        boxShadow: '0 6px 20px rgba(0,0,0,0.15)',
-                        fontSize: '15px',
-                        zIndex: 9999
-                    }}
-                >
-                    <div className="d-flex">
-                        <div className="toast-body" style={{ padding: '12px 16px' }}>
-                            <strong>{toastVariant === 'success' ? '✅' : '❌'} </strong> {toastMessage}
-                        </div>
-                        <button
-                            type="button"
-                            className="btn-close btn-close-white me-2 m-auto"
-                            onClick={() => setShowToast(false)}
-                            aria-label="Close"
-                        ></button>
-                    </div>
-                </div>
-
-            )}
+           
 
         </>
     );

@@ -189,7 +189,7 @@ export const Sidebar = () => {
               )}
             </div>
             {openMenu === "misReport" && (
-              <ul className={`submenu ${isCollapsed ? 'submenu-float' : ''}`}>
+              <ul className={`submenu ${isCollapsed ? 'submenu-float' : ''}`} style={{}}>
                 <li style={!isCollapsed ? { marginLeft: '15px' } : {}}>
                   <Link
                     to="/inventoryReport"

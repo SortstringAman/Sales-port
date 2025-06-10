@@ -54,9 +54,7 @@ const InventryReport = () => {
   const [idcardmodal, setidcardmodal] = useState(false);
   const navigate = useNavigate();
   const pageSize = 10;
-  const [showToast, setShowToast] = useState(false);
-  const [toastVariant, setToastVariant] = useState('success');
-  const [toastMessage, setToastMessage] = useState('');
+   
   const [status, setstatus] = useState();
   const [showEditor, setShowEditor] = useState(false);
   const [showvaliditymodal, setshowvaliditymodal] = useState(false);
@@ -80,14 +78,7 @@ const InventryReport = () => {
   const [generatedregno, setgeneratedregno] = useState('');
   const [filtermodal, setfiltermodal] = useState(false);
   const [filterQueryString, setFilterQueryString] = useState('');
-
-  const displayToast = (message, variant = 'success') => {
-    setToastMessage(message);
-    setToastVariant(variant);
-    setShowToast(true);
-    // console.log("hiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
-    setTimeout(() => setShowToast(false), 3000);
-  };
+ 
   const handleFilterClick = () => {
     // onFilter(searchQuery); 
     setfiltermodal(true);
@@ -316,7 +307,6 @@ const InventryReport = () => {
             <FilterBar />
           </div>
         </div>
-
         <div className='row mt-5'>
           <div className="col-md-12">
             <div className="row align-items-center">
@@ -386,34 +376,7 @@ const InventryReport = () => {
 
 
 
-      {showToast && (
-        <div
-          className={`custom-toast toast align-items-center text-white bg-${toastVariant} border-0 position-fixed top-0 end-0 m-3`}
-          role="alert"
-          style={{
-            display: 'block',
-            minWidth: '300px',
-            maxWidth: '400px',
-            borderRadius: '8px',
-            boxShadow: '0 6px 20px rgba(0,0,0,0.15)',
-            fontSize: '15px',
-            zIndex: 9999
-          }}
-        >
-          <div className="d-flex">
-            <div className="toast-body" style={{ padding: '12px 16px' }}>
-              <strong>{toastVariant === 'success' ? '✅' : '❌'} </strong> {toastMessage}
-            </div>
-            <button
-              type="button"
-              className="btn-close btn-close-white me-2 m-auto"
-              onClick={() => setShowToast(false)}
-              aria-label="Close"
-            ></button>
-          </div>
-        </div>
-
-      )}
+  
 
     </>
   );

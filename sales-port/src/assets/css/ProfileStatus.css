@@ -21,6 +21,8 @@
   .progress-card-icon {
     width: 30px;
     height: 30px;
+  color: red !important;
+  background-color: transparent !important;
   }
   
   .progress-card-label {
