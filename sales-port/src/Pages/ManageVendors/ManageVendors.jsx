@@ -20,9 +20,7 @@ import adstatus from '../../assets/icons/statuspur.svg'
 import adstatusred from '../../assets/icons/status-red.svg';
 import tablelast from '../../assets/icons/tablelast.svg';
 import edit from '../../assets/icons/editnew.svg';
-
 import { useNavigate } from 'react-router-dom';
-import { getBlob, getData, patchData } from '../../API/GlobalApi';
 import confirmadicon from '../../assets/icons/confirm-admission.svg';
 import exporticon from '../../assets/icons/export-data.svg';
 import { Tooltip } from 'react-tooltip';
@@ -110,25 +108,6 @@ const ManageVendors = () => {
         setsubmit(false);
     };
 
-    // const handleExportExcel = async () => {
-    //     try {
-    //         const urlWithParams = filterQueryString
-    //             ? `students/export-student-payments-to-xls/?${filterQueryString}`
-    //             : 'students/export-student-payments-to-xls/';
-
-    //         const blob = await getBlob(urlWithParams);
-
-    //         const url = window.URL.createObjectURL(blob);
-    //         const a = document.createElement('a');
-    //         a.href = url;
-    //         a.download = 'students_export.xlsx';
-    //         document.body.appendChild(a);
-    //         a.click();
-    //         a.remove();
-    //     } catch (error) {
-    //         displayToast('❌ Excel export failed', 'danger');
-    //     }
-    // };
 
     const handleRowClick = async (userId, row) => {
         try {
@@ -191,29 +170,6 @@ const ManageVendors = () => {
         // setIsModalOpen(true); // open the modal
     };
 
-    // const handleStatus = async (row) => {
-    //     const newStatus = !row.original.status;
-    //     setstatus(newStatus) // Toggle status for that specific row
-    //     // Update the status for that row in your table
-    //     row.original.status = newStatus;
-
-    //     // Optionally, make an API call here to update the status on the backend
-    //     // const url = `administration/organizations/${row.original.id}/`;
-    //     const url = `students/update-student-status/${row.original.id}/`;
-    //     const response = await patchData(url, { status: newStatus });
-
-    //     if (response && !response.error) {
-    //         displayToast('Status Updated successfully!', 'success');
-    //         // getorgdata()
-    //     } else if (response && response.error) {
-    //         const errorMsg = response.error?.[0] || 'Error Updating Status.';
-    //         displayToast(errorMsg, 'danger');
-    //     } else {
-    //         displayToast('Unexpected error occurred.', 'danger');
-    //     }
-    //     // Log or handle response as needed
-    //     console.log("Updated Status:", response);
-    // };
 
     const columns = useMemo(
         () => [
@@ -341,48 +297,6 @@ const ManageVendors = () => {
 
     const pageCounts = Math.ceil(totalCount / pageSize);
     console.log("pageCounts--newSt", pageCounts)
-
-
-
-
-
-    // useEffect(() => {
-    // const handleRowClick = async () => {
-
-    //     const token = window.localStorage.getItem("token");
-
-    //     try {
-    //         // const response = await fetch(`https://bgi.sortstring.com/api/v1/students/get-students/${getstudentsdataId}/`, {
-    //         //   method: 'GET',
-    //         //   headers: {
-    //         //     Authorization: `Token ${token}`
-    //         //   }
-    //         // });
-    //         const response = await getData(`students/get-students/${getstudentsdataId}/`)
-
-    //         // if (!response.ok) {
-    //         //   throw new Error("Failed to fetch employee details");
-    //         // }
-
-    //         // const employeeData = await response.json();
-    //         setselectedVendor(response);
-    //         // Save data in state or localStorage (depending on your use case)
-    //         localStorage.setItem("selectedEmployeeData", JSON.stringify(response));
-    //         console.log("✅ Employee Data:", response);
-
-    //         // Optionally, update state to use in a modal
-    //         // setSelectedEmployeeData(employeeData); // if you're using it in a modal later
-
-    //     } catch (error) {
-    //         console.error("❌ Error fetching employee data:", error);
-    //     }
-
-
-
-    //  };
-    // handleRowClick()
-    // }, [getstudentsdataId]);
-    //  }, [ ]);
 
 
 

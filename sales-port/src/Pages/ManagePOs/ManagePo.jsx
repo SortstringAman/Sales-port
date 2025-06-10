@@ -20,9 +20,7 @@ import adstatus from '../../assets/icons/statuspur.svg'
 import adstatusred from '../../assets/icons/status-red.svg';
 import tablelast from '../../assets/icons/tablelast.svg';
 import edit from '../../assets/icons/editnew.svg';
-
 import { useNavigate } from 'react-router-dom';
-import { getBlob, getData, patchData } from '../../API/GlobalApi';
 import exporticon from '../../assets/icons/export-data.svg';
 import { Tooltip } from 'react-tooltip';
 import checkgif from '../../assets/gif/successfullgif.gif';
@@ -102,31 +100,31 @@ const ManagePOs = () => {
     const handleSearch = async (query) => {
         setSearchQuery(query);
 
-        const queryParams = new URLSearchParams();
+        // const queryParams = new URLSearchParams();
 
-        // Add existing filter query params if any
-        if (filterQueryString) {
-            const existingParams = new URLSearchParams(filterQueryString);
-            existingParams.forEach((value, key) => {
-                queryParams.append(key, value);
-            });
-        }
+        // // Add existing filter query params if any
+        // if (filterQueryString) {
+        //     const existingParams = new URLSearchParams(filterQueryString);
+        //     existingParams.forEach((value, key) => {
+        //         queryParams.append(key, value);
+        //     });
+        // }
 
-        // Add search and reset to page 1
-        queryParams.set("search", query);
-        queryParams.set("page", "1");
+        // // Add search and reset to page 1
+        // queryParams.set("search", query);
+        // queryParams.set("page", "1");
 
-        const finalUrl = `students/get-students/?${queryParams.toString()}`;
+        // const finalUrl = `students/get-students/?${queryParams.toString()}`;
 
-        try {
-            const response = await getData(finalUrl);
-            setStudentsdata(response?.results || []);
-            setTotalCount(response?.count || 0);
-            setgetstudentsdataId(response?.results[0]?.user_id || null);
-            setFilterQueryString(queryParams.toString()); // Save updated string
-        } catch (err) {
-            console.error("Search failed:", err);
-        }
+        // try {
+        //     const response = await getData(finalUrl);
+        //     setStudentsdata(response?.results || []);
+        //     setTotalCount(response?.count || 0);
+        //     setgetstudentsdataId(response?.results[0]?.user_id || null);
+        //     setFilterQueryString(queryParams.toString()); // Save updated string
+        // } catch (err) {
+        //     console.error("Search failed:", err);
+        // }
     };
 
 

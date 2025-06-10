@@ -271,7 +271,6 @@ export const RightPart = () => {
       } else {
         Notifier.error("Unexpected error. Please try again.");
       }
-
     } catch (error) {
       console.error("❗ Error during OTP submission:", error);
       Notifier.error("Something went wrong. Please try again later.");
