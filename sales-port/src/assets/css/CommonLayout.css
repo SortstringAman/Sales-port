@@ -10,7 +10,6 @@
   top: 0;
   left: 0;
   width: 240px;
-  /* expanded width */
   height: 100%;
   background-color: #fff;
   border-right: 1px solid #E9E9E9;
@@ -18,12 +17,22 @@
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  /* transition: width 0.3s ease; */
-  overflow-y: auto;     /* Enable vertical scroll */
-  overflow-x: hidden;   /* Prevent horizontal scroll */
-  scroll-behavior: smooth;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: width 0.3s ease;
+  z-index: 1000;
 }
+
+.sidebar.collapsed {
+  width: 60px; /* or whatever width you use when collapsed */
+  /* background-color: red !important; */
+  z-index: 111111 !important;
+  overflow: visible !important; 
+ 
+     /* height: 100vh !important; */
+  
+}
+
 
 .sidebar-header {
   text-align: center;
@@ -189,10 +198,6 @@
   font-weight: 600;
 }
 
-/* Collapsed Sidebar */
-.sidebar.collapsed {
-  width: 65px;
-}
 
 .sidebar.collapsed .sidebar-ul span {
   display: none;
@@ -242,6 +247,17 @@
   min-width: 180px;
   z-index: 999;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); /* ✨ Smooth shadow */
+    max-height: 50vh;           /* 👈 this enables scrolling */
+  overflow-y: auto;           /* 👈 scroll when submenu exceeds height */
+}
+
+.submenu-float::-webkit-scrollbar {
+  width: 6px;
+}
+
+.submenu-float::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
 }
 
 
@@ -254,7 +270,7 @@
 /* Submenu floating when sidebar is collapsed */
 .sidebar.collapsed .submenu {
   position: absolute;
-  left: 70px;
+  left: 60px;
   top: 0;
   background-color: #fff;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -264,6 +280,7 @@
   z-index: 1000;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); /* ✨ Smooth shadow */
   transition: opacity 0.3s ease, transform 0.3s ease;
+  border-left: unset;
 }
 
 .sidebar.collapsed .submenu li {

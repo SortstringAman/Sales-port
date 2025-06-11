@@ -1,16 +1,12 @@
-import React from 'react';
+
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import close from '../../assets/icons/close.svg';
-
 import '../../assets/css/Modal.css';
+import { ItemtypesValidationSchema } from '../../Pages/ManageMasters/ManageItemTypes/schema';
 
-import { MeasurementSchema } from '../../Pages/ManageMasters/ManageMeasureMents/schema';
-
-
-export const AddMeasurement = ({ isOpen, onClose }) => {
+export const AddItemTypes = ({ isOpen, onClose }) => {
   const initialValues = {
     name: '',
-    shortCode: '',
     description: '',
   };
 
@@ -20,16 +16,10 @@ export const AddMeasurement = ({ isOpen, onClose }) => {
     <div className="modal-overlay">
       <div
         className="modal-content"
-        style={{
-          position: 'relative',
-          height: '67vh',
-          // overflowY: 'auto',
-          padding: '30px',
-          width: '40vw',
-        }}
+        style={{ position: 'relative', height: '50vh', padding: '30px',width:'35vw' }}
       >
         <div className="modal-header-content d-flex justify-content-between align-items-center mb-3">
-          <h2 className="text-primary">Create Measurement Unit</h2>
+          <h2 className="text-primary">Create Item Types</h2>
           <button className="close-btn" onClick={onClose}>
             <img src={close} alt="close" />
           </button>
@@ -37,49 +27,40 @@ export const AddMeasurement = ({ isOpen, onClose }) => {
 
         <Formik
           initialValues={initialValues}
-          validationSchema={MeasurementSchema}
+          validationSchema={ItemtypesValidationSchema}
           onSubmit={(values) => {
-            console.log('Measurement Submitted:', values);
-            // Add your API call here
+            console.log('Department Submitted:', values);
+            // Call your API or logic here
           }}
         >
           {({ errors, touched }) => (
             <Form>
-              <div className="row" style={{ justifyContent: 'center' }}>
-                <div className="col-sm-10 col-md-10">
+              {/* <p className="fm-pr-hd mt-3 text-start fw-900 text-uppercase">
+                Department Details
+              </p> */}
+
+              <div className="row" style={{justifyContent:'center'}}>
+                <div className="col-sm-10 col-md-10 col-lg-10 col-xl-10">
                   <label className="form-labell">
-                    Unit Name <span className="astrisk">*</span>
+                  Item Name <span className="astrisk">*</span>
                   </label>
                   <Field
                     type="text"
                     name="name"
                     className={`form-control input-height ${touched.name && errors.name ? 'is-invalid' : ''}`}
-                    placeholder="e.g. Kilogram"
+                    placeholder="Enter Item Name"
                   />
                   <ErrorMessage name="name" component="div" className="invalid-feedback error" />
                 </div>
 
-                <div className="col-sm-10 col-md-10">
-                  <label className="form-labell">
-                    Short Code <span className="astrisk">*</span>
-                  </label>
-                  <Field
-                    type="text"
-                    name="shortCode"
-                    className={`form-control input-height ${touched.shortCode && errors.shortCode ? 'is-invalid' : ''}`}
-                    placeholder="e.g. kg"
-                  />
-                  <ErrorMessage name="shortCode" component="div" className="invalid-feedback error" />
-                </div>
-
-                <div className="col-sm-10 col-md-10">
+                <div className="col-sm-10 col-md-10 col-lg-10 col-xl-10">
                   <label className="form-labell">Description</label>
                   <Field
                     as="textarea"
                     name="description"
                     className={`form-control input-height ${touched.description && errors.description ? 'is-invalid' : ''}`}
                     rows={2}
-                    placeholder="Enter description (optional)"
+                    placeholder="Enter Description"
                   />
                   <ErrorMessage name="description" component="div" className="invalid-feedback error" />
                 </div>
@@ -87,7 +68,7 @@ export const AddMeasurement = ({ isOpen, onClose }) => {
 
               <div className="d-flex justify-content-end mt-4">
                 <button type="submit" className="add-btn">
-                  Save Measurement
+                  Save Item Types
                 </button>
               </div>
             </Form>

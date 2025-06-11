@@ -31,27 +31,32 @@ export const Sidebar = () => {
   const [isLogoutConfirmationModalOpen, setLogoutConfirmationModalOpen] = useState(false);
   // Auto open submenu based on current route
   useEffect(() => {
-    const misSubmenuPaths = ["/stockInReport", "/inventoryReport", "/stockOutReport", "/indentReport", "/purchaseOfferReport", "/reorderReport", '/itemConsumptionReport', '/compareReport'];
+    const misSubmenuPaths = [
+      "/stockInReport", "/inventoryReport", "/stockOutReport", "/indentReport",
+      "/purchaseOfferReport", "/reorderReport", "/itemConsumptionReport", "/compareReport"
+    ];
+    const masterSubMenu = ["/department", "/measurement", "/item-categories", "/item-types", "/locations"];
 
+    const submenuPaths = [...misSubmenuPaths, ...masterSubMenu];
 
-    const masterSubMenu = ['/department', '/measurement','/item-categories']
-
-  
-    // Collapse all menus if sidebar is collapsed and path is in any submenu
-    if (isCollapsed && [ ...misSubmenuPaths, ...masterSubMenu].includes(location.pathname)) {
+    // If sidebar is collapsed, always close submenu
+    if (isCollapsed) {
       setOpenMenu(null);
       return;
     }
 
-    // Expand appropriate menu based on pathname
+    // Auto open submenu based on route when expanded
     if (misSubmenuPaths.includes(location.pathname)) {
       setOpenMenu("misReport");
+    } else if (masterSubMenu.includes(location.pathname)) {
+      setOpenMenu("manageMaster");
+    } else {
+      setOpenMenu(null); // For non-submenu paths
     }
-    else if (masterSubMenu.includes(location.pathname)) {
-      setOpenMenu("manageMaster")
-    }
-    
+
   }, [location.pathname, isCollapsed]);
+
+
 
 
   // Toggle which menu is open
@@ -184,7 +189,7 @@ export const Sidebar = () => {
               </svg>
               <span>MIS Report</span>
               {!isCollapsed && (
-                <svg viewBox="0 0 24 24" style={{ marginLeft: '17px' }} fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(180)" stroke="#ffffff" height="22" width="22">
+                <svg viewBox="0 0 24 24" style={{ marginLeft: '40px' }} fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(180)" stroke="#ffffff" height="15" width="15">
                   <path d="M18.2929 15.2893C18.6834 14.8988 18.6834 14.2656 18.2929 13.8751L13.4007 8.98766C12.6195 8.20726 11.3537 8.20757 10.5729 8.98835L5.68257 13.8787C5.29205 14.2692 5.29205 14.9024 5.68257 15.2929C6.0731 15.6835 6.70626 15.6835 7.09679 15.2929L11.2824 11.1073C11.673 10.7168 12.3061 10.7168 12.6966 11.1073L16.8787 15.2893C17.2692 15.6798 17.9024 15.6798 18.2929 15.2893Z" fill="#0F0F0F"></path>
                 </svg>
               )}
@@ -226,7 +231,7 @@ export const Sidebar = () => {
                   <Link
                     to="/indentReport"
                     className={location.pathname === "/indentReport" ? "active" : ""}
-                    onC lick={handleSubmenuClick}
+                    onClick={handleSubmenuClick}
                   >
                     Indent Report
                   </Link>
@@ -285,18 +290,21 @@ export const Sidebar = () => {
 
           <li className='submenu-container'>
             <div
-              className={location.pathname === "/manageDashboard" || location.pathname === "/manageDashboard"
+              className={location.pathname === "/manageMaster" || location.pathname === "/manageMaster"
                 ? "active menu-item"
                 : "menu-item"}
               onClick={() => toggleMenu("manageMaster")}
             >
-           <svg width="16" height="19" viewBox="0 0 16 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M16 14.5V4.5C16 2.332 12.337 0.5 8 0.5C3.663 0.5 0 2.332 0 4.5V14.5C0 16.668 3.663 18.5 8 18.5C12.337 18.5 16 16.668 16 14.5ZM8 2.5C11.691 2.5 13.931 4.007 14 4.494C13.931 4.993 11.691 6.5 8 6.5C4.309 6.5 2.069 4.993 2 4.506C2.069 4.007 4.309 2.5 8 2.5ZM2 7.107C3.479 7.954 5.637 8.5 8 8.5C10.363 8.5 12.521 7.954 14 7.107V9.494C13.931 9.993 11.691 11.5 8 11.5C4.309 11.5 2.069 9.993 2 9.5V7.107ZM2 14.5V12.107C3.479 12.954 5.637 13.5 8 13.5C10.363 13.5 12.521 12.954 14 12.107V14.494C13.931 14.993 11.691 16.5 8 16.5C4.309 16.5 2.069 14.993 2 14.5Z" fill="#222F3E"/>
-</svg>
+              <svg width="16" height="19" viewBox="0 0 16 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16 14.5V4.5C16 2.332 12.337 0.5 8 0.5C3.663 0.5 0 2.332 0 4.5V14.5C0 16.668 3.663 18.5 8 18.5C12.337 18.5 16 16.668 16 14.5ZM8 2.5C11.691 2.5 13.931 4.007 14 4.494C13.931 4.993 11.691 6.5 8 6.5C4.309 6.5 2.069 4.993 2 4.506C2.069 4.007 4.309 2.5 8 2.5ZM2 7.107C3.479 7.954 5.637 8.5 8 8.5C10.363 8.5 12.521 7.954 14 7.107V9.494C13.931 9.993 11.691 11.5 8 11.5C4.309 11.5 2.069 9.993 2 9.5V7.107ZM2 14.5V12.107C3.479 12.954 5.637 13.5 8 13.5C10.363 13.5 12.521 12.954 14 12.107V14.494C13.931 14.993 11.691 16.5 8 16.5C4.309 16.5 2.069 14.993 2 14.5Z" fill="#222F3E" />
+              </svg>
 
-              <span>Manage Masters</span>
+              <span style={openMenu === "manageMaster" ? { fontSize: '15px' } : {}}>
+                Manage Masters
+              </span>
+
               {!isCollapsed && (
-                <svg viewBox="0 0 24 24" style={{ marginLeft: '17px' }} fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(180)" stroke="#ffffff" height="22" width="22">
+                <svg viewBox="0 0 24 24" style={{ marginLeft: '5px' }} fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(180)" stroke="#ffffff" height="15" width="15">
                   <path d="M18.2929 15.2893C18.6834 14.8988 18.6834 14.2656 18.2929 13.8751L13.4007 8.98766C12.6195 8.20726 11.3537 8.20757 10.5729 8.98835L5.68257 13.8787C5.29205 14.2692 5.29205 14.9024 5.68257 15.2929C6.0731 15.6835 6.70626 15.6835 7.09679 15.2929L11.2824 11.1073C11.673 10.7168 12.3061 10.7168 12.6966 11.1073L16.8787 15.2893C17.2692 15.6798 17.9024 15.6798 18.2929 15.2893Z" fill="#0F0F0F"></path>
                 </svg>
               )}
@@ -309,7 +317,7 @@ export const Sidebar = () => {
                     className={location.pathname === "/department" ? "active" : ""}
                     onClick={handleSubmenuClick}
                   >
-                   Department
+                    Department
                   </Link>
 
                 </li>
@@ -324,7 +332,7 @@ export const Sidebar = () => {
 
                 </li>
 
-                  <li style={!isCollapsed ? { marginLeft: '15px' } : {}}>
+                <li style={!isCollapsed ? { marginLeft: '15px' } : {}}>
                   <Link
                     to="/item-categories"
                     className={location.pathname === "/item-categories" ? "active" : ""}
@@ -335,15 +343,27 @@ export const Sidebar = () => {
 
                 </li>
 
- 
 
+                <li style={!isCollapsed ? { marginLeft: '15px' } : {}}>
+                  <Link
+                    to="/item-types"
+                    className={location.pathname === "/item-types" ? "active" : ""}
+                    onClick={handleSubmenuClick}
+                  >
+                    Item Type
+                  </Link>
 
+                </li>
+                <li style={!isCollapsed ? { marginLeft: '15px' } : {}}>
+                  <Link
+                    to="/locations"
+                    className={location.pathname === "/locations" ? "active" : ""}
+                    onClick={handleSubmenuClick}
+                  >
+                    Locations
+                  </Link>
 
-
-
-
-
-
+                </li>
               </ul>
             )}
           </li>
