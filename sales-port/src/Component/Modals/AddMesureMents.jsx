@@ -22,7 +22,7 @@ export const AddMeasurement = ({ isOpen, onClose }) => {
         className="modal-content"
         style={{
           position: 'relative',
-          height: '67vh',
+          // height: '67vh',
           // overflowY: 'auto',
           padding: '30px',
           width: '40vw',

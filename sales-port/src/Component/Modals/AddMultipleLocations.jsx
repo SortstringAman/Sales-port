@@ -85,7 +85,7 @@ const MultpleLocationModal = ({ isOpen, onClose, fieldType, onSubmit, height }) 
                 className="modal-content"
                 style={{
                     position: 'relative',
-                    height: height,
+                    // height: height,
                     overflowY: 'auto',
                     padding: '30px',
                     width: '40vw',

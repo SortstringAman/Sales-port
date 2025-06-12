@@ -16,7 +16,7 @@ export const AddItemTypes = ({ isOpen, onClose }) => {
     <div className="modal-overlay">
       <div
         className="modal-content"
-        style={{ position: 'relative', height: '50vh', padding: '30px',width:'35vw' }}
+        style={{ position: 'relative', padding: '30px',width:'35vw' }}
       >
         <div className="modal-header-content d-flex justify-content-between align-items-center mb-3">
           <h2 className="text-primary">Create Item Types</h2>

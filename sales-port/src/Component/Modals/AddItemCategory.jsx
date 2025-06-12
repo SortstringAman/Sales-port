@@ -27,7 +27,7 @@ export const AddItemCategory = ({ isOpen, onClose }) => {
                 className="modal-content"
                 style={{
                     position: 'relative',
-                    height: '68vh',
+                    // height: '68vh',
                     overflowY: 'auto',
                     padding: '30px',
                     width: '40vw',
