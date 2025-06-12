@@ -60,7 +60,7 @@ export const ReceiveStock = ({ isOpen, onClose }) => {
         <div className="modal-overlay">
             <div
                 className="modal-content stock"
-                style={{ position: 'relative', height: '80vh', overflowY: 'auto', padding: '30px' }}
+                style={{ position: 'relative' , overflowY: 'auto', padding: '30px' }}
             >
                 <div className="modal-header-content d-flex justify-content-between align-items-center mb-3">
                     <h2 className="text-primary">Receive Stock</h2>
