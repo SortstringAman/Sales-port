@@ -93,7 +93,7 @@ const Table = ({ data, columns, selectedData, handlePageChange, pageCounts }) =>
           {headerGroups?.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers?.map(column => (
-                <th {...column.getHeaderProps(column.getSortByToggleProps())} style={{ cursor: 'pointer',  }}>
+                <th {...column.getHeaderProps(column.getSortByToggleProps())} style={{ cursor: 'pointer', }}>
                   {column.render('Header')}
                   {column.canSort && (
                     <span style={{ marginLeft: '10px', display: 'inline-flex', alignItems: 'center' }}>
