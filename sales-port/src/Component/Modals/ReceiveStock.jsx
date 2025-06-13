@@ -6,6 +6,7 @@ import close from '../../assets/icons/close.svg';
 import { VendorSchema } from '../../Pages/ManageVendors/schema';
 import { reactSelectStyles } from '../../Utils/selectboxStyle';
 import '../../assets/css/Modal.css'; // Make sure to import the CSS
+import { ReceiveStockSchema } from '../../Pages/ManageStocks/schema';
 export const ReceiveStock = ({ isOpen, onClose }) => {
     // Internal options
     const poNumberOptions = [
@@ -82,7 +83,7 @@ export const ReceiveStock = ({ isOpen, onClose }) => {
                         storeIn: '',
                         file: null,
                     }}
-                    validationSchema={VendorSchema}
+                    validationSchema={ReceiveStockSchema}
                     onSubmit={(values) => {
                         const dataToSubmit = {
                             ...values,

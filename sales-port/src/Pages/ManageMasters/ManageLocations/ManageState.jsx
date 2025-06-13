@@ -164,7 +164,7 @@ const ManageStates = () => {
         <>
             <div className="dashboard">
                 {/* Content for the Dashboard */}
-                <div style={{ display: "flex", justifyContent: 'space-between' }}>
+                <div style={{ display: "flex", justifyContent: 'space-between' }} className='mt-5'>
                     <div >
                         <h2 className='main-heading'>Manage  States</h2>
                     </div>

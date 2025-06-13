@@ -56,14 +56,10 @@ export const Sidebar = () => {
 
   }, [location.pathname, isCollapsed]);
 
-
-
-
   // Toggle which menu is open
   const toggleMenu = (menuName) => {
     setOpenMenu(openMenu === menuName ? null : menuName);
   };
-
 
   const handleSubmenuClick = () => {
     if (isCollapsed) {
@@ -299,7 +295,11 @@ export const Sidebar = () => {
                 <path d="M16 14.5V4.5C16 2.332 12.337 0.5 8 0.5C3.663 0.5 0 2.332 0 4.5V14.5C0 16.668 3.663 18.5 8 18.5C12.337 18.5 16 16.668 16 14.5ZM8 2.5C11.691 2.5 13.931 4.007 14 4.494C13.931 4.993 11.691 6.5 8 6.5C4.309 6.5 2.069 4.993 2 4.506C2.069 4.007 4.309 2.5 8 2.5ZM2 7.107C3.479 7.954 5.637 8.5 8 8.5C10.363 8.5 12.521 7.954 14 7.107V9.494C13.931 9.993 11.691 11.5 8 11.5C4.309 11.5 2.069 9.993 2 9.5V7.107ZM2 14.5V12.107C3.479 12.954 5.637 13.5 8 13.5C10.363 13.5 12.521 12.954 14 12.107V14.494C13.931 14.993 11.691 16.5 8 16.5C4.309 16.5 2.069 14.993 2 14.5Z" fill="#222F3E" />
               </svg>
 
-              <span style={openMenu === "manageMaster" ? { fontSize: '15px' } : {}}>
+              <span style={
+                openMenu === "manageMaster" || openMenu === "misReport"
+                  ? { fontSize: '15px' }
+                  : {}
+              }>
                 Manage Masters
               </span>
 

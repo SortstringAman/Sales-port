@@ -7,6 +7,7 @@ import useAutoFocus from '../../Utils/autoFocus';
 import '../../assets/css/Modal.css'; // Make sure to import the CSS
 import { reactSelectStyles } from '../../Utils/selectboxStyle';
 import { VendorSchema } from '../../Pages/ManageVendors/schema';
+import { IssueStockSchema } from '../../Pages/ManageStocks/schema';
 
 const departmentOptions = [
     { value: 'finance', label: 'Finance' },
@@ -58,7 +59,7 @@ export const IssueStock = ({ isOpen, onClose }) => {
                         purpose: '',
                         remark: '',
                     }}
-                    validationSchema={VendorSchema}
+                    validationSchema={IssueStockSchema}
                     onSubmit={(values) => {
                         console.log('Form Submitted:', values);
                     }}

@@ -94,7 +94,7 @@ export const AddIndent = ({ isOpen, onClose }) => {
         <div className="modal-overlay">
             <div
                 className="modal-content stock"
-                style={{ position: 'relative',   overflowY: 'auto', padding: '30px' }}
+                style={{ position: 'relative', maxHeight: '80vh', overflowY: 'auto', padding: '30px' }}
             >
                 <div className="modal-header-content d-flex justify-content-between align-items-center mb-3">
                     <h2 className="text-primary">Create Indent</h2>
@@ -121,7 +121,7 @@ export const AddIndent = ({ isOpen, onClose }) => {
                             <p className="fm-pr-hd mt-3 text-start fw-900" style={{ textTransform: 'uppercase' }}>
                                 Indent Details
                             </p>
-                            <div className="row">
+                            <div className="row" style={{ display: 'flex', alignItems: 'center' }}>
                                 <div className="col-md-4">
                                     <label className="form-labell">
                                         Department<span className="astrisk">*</span>
@@ -168,18 +168,23 @@ export const AddIndent = ({ isOpen, onClose }) => {
                                     <ErrorMessage name="indentDate" component="div" className="invalid-feedback error" />
                                 </div>
                                 <div className="col-md-4">
-                                    <label className="form-labell" style={{ marginBottom: 'unset' }}>
+                                    {/* <label className="form-labell" style={{ marginTop: '10PX', marginBottom: 'unset' }}>
                                         Upload Document <span className='any'>(if any)</span> <span className="astrisk">*</span>
-                                    </label>
+                                    </label> */}
                                     <div className="d-flex ">
                                         <UploadBox
                                             name="file"
                                             onFileSelect={(name, file) => setFieldValue(name, file)}
-                                            col="col-md-5"
+                                            label={
+                                                <>
+                                                    Upload Document <span className='any'>(if any)</span> <span className="astrisk">*</span>
+                                                </>
+                                            }
+                                            col="col-md-12"
                                         />
-                                        <div className="col-md-5 text-secondary small d-flex align-items-center justify-content-center">
+                                        {/* <div className="col-md-5 text-secondary small d-flex align-items-center justify-content-center mt-3" >
                                             {values.file ? values.file.name : "No file selected"}
-                                        </div>
+                                        </div> */}
                                     </div>
 
                                     <ErrorMessage name="file" component="div" className="text-danger error" />
@@ -202,8 +207,6 @@ export const AddIndent = ({ isOpen, onClose }) => {
                                     <ErrorMessage name="storelocation" component="div" className="text-danger error" />
                                 </div>
                             </div>
-
-
 
                             {/* Stock Details */}
                             <p className="fm-pr-hd mt-3 text-start fw-900" style={{ textTransform: 'uppercase' }}>
@@ -313,7 +316,7 @@ export const AddIndent = ({ isOpen, onClose }) => {
                             </div>
                             <div className="d-flex justify-content-end mt-4">
                                 <button type="submit" className="add-btn">
-                                    Receive Stock
+                                    Create Indent
                                     {/* <img className="ms-2" src={next} alt="next" /> */}
                                 </button>
                             </div>

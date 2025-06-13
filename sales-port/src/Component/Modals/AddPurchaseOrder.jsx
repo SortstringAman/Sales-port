@@ -9,6 +9,7 @@ import { VendorSchema } from '../../Pages/ManageVendors/schema';
 import { reactSelectStyles } from '../../Utils/selectboxStyle';
 import { UploadBox } from '../../Utils/uploadFile';
 import '../../assets/css/Modal.css'; // Make sure to import the CSS
+import { PurchaseOrderSchema } from '../../Pages/ManagePOs/schema';
 
 export const AddPurchaseOrder = ({ isOpen, onClose }) => {
     // Internal options
@@ -26,25 +27,35 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
         { value: 'Main Warehouse', label: 'Main Warehouse' },
         { value: 'Secondary Warehouse', label: 'Secondary Warehouse' },
     ];
-    const itemOptions = [
-        { value: 'Item 1', label: 'Item 1' },
-        { value: 'Item 2', label: 'Item 2' },
-        { value: 'Item 3', label: 'Item 3' },
-    ];
+    const currencyOptions = [
+  { value: 'INR', label: 'INR - Indian Rupee' },
+  { value: 'USD', label: 'USD - US Dollar' },
+  { value: 'EUR', label: 'EUR - Euro' },
+  { value: 'GBP', label: 'GBP - British Pound' },
+  { value: 'JPY', label: 'JPY - Japanese Yen' },
+];
+
+    const paymentTermsOptions = [
+  { value: 'advance', label: 'Advance' },
+  { value: 'net_15', label: 'Net 15 Days' },
+  { value: 'net_30', label: 'Net 30 Days' },
+  { value: 'net_60', label: 'Net 60 Days' },
+  { value: 'upon_delivery', label: 'Upon Delivery' },
+];
 
     // Dynamic rows state
     // State for dynamic rows
     const [rows, setRows] = useState([
         {
-            itemname: '',
-            indentnumber: '',
-            reqquantity: '',
-            approvedquantity: '',
+            itemName: '',
+            indentNumber: '',
+            reqQuantity: '',
+            approvedQuantity: '',
             uom: '',
-            unitrate: '',
-            totalamount: '',
+            unitRate: '',
+            totalAmount: '',
             gst: '',
-            itemremarks: ''
+            itemRemarks: ''
         },
     ]);
 
@@ -54,15 +65,15 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
         setRows([
             ...rows,
             {
-                itemname: '',
-                indentnumber: '',
-                reqquantity: '',
-                approvedquantity: '',
+                itemName: '',
+                indentNumber: '',
+                reqQuantity: '',
+                approvedQuantity: '',
                 uom: '',
-                unitrate: '',
-                totalamount: '',
+                unitRate: '',
+                totalAmount: '',
                 gst: '',
-                itemremarks: ''
+                itemRemarks: ''
             }
         ]);
     };
@@ -81,6 +92,36 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
         updated[index][field] = value;
         setRows(updated);
     };
+    
+    
+    const handleSubmit = (values) => {
+  // Transform data if needed
+  const transformed = {
+    ...values,
+    items: values.items.map((row) => ({
+      itemName: row.itemName,
+      indentNumber: row.indentNumber,
+      reqQuantity: parseFloat(row.reqQuantity),
+      approvedQuantity: parseFloat(row.approvedQuantity),
+      uom: row.uom,
+      unitRate: parseFloat(row.unitRate),
+      totalAmount: parseFloat(row.totalAmount),
+      gst: row.gst,
+      itemRemarks: row.itemRemarks,
+    })),
+  };
+
+  console.log("Final Data to Submit for POs::==>", transformed);
+
+  // Submit to API (you can use axios/fetch here)
+  // axios.post('/api/purchase-orders', transformed)
+  //   .then(response => ...)
+  //   .catch(error => ...);
+};
+
+
+
+
 
     if (!isOpen) return null;
 
@@ -103,35 +144,46 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
 
                 <Formik
                     initialValues={{
-                        poNumber: '',
+                        indentNumber: '',
+                        indentDate: '',
+                        requestedBy: '',
+                        poDate: '',
+                        createdBy: '',
                         vendorName: '',
-                        dateOfReceiving: '',
-                        billNo: '',
-                        storeIn: '',
-                        file: null,
+                        vendorContact: '',
+                        deliveryAddress: '',
+                        billingAddress: '',
+                        deliveryDate: '',
+                        paymentTerms: '',
+                        currency: '',
+                        subTotal: '',
+                        totalTax: '',
+                        grandTotal: '',
+                        gstCert: null,
+                        panCard: null,
+                        term: '',
+                        items: [
+                            {
+                                itemname: '',
+                                indentnumber: '',
+                                reqquantity: '',
+                                approvedquantity: '',
+                                uom: '',
+                                unitrate: '',
+                                totalamount: '',
+                                gst: '',
+                                itemremarks: ''
+                            }
+                        ]
                     }}
-                    validationSchema={VendorSchema}
-                    onSubmit={(values) => {
-                        const dataToSubmit = {
-                            ...values,
-                            stockItems: rows.map((row) => ({
-                                item: row.item ? row.item.value : null,
-                                quantity: row.quantity,
-                                batch: row.batch,
-                                expiry: row.expiry,
-                                remark: row.remark,
-                            })),
-                        };
-                        console.log('Submit Data:', dataToSubmit);
-                        // Submit your form data here
-                    }}
+                    validationSchema={PurchaseOrderSchema}
+                    onSubmit={handleSubmit}  // ✅ using the separate functions
                 >
                     {({ setFieldValue, values, errors, touched }) => (
                         <Form>
                             {/* Stock Receiving Details */}
                             <p className="fm-pr-hd mt-3 text-start fw-900" style={{ textTransform: 'uppercase' }}>
-                                Link To Indent
-                            </p>
+                                Link To Indent </p>
                             <div className="row">
                                 <div className="col-md-4">
                                     <label className="form-labell">
@@ -143,10 +195,10 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
                                         options={indentNumberOptions}
                                         name="indentNumber"
                                         styles={reactSelectStyles}
-                                        value={indentNumberOptions.find((opt) => opt.value === values.poNumber) || null}
+                                        value={indentNumberOptions.find((opt) => opt.value === values.indentNumber) || null}
                                         onChange={(option) => setFieldValue('indentNumber', option ? option.value : '')}
                                     />
-                                    <ErrorMessage name="poNumber" component="div" className="text-danger error" />
+                                    <ErrorMessage name="indentNumber" component="div" className="text-danger error" />
                                 </div>
 
                                 <div className="col-md-4">
@@ -155,27 +207,23 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
                                     </label>
                                     <Field
                                         type="date"
-                                        name="indentdate"
-                                        className={`form-control input-height ${touched.indentdate && errors.indentdate ? 'is-invalid' : ''
-                                            }`}
-                                    />
-                                    <ErrorMessage name="indentdate" component="div" className="invalid-feedback error" />
+                                        name="indentDate"
+                                        className={`form-control input-height ${touched.indentDate && errors.indentDate ? 'is-invalid' : ''
+                                            }`} />
+                                    <ErrorMessage name="indentDate" component="div" className="invalid-feedback error" />
                                 </div>
-
-
-
                                 <div className="col-md-4">
                                     <label className="form-labell">
                                         Requested By<span className="astrisk">*</span>
                                     </label>
                                     <Field
                                         type="text"
-                                        name="requestedby"
+                                        name="requestedBy"
                                         placeholder="Auto Filled (store manager)"
-                                        className={`form-control input-height ${touched.requestedby && errors.requestedby ? 'is-invalid' : ''
+                                        className={`form-control input-height ${touched.requestedBy && errors.requestedBy ? 'is-invalid' : ''
                                             }`}
                                     />
-                                    <ErrorMessage name="requestedby" component="div" className="invalid-feedback error" />
+                                    <ErrorMessage name="requestedBy" component="div" className="invalid-feedback error" />
                                 </div>
                             </div>
 
@@ -191,11 +239,11 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
                                     </label>
                                     <Field
                                         type="date"
-                                        name="podate"
-                                        className={`form-control input-height ${touched.podate && errors.podate ? 'is-invalid' : ''
+                                        name="poDate"
+                                        className={`form-control input-height ${touched.poDate && errors.poDate ? 'is-invalid' : ''
                                             }`}
                                     />
-                                    <ErrorMessage name="podate" component="div" className="invalid-feedback error" />
+                                    <ErrorMessage name="poDate" component="div" className="invalid-feedback error" />
                                 </div>
                                 <div className="col-md-3">
                                     <label className="form-labell">
@@ -203,12 +251,12 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
                                     </label>
                                     <Field
                                         type="text"
-                                        name="requestedby"
+                                        name="createdBy"
                                         placeholder="Auto Filled (store manager)"
-                                        className={`form-control input-height ${touched.requestedby && errors.requestedby ? 'is-invalid' : ''
+                                        className={`form-control input-height ${touched.createdBy && errors.createdBy ? 'is-invalid' : ''
                                             }`}
                                     />
-                                    <ErrorMessage name="requestedby" component="div" className="invalid-feedback error" />
+                                    <ErrorMessage name="createdBy" component="div" className="invalid-feedback error" />
                                 </div>
 
                                 <div className="col-md-3">
@@ -216,15 +264,14 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
                                         Vendor Name<span className="astrisk">*</span>
                                     </label>
                                     <Select
-
                                         classNamePrefix="react-select"
-                                        options={indentNumberOptions}
-                                        name="vendorname"
+                                        options={vendorNameOptions}
+                                        name="vendorName"
                                         styles={reactSelectStyles}
-                                        value={indentNumberOptions.find((opt) => opt.value === values.poNumber) || null}
-                                        onChange={(option) => setFieldValue('indentNumber', option ? option.value : '')}
+                                        value={vendorNameOptions.find((opt) => opt.value === values.vendorName) || null}
+                                        onChange={(option) => setFieldValue('vendorName', option ? option.value : '')}
                                     />
-                                    <ErrorMessage name="vendorname" component="div" className="text-danger error" />
+                                    <ErrorMessage name="vendorName" component="div" className="text-danger error" />
                                 </div>
 
                                 <div className="col-md-3">
@@ -251,12 +298,12 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
                                     </label>
                                     <Field
                                         type="text"
-                                        name="deliveryaddress"
+                                        name="deliveryAddress"
                                         placeholder="Auto Filled"
-                                        className={`form-control input-height ${touched.deliveryaddress && errors.deliveryaddress ? 'is-invalid' : ''
+                                        className={`form-control input-height ${touched.deliveryAddress && errors.deliveryAddress ? 'is-invalid' : ''
                                             }`}
                                     />
-                                    <ErrorMessage name="deliveryaddress" component="div" className="invalid-feedback error" />
+                                    <ErrorMessage name="deliveryAddress" component="div" className="invalid-feedback error" />
                                 </div>
 
                                 <div className="col-md-3">
@@ -265,12 +312,12 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
                                     </label>
                                     <Field
                                         type="text"
-                                        name="billingaddress"
+                                        name="billingAddress"
                                         placeholder="Auto Filled"
-                                        className={`form-control input-height ${touched.billingaddress && errors.billingaddress ? 'is-invalid' : ''
+                                        className={`form-control input-height ${touched.billingAddress && errors.billingAddress ? 'is-invalid' : ''
                                             }`}
                                     />
-                                    <ErrorMessage name="billingaddress" component="div" className="invalid-feedback error" />
+                                    <ErrorMessage name="billingAddress" component="div" className="invalid-feedback error" />
                                 </div>
 
                                 <div className="col-md-3">
@@ -279,11 +326,11 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
                                     </label>
                                     <Field
                                         type="date"
-                                        name="podate"
-                                        className={`form-control input-height ${touched.podate && errors.podate ? 'is-invalid' : ''
+                                        name="deliveryDate"
+                                        className={`form-control input-height ${touched.deliveryDate && errors.deliveryDate ? 'is-invalid' : ''
                                             }`}
                                     />
-                                    <ErrorMessage name="podate" component="div" className="invalid-feedback error" />
+                                    <ErrorMessage name="deliveryDate" component="div" className="invalid-feedback error" />
                                 </div>
 
 
@@ -294,13 +341,13 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
                                     <Select
 
                                         classNamePrefix="react-select"
-                                        options={indentNumberOptions}
-                                        name="paymentterms"
+                                        options={paymentTermsOptions}
+                                        name="paymentTerms"
                                         styles={reactSelectStyles}
-                                        value={indentNumberOptions.find((opt) => opt.value === values.poNumber) || null}
-                                        onChange={(option) => setFieldValue('paymentterms', option ? option.value : '')}
+                                        value={paymentTermsOptions.find((opt) => opt.value === values.paymentTerms) || null}
+                                        onChange={(option) => setFieldValue('paymentTerms', option ? option.value : '')}
                                     />
-                                    <ErrorMessage name="paymentterms" component="div" className="text-danger error" />
+                                    <ErrorMessage name="paymentTerms" component="div" className="text-danger error" />
                                 </div>
 
                             </div>
@@ -318,8 +365,8 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
                                             type="text"
                                             className="form-control input-height"
                                             placeholder="Item Name"
-                                            value={row.itemname}
-                                            onChange={(e) => handleChangeRow(index, 'itemname', e.target.value)}
+                                            value={row.itemName}
+                                            onChange={(e) => handleChangeRow(index, 'itemName', e.target.value)}
                                         />
                                     </div>
                                     <div className="col-md-1">
@@ -328,8 +375,8 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
                                             type="text"
                                             className="form-control input-height"
                                             placeholder="Indent Number"
-                                            value={row.indentnumber}
-                                            onChange={(e) => handleChangeRow(index, 'indentnumber', e.target.value)}
+                                            value={row.indentNumber}
+                                            onChange={(e) => handleChangeRow(index, 'indentNumber', e.target.value)}
                                         />
                                     </div>
                                     <div className="col-md-1">
@@ -338,8 +385,8 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
                                             type="number"
                                             className="form-control input-height"
                                             placeholder="Req Qty"
-                                            value={row.reqquantity}
-                                            onChange={(e) => handleChangeRow(index, 'reqquantity', e.target.value)}
+                                            value={row.reqQuantity}
+                                            onChange={(e) => handleChangeRow(index, 'reqQuantity', e.target.value)}
                                         />
                                     </div>
                                     <div className="col-md-1">
@@ -348,8 +395,8 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
                                             type="number"
                                             className="form-control input-height"
                                             placeholder="Approved Qty"
-                                            value={row.approvedquantity}
-                                            onChange={(e) => handleChangeRow(index, 'approvedquantity', e.target.value)}
+                                            value={row.approvedQuantity}
+                                            onChange={(e) => handleChangeRow(index, 'approvedQuantity', e.target.value)}
                                         />
                                     </div>
                                     <div className="col-md-1">
@@ -368,8 +415,8 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
                                             type="number"
                                             className="form-control input-height"
                                             placeholder="Unit Rate"
-                                            value={row.unitrate}
-                                            onChange={(e) => handleChangeRow(index, 'unitrate', e.target.value)}
+                                            value={row.unitRate}
+                                            onChange={(e) => handleChangeRow(index, 'unitRate', e.target.value)}
                                         />
                                     </div>
                                     <div className="col-md-1">
@@ -378,14 +425,14 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
                                             type="number"
                                             className="form-control input-height"
                                             placeholder="Total Amount"
-                                            value={row.totalamount}
-                                            onChange={(e) => handleChangeRow(index, 'totalamount', e.target.value)}
+                                            value={row.totalAmount}
+                                            onChange={(e) => handleChangeRow(index, 'totalAmount', e.target.value)}
                                         />
                                     </div>
                                     <div className="col-md-1">
                                         <label className="form-labell">GST</label>
                                         <input
-                                            type="number"
+                                            type="text"
                                             className="form-control input-height"
                                             placeholder="GST"
                                             value={row.gst}
@@ -398,8 +445,8 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
                                             type="text"
                                             className="form-control input-height"
                                             placeholder="Item Remarks"
-                                            value={row.itemremarks}
-                                            onChange={(e) => handleChangeRow(index, 'itemremarks', e.target.value)}
+                                            value={row.itemRemarks}
+                                            onChange={(e) => handleChangeRow(index, 'itemRemarks', e.target.value)}
                                         />
                                     </div>
                                     <div className="col-md-1">
@@ -459,13 +506,13 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
                                             </label>
                                             <Field
                                                 type="text"
-                                                name="subtotal"
-                                                className={`form-control input-height ${touched.subtotal && errors.subtotal ? 'is-invalid' : ''
+                                                name="subTotal"
+                                                className={`form-control input-height ${touched.subTotal && errors.subTotal ? 'is-invalid' : ''
                                                     }`}
                                                 placeholder="₹ 1800"
 
                                             />
-                                            <ErrorMessage name="subtotal" component="div" className="invalid-feedback error" />
+                                            <ErrorMessage name="subTotal" component="div" className="invalid-feedback error" />
                                         </div>
                                         <div className="col-md-2">
                                             <label className="form-labell">
@@ -473,12 +520,12 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
                                             </label>
                                             <Field
                                                 type="text"
-                                                name="totaltax"
-                                                className={`form-control input-height ${touched.totaltax && errors.totaltax ? 'is-invalid' : ''
+                                                name="totalTax"
+                                                className={`form-control input-height ${touched.totalTax && errors.totalTax ? 'is-invalid' : ''
                                                     }`}
                                                 placeholder="₹ 800"
                                             />
-                                            <ErrorMessage name="totaltax" component="div" className="invalid-feedback error" />
+                                            <ErrorMessage name="totalTax" component="div" className="invalid-feedback error" />
                                         </div>
 
                                         <div className="col-md-2">
@@ -487,12 +534,12 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
                                             </label>
                                             <Field
                                                 type="text"
-                                                name="grandtotal"
-                                                className={`form-control input-height ${touched.grandtotal && errors.grandtotal ? 'is-invalid' : ''
+                                                name="grandTotal"
+                                                className={`form-control input-height ${touched.grandTotal && errors.grandTotal ? 'is-invalid' : ''
                                                     }`}
                                                 placeholder="₹ 1100"
                                             />
-                                            <ErrorMessage name="grandtotal" component="div" className="invalid-feedback error" />
+                                            <ErrorMessage name="grandTotal" component="div" className="invalid-feedback error" />
                                         </div>
 
                                         <div className="col-md-3">
@@ -501,10 +548,10 @@ export const AddPurchaseOrder = ({ isOpen, onClose }) => {
                                             </label>
                                             <Select
                                                 classNamePrefix="react-select"
-                                                options={indentNumberOptions}
+                                                options={currencyOptions}
                                                 name="currency"
                                                 styles={reactSelectStyles}
-                                                value={indentNumberOptions.find((opt) => opt.value === values.poNumber) || null}
+                                                value={currencyOptions.find((opt) => opt.value === values.currency) || null}
                                                 onChange={(option) => setFieldValue('currency', option ? option.value : '')}
                                             />
                                             <ErrorMessage name="currency" component="div" className="text-danger error" />

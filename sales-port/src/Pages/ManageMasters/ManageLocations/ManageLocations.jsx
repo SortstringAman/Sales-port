@@ -17,10 +17,10 @@ import close from '../../../assets/icons/close.svg';
 import debounce from 'lodash.debounce';
 import SearchBar from '../../../Component/SearchBar';
 import Select from 'react-select';
-import { reactSelectStyles } from '../../../Utils/selectboxStyle';
+import { locationSelectStyle, reactSelectStyles } from '../../../Utils/selectboxStyle';
 import ManageCountry from './ManageCountry';
 import ManageStates from './ManageState';
-import ManageDistricts from './ManageDistrict';
+import ManageCities from './ManageCity';
 
 
 
@@ -48,22 +48,15 @@ const ManageLocations = () => {
 
 
     const handleRowClick = async (userId, row) => {
-
-
         try {
             console.log("handelclick==>", row?.original)
-          
-
         } catch (error) {
             console.error("❌ Error fetching employee data:", error);
         }
     };
 
 
-
-
     const handleSearch = async (query) => {
-   
     };
 
 
@@ -75,7 +68,7 @@ const ManageLocations = () => {
 
     const handleEditClick = (userId, row) => {
         setIsaddItemTypesModal(true)
-      
+
     };
 
 
@@ -134,99 +127,32 @@ const ManageLocations = () => {
 
     return (
         <>
-            <div className="dashboard">
-                {/* Content for the Dashboard */}
-                <div className='row' style={{ display: "flex", justifyContent: 'space-between' }}>
-                    <div className='col-md-8'>
-                        <h2 className='main-heading'>Choose Locations</h2>
-                    </div>
-                    <div className='col-md-3' >
-                        <Select
-                            options={[
-                                { value: 'country', label: 'Country' },
-                                { value: 'state', label: 'State' },
-                                { value: 'district', label: 'District' }
-                            ]}
-                            styles={reactSelectStyles}
-                            onChange={(e) => setSelectedType(e.value)}
-                            placeholder="Select Location Type"
-                        />
-
-                    </div>
+            {/* Content for the Dashboard */}
+            <div className='row mb-5 manageLocation' style={{ display: "flex", justifyContent: 'end' }}>
+                <div className='col-md-3'>
+                    {/* <h2 className='main-heading'>Choose Locations</h2> */}
                 </div>
-             
-
-                <div className='row mt-2'>
-                    
-                    <div className="col-md-12">
-                        <div className="row align-items-center">
-                          
-                            <div className="col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-2">
-                                {/* <h4 className="text-primary fw-bold">Stock Level Overview</h4> */}
-                            </div>
-
-                            {/* Search + Buttons Column */}
-                            {/* <div className="col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-2">
-                                <div className="d-flex justify-content-lg-end  gap-2">
-                                    <SearchBar
-                                        data={studentdata}
-                                        onSearch={debouncedSearch}
-                                        ref={searchInputRef}
-                                        placeholder={'Search by Item Name, SQU Code..'}
-                                    />
-                                    <button
-                                        className="filter-btn"
-                                        onClick={handleFilterClick}
-                                        style={{ height: '43px' }}
-                                    >
-                                        <img src={filtericon} alt="Filter" />
-                                    </button>
-                                    <button
-                                        className="filter-btn"
-                                        style={{
-                                            background: 'white',
-                                            border: '1px solid #7F56DA',
-                                            height: '43px',
-                                        }}
-                                    >
-                                        <img src={exporticon} alt="Export" />
-                                    </button>
-                                </div>
-                            </div> */}
-                        </div>
-                        {/* <div className="row">
-                            <div className="col-md-12">
-                                {/* {data.length > 0 ? ( */}
-                                {/* <Table
-                                    columns={columns}
-                                    pageCounts={pageCounts}
-                                    handlePageChange={handlePageChange}
-                                    selectedData={selectedIndentDetails}
-                                    data={itemTypes}
-                                /> */}
-                                {/* ) : (
-                                    <div className="no-data-message" style={{ textAlign: 'center', padding: '40px', color: '#888' }}>
-                                        No data available
-                                    </div>
-                                )} */}
-
-                            {/* </div>
-
-                        </div>  */}
-                    </div>
-
-
-
-                    <div className="col-md-3">
-                        {/* <IndentShortDetails navigate={navigate} selectedIndentDetails={selectedIndentDetails} /> */}
-                    </div>
-                    {/* <AddItemTypes isOpen={isaddItemTypesModal} onClose={closeModal} /> */}
-                    {selectedType === 'country' && <ManageCountry />}
-                    {selectedType === 'state' && <ManageStates />}
-                    {selectedType === 'district' && <ManageDistricts />}
-
+                <div className='col-md-3  animated-select' >
+                    <Select
+                        options={[
+                            { value: 'country', label: 'Country' },
+                            { value: 'state', label: 'State' },
+                            { value: 'city', label: 'City' },
+                        ]}
+                        styles={locationSelectStyle}
+                        classNamePrefix="react-select"
+                        placeholder="Select Location Type"
+                        onChange={(e) => setSelectedType(e.value)}
+                        autoFocus
+                        menuPortalTarget={document.body}
+                        menuPosition="fixed"
+                    />
                 </div>
-            </div >
+                {/* <AddItemTypes isOpen={isaddItemTypesModal} onClose={closeModal} /> */}
+                {selectedType === 'country' && <ManageCountry />}
+                {selectedType === 'state' && <ManageStates />}
+                {selectedType === 'city' && <ManageCities />}
+            </div>
             <div>
             </div>
         </>

@@ -22,3 +22,27 @@
     font-size: 14px;
 font-weight: 400;
 }
+
+
+.manageLocation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+}
+
+.animated-select {
+    animation: slideFadeIn 0.8s ease-in-out forwards;
+    opacity: 0;
+}
+
+@keyframes slideFadeIn {
+    0% {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}

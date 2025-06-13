@@ -5,22 +5,23 @@ import { dashboardData, lowStockAlert, stockData } from './data';
 import '../../assets/css/SearchBar.css'
 import { getData } from '../../API/GlobalApi';
 const ManageDashboard = () => {
-
-    const getOrgData = async()=>{
-        const url = "administration/organizations"
+    console.log("🔥 Componenet rerendered");
+    const getOrgData = async () => {
+        console.log("🔥 Calling getOrgData");
+        const url = "administration/organizations/"
         const response = await getData(url)
-        console.log("testing for get data",response)
+        console.log("testing for get data", response)
     }
 
-    useEffect(()=>{
-getOrgData()
-    },[])
-   
+    useEffect(() => {
+        getOrgData()
+    }, [])
+
     return (
         <>
             <div className="dashboard">
                 {/* Content for the Dashboard */}
-                <div style={{ display: "flex",  marginBottom: '28px' }} >
+                <div style={{ display: "flex", marginBottom: '28px' }} >
                     <div >
                         <h2 className='main-heading'> Inventry & Purchase Control</h2>
                         <p className='dashboard-p' style={{ fontSize: "20px" }}>Centralized view for Indent,Purchase Orders,Stock,and Alerts.</p>
@@ -28,22 +29,20 @@ getOrgData()
                     <div style={{ display: "flex", gap: "25px" }} >
                     </div>
                 </div>
-
                 <div className="row "  >
                     <div className='col-md-10' style={{ margin: 'auto' }}>
                         <div className='row d-flex  justify-content-center dashboard-card-container' style={{ gap: '40px' }} clas>
                             {dashboardData.map((item, index) => (
-                                <div   className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"  key={index}>
+                                <div className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2" key={index}>
                                     <div
                                         className="border shadow-sm dashboard-card"
                                         style={{
                                             width: "100%",
                                             padding: "15px",
                                             borderRadius: "20px",
-                                         height: "150px",
-                                        }}
-                                    >
-                                        <div className="d-flex align-items-center mb-3 div" style={{gap:'5px'}}>
+                                            height: "150px",
+                                        }}>
+                                        <div className="d-flex align-items-center mb-3 div" style={{ gap: '5px' }}>
                                             <img
                                                 src={item.icon}
                                                 alt={item.title}

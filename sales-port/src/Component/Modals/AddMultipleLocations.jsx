@@ -12,7 +12,7 @@ const MultpleLocationModal = ({ isOpen, onClose, fieldType, onSubmit, height }) 
         switch (fieldType) {
             case 'country': return 'Add Country';
             case 'state': return 'Add State';
-            case 'district': return 'Add District';
+            case 'city': return 'Add City';
             default: return 'Add Data';
         }
     };
@@ -50,7 +50,7 @@ const MultpleLocationModal = ({ isOpen, onClose, fieldType, onSubmit, height }) 
             name: values.name,
             country: values.country?.value,
         };
-    } else if (fieldType === 'district') {
+    } else if (fieldType === 'city') {
         // apiEndpoint = '/api/districts/';
         payload = {
             name: values.name,
@@ -92,7 +92,7 @@ const MultpleLocationModal = ({ isOpen, onClose, fieldType, onSubmit, height }) 
                 }}
             >
                 <div className="modal-header-content d-flex justify-content-between align-items-center mb-3">
-                    <h2 className="text-primary">{getTitle()}</h2>
+                    <h2 className="text-primary" style={{color:'#7F56DA'}}>{getTitle()}</h2>
                     <button className="close-btn" onClick={onClose}>
                         <img src={close} alt="close" />
                     </button>
@@ -156,7 +156,7 @@ const MultpleLocationModal = ({ isOpen, onClose, fieldType, onSubmit, height }) 
                                     </>
                                 )}
 
-                                {fieldType === 'district' && (
+                                {fieldType === 'city' && (
                                     <>
                                         {/* Country Dropdown */}
                                         <div className="col-10 mb-3">
@@ -198,12 +198,12 @@ const MultpleLocationModal = ({ isOpen, onClose, fieldType, onSubmit, height }) 
 
                                         {/* District Name */}
                                         <div className="col-10">
-                                            <label className="form-labell">District Name <span className="astrisk">*</span></label>
+                                            <label className="form-labell">City <span className="astrisk">*</span></label>
                                             <Field
                                                 type="text"
                                                 name="name"
                                                 className={`form-control ${touched.name && errors.name ? 'is-invalid' : ''}`}
-                                                placeholder="Enter District Name"
+                                                placeholder="Enter City Name"
                                             />
                                             <ErrorMessage name="name" component="div" className="invalid-feedback error" />
                                         </div>

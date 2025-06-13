@@ -188,3 +188,25 @@
 .pos{
   width: 91% !important;
 }
+
+
+.filterreport{
+  position: relative;
+}
+ 
+.filterreport .filter-svg {
+  position: absolute;
+  top: 13px;
+  left: 15px;
+  z-index: 1111;
+  background-color: transparent;
+  pointer-events: none; /* Prevents focus or click */
+}
+
+.filterreport .filter-svg:focus,
+.filterreport .filter-svg:active,
+.filterreport .filter-svg:hover {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}

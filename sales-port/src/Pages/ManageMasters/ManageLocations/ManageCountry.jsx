@@ -94,8 +94,8 @@ const ManageCountry = () => {
     }, []);
 
     const handleEditClick = (userId, row) => {
-         setFieldType("country")
-         setIsaddMultipleLocatonsModal(true)
+        setFieldType("country")
+        setIsaddMultipleLocatonsModal(true)
     };
 
 
@@ -168,7 +168,7 @@ const ManageCountry = () => {
         <>
             <div className="dashboard">
                 {/* Content for the Dashboard */}
-                <div style={{ display: "flex", justifyContent: 'space-between' }}>
+                <div style={{ display: "flex", justifyContent: 'space-between' }}className='mt-5'>
                     <div >
                         <h2 className='main-heading'>Manage  Country</h2>
                     </div>
@@ -182,7 +182,7 @@ const ManageCountry = () => {
                         </button>
                     </div>
                 </div>
-            
+
                 <div className='row mt-2'>
                     <div className="col-md-12">
                         <div className="row align-items-center">
@@ -247,9 +247,9 @@ const ManageCountry = () => {
                     {/* <AddItemTypes isOpen={isaddItemTypesModal} onClose={closeModal} /> */}
                     <MultpleLocationModal
                         isOpen={isaddMultipleLocatonsModal}
-                       fieldType={fieldType}         // 👈 Set what you're creating
+                        fieldType={fieldType}         // 👈 Set what you're creating
                         onClose={closeModal}
-                         height='40vh'
+                        height='40vh'
                     />
                 </div>
             </div >

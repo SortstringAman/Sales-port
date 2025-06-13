@@ -25,13 +25,13 @@ import MultpleLocationModal from '../../../Component/Modals/AddMultipleLocations
 
 
 
-const ManageDistricts = () => {
+const ManageCities = () => {
     const [submit, setsubmit] = useState(false);
     const [currentPage, setCurrentPage] = useState(0); // Starts from 0
     const [totalCount, setTotalCount] = useState(0);
     const [studentdata, setStudentsdata] = useState([]);
     const [studentid, setstudentid] = useState([]);
-  const [isaddMultipleLocatonsModal, setIsaddMultipleLocatonsModal] = useState(false);
+    const [isaddMultipleLocatonsModal, setIsaddMultipleLocatonsModal] = useState(false);
     const [selectedIndentDetails, setSelectedIndentDetails] = useState([]);
     const navigate = useNavigate();
     const pageSize = 10;
@@ -43,7 +43,7 @@ const ManageDistricts = () => {
     })
 
 
- const [fieldType, setFieldType] = useState('');
+    const [fieldType, setFieldType] = useState('');
 
     const [filtermodal, setfiltermodal] = useState(false);
     const [filterQueryString, setFilterQueryString] = useState('');
@@ -57,12 +57,12 @@ const ManageDistricts = () => {
         setfiltermodal(true);
     };
     const openModal = () => {
-        setFieldType('district')
-       setIsaddMultipleLocatonsModal(true);
+        setFieldType('city')
+        setIsaddMultipleLocatonsModal(true);
     };
 
     const closeModal = () => {
-       setIsaddMultipleLocatonsModal(false)
+        setIsaddMultipleLocatonsModal(false)
         // setIsEditMode(false);
         // setidcardmodal(false);
         // setFingerprints([null, null, null]);
@@ -86,7 +86,7 @@ const ManageDistricts = () => {
 
 
     const handleSearch = async (query) => {
-     
+
     };
 
 
@@ -97,9 +97,9 @@ const ManageDistricts = () => {
     }, []);
 
     const handleEditClick = (userId, row) => {
-          setFieldType('district')
+        setFieldType('city')
         setIsaddMultipleLocatonsModal(true)
-       
+
     };
 
 
@@ -125,7 +125,7 @@ const ManageDistricts = () => {
         },
 
         {
-            Header: 'District',
+            Header: 'City',
             accessor: 'districtName',
             disableSortBy: false,
             Cell: ({ value }) => <p className="item-values">{value}</p>,
@@ -160,9 +160,9 @@ const ManageDistricts = () => {
         <>
             <div className="dashboard">
                 {/* Content for the Dashboard */}
-                <div style={{ display: "flex", justifyContent: 'space-between' }}>
+                <div style={{ display: "flex", justifyContent: 'space-between' }} className='mt-5'>
                     <div >
-                        <h2 className='main-heading'>Manage  District</h2>
+                        <h2 className='main-heading'>Manage City</h2>
                     </div>
                     <div >
                         <button className='add-btn' onClick={openModal}>
@@ -170,11 +170,11 @@ const ManageDistricts = () => {
                                 <svg width="12" height="12" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M20.4286 13.3537H12.5714V21.2108C12.5714 21.6276 12.4059 22.0273 12.1112 22.322C11.8165 22.6167 11.4168 22.7822 11 22.7822C10.5832 22.7822 10.1835 22.6167 9.88883 22.322C9.59413 22.0273 9.42857 21.6276 9.42857 21.2108V13.3537H1.57143C1.15466 13.3537 0.754961 13.1881 0.460261 12.8934C0.165561 12.5987 0 12.199 0 11.7822C0 11.3655 0.165561 10.9658 0.460261 10.6711C0.754961 10.3764 1.15466 10.2108 1.57143 10.2108H9.42857V2.35366C9.42857 1.93689 9.59413 1.53719 9.88883 1.24249C10.1835 0.947787 10.5832 0.782227 11 0.782227C11.4168 0.782227 11.8165 0.947787 12.1112 1.24249C12.4059 1.53719 12.5714 1.93689 12.5714 2.35366V10.2108H20.4286C20.8453 10.2108 21.245 10.3764 21.5397 10.6711C21.8344 10.9658 22 11.3655 22 11.7822C22 12.199 21.8344 12.5987 21.5397 12.8934C21.245 13.1881 20.8453 13.3537 20.4286 13.3537Z" fill="white" />
                                 </svg>
-                            </span>Create District
+                            </span>Create City
                         </button>
                     </div>
                 </div>
-              
+
 
                 <div className='row mt-2'>
                     <div className="col-md-12">
@@ -233,7 +233,6 @@ const ManageDistricts = () => {
 
                         </div>
                     </div>
-
                     <div className="col-md-3">
                         {/* <IndentShortDetails navigate={navigate} selectedIndentDetails={selectedIndentDetails} /> */}
                     </div>
@@ -242,10 +241,8 @@ const ManageDistricts = () => {
                         isOpen={isaddMultipleLocatonsModal}
                         fieldType={fieldType}
                         onClose={closeModal}
-                         height='68vh'
+                        height='68vh'
                     />
-
-
                 </div>
             </div >
             <div>
@@ -256,4 +253,4 @@ const ManageDistricts = () => {
 
 
 
-export default ManageDistricts
+export default ManageCities
