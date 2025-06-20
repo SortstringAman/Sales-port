@@ -3,13 +3,13 @@ import { useState, useMemo, useEffect, useRef } from 'react';
 import '../../assets/css/StudentDashboard.css'
 import { dashboardData, lowStockAlert, stockData } from './data';
 import '../../assets/css/SearchBar.css'
-import { getData } from '../../API/GlobalApi';
+import { GetData } from '../../API/GlobalApi';
 const ManageDashboard = () => {
     console.log("🔥 Componenet rerendered");
     const getOrgData = async () => {
         console.log("🔥 Calling getOrgData");
         const url = "administration/organizations/"
-        const response = await getData(url)
+        const response = await GetData(url)
         console.log("testing for get data", response)
     }
 

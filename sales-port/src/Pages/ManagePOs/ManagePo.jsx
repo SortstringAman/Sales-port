@@ -117,7 +117,7 @@ const ManagePOs = () => {
         // const finalUrl = `students/get-students/?${queryParams.toString()}`;
 
         // try {
-        //     const response = await getData(finalUrl);
+        //     const response = await GetData(finalUrl);
         //     setStudentsdata(response?.results || []);
         //     setTotalCount(response?.count || 0);
         //     setgetstudentsdataId(response?.results[0]?.user_id || null);

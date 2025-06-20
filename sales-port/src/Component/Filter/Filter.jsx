@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import close from '../../assets/icons/close.svg';
 import '../../assets/css/SearchBar.css';
-import { getData } from '../../API/GlobalApi';
+import { GetData } from '../../API/GlobalApi';
 import arrowclockwise from '../../assets/icons/arrow-clockwise.svg';
 
 const initialStaticFilterOptions = {
@@ -87,7 +87,7 @@ export const Filter = ({ setfiltermodal, setStudentsdata, setCurrentPage, setTot
   };
 
   const getorgdata = async () => {
-    const res = await getData("administration/organizations/");
+    const res = await GetData("administration/organizations/");
     if (res) {
       const institutes = res?.map(org => ({
         name: org.organization_name || org.name,
@@ -102,7 +102,7 @@ export const Filter = ({ setfiltermodal, setStudentsdata, setCurrentPage, setTot
   };
 
   const getcastcategory = async () => {
-    const res = await getData('students/student-onboarding-basic-details/get-master-data/');
+    const res = await GetData('students/student-onboarding-basic-details/get-master-data/');
     const categories = res?.master?.student_categories;
     if (categories && Array.isArray(categories)) {
       const categoryNames = categories?.map(cat => cat.name);
@@ -121,7 +121,7 @@ export const Filter = ({ setfiltermodal, setStudentsdata, setCurrentPage, setTot
   const getcoursedata = async (orgName) => {
     const org = orgs.find(o => o.name === orgName);
     if (org) {
-      const res = await getData(`students/get-course-list-by-organization/?organization_id=${org.id}`);
+      const res = await GetData(`students/get-course-list-by-organization/?organization_id=${org.id}`);
       if (res && Array.isArray(res)) {
         const courses = res?.map(r => {
           const name = r.course_specialization?.trim() || r.course?.name?.trim() || "Unnamed Course";
@@ -143,7 +143,7 @@ export const Filter = ({ setfiltermodal, setStudentsdata, setCurrentPage, setTot
   const getacademicdata = async (courseName) => {
     const specializationId = courseIdMap[courseName];
     if (specializationId) {
-      const res = await getData(`students/get-academic-groups-by-specialization/?specialization_id=${specializationId}`);
+      const res = await GetData(`students/get-academic-groups-by-specialization/?specialization_id=${specializationId}`);
       if (res && Array.isArray(res)) {
         const groups = res?.map(r => ({ name: r.name, id: r.id }));
         const nameList = groups?.map(g => g.name);
@@ -161,7 +161,7 @@ export const Filter = ({ setfiltermodal, setStudentsdata, setCurrentPage, setTot
   const getclassdata = async (groupName) => {
     const academicId = academicIdMap[groupName];
     if (academicId) {
-      const res = await getData(`students/get-least-academic-groups-by-academic-group/?academic_group_id=${academicId}`);
+      const res = await GetData(`students/get-least-academic-groups-by-academic-group/?academic_group_id=${academicId}`);
       if (res && Array.isArray(res)) {
         const classList = res?.map(r => r.name);
         setDynamicOptions(prev => ({
@@ -201,7 +201,7 @@ export const Filter = ({ setfiltermodal, setStudentsdata, setCurrentPage, setTot
     console.log("Final Filter URL:", finalUrl);
 
     try {
-      const res = await getData(finalUrl);
+      const res = await GetData(finalUrl);
       if (res) {
         setStudentsdata(res.results || []);
         setTotalCount(res.count || 0);

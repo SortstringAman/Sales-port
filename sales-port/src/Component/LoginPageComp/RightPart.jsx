@@ -244,8 +244,6 @@ export const RightPart = () => {
       setIsOtpFilled(false);
     }
   };
-
-
   const navigate = useNavigate()
   const handleSubmit = async () => {
     try {
@@ -254,25 +252,18 @@ export const RightPart = () => {
         mobile: phoneNumber,
         otp: otp.join('')
       };
-
       const response = await Postdata(url, data);
-
       console.log("✅ Response received: ater submit", response);
-
       if (response.token) {
         setIsOtpVerified(true);
         settoken(response.token);
         Session.set("token", response.token);
         Notifier.success(response?.message)
         navigate('/')
-      } else if (response.error) {
-        Notifier.error(response.error?.error); // Show proper error
-      } else {
-        Notifier.error("Unexpected error. Please try again.");
-      }
+      } 
     } catch (error) {
-      console.error("❗ Error during OTP submission:", error);
-      Notifier.error("Something went wrong. Please try again later.");
+        Notifier.error(error?.error);
+    
     }
   };
 

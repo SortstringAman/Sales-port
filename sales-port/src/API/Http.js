@@ -1,6 +1,6 @@
 import axios from 'axios';
-import session from "./session";
-import { PUBLIC_URLS } from '../Constant/publicUrl';
+import session from "../Service/session";
+import { PUBLIC_URLS } from './publicUrl';
 import Notify from '../Utils/notify';
 // import store from "../store/store"
 // import { logOut, removeToken } from '../store/auth.slice';

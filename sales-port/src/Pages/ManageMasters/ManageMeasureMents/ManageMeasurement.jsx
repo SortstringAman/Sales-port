@@ -80,7 +80,7 @@ const ManageMeasurement = () => {
             // //     Authorization: `Token ${token}`
             // //   }
             // // });
-            // const response = await getData(`students/get-students/${userId}/`)
+            // const response = await GetData(`students/get-students/${userId}/`)
 
             // // if (!employeeData || employeeData.error) {
             // //   throw new Error("Failed to fetch employee details");
@@ -123,7 +123,7 @@ const ManageMeasurement = () => {
         // const finalUrl = `students/get-students/?${queryParams.toString()}`;
 
         // try {
-        //     const response = await getData(finalUrl);
+        //     const response = await GetData(finalUrl);
         //     setStudentsdata(response?.results || []);
         //     setTotalCount(response?.count || 0);
         //     setgetstudentsdataId(response?.results[0]?.user_id || null);
